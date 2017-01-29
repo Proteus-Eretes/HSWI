@@ -46,12 +46,6 @@ First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
 
     npm install -g polymer-cli
 
-##### Initialize project from template
-
-    mkdir my-app
-    cd my-app
-    polymer init starter-kit
-
 ### Start the development server
 
 This command serves the app at `http://localhost:8080` and provides basic URL
@@ -86,6 +80,8 @@ generated using fragment bundling:
     polymer serve build/bundled
 
 ### Run tests
+
+NOTE do not know if I want to build tests
 
 This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester)
 against the browsers currently installed on your machine:
