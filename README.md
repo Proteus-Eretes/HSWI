@@ -8,16 +8,16 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
 | Oars            | Completed      |Load image of club          |     -|
-| last results    | In progress    |Display last 15 teams       | [#] -|
+| last results    | In progress    |Display last 15 teams       | [#]  |
 | Finish time     | Completed      |Time,disqualified,excluded  |     -|
-| Team overview   | To be ported   |Team info hover dialog      | [#] -|
-| Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#] -|
-| Menubar         | To be started  |List of matches             | [#] -|
-| View results    | To be started  |List of fields              | [#] -|
-| View toss       | To be started  |List of fields              | [#] -|
-| View clubs      | To be started  |List of clubs               | [#] -|
-| View competitors| Do we want it? |List of fields              | [#] -|
-| Team list       | To be started  |List of teams               | [#] -|
+| Team overview   | To be ported   |Team info hover dialog      | [#]  |
+| Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
+| Menubar         | To be started  |List of matches             | [#]  |
+| View results    | To be started  |List of fields              | [#]  |
+| View toss       | To be started  |List of fields              | [#]  |
+| View clubs      | To be started  |List of clubs               | [#]  |
+| View competitors| Do we want it? |List of fields              | [#]  |
+| Team list       | To be started  |List of teams               | [#]  |
 
 
 ### Required logic
