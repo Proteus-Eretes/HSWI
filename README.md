@@ -1,26 +1,41 @@
-# Polymer App Toolbox - Starter Kit
+#HoeSnelWasIk
 
-[![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
+Hoesnelwasik will be compoment based work using the modern HTML5 techniques.
+The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to support old browser.
 
-This template is a starting point for building apps using a drawer-based
-layout. The layout is provided by `app-layout` elements.
+### Required compoments
 
-This template, along with the `polymer-cli` toolchain, also demonstrates use
-of the "PRPL pattern" This pattern allows fast first delivery and interaction with
-the content at the initial route requested by the user, along with fast subsequent
-navigation by pre-caching the remaining components required by the app and
-progressively loading them on-demand as the user navigates through the app.
+| Compoment       | Status         |Description                 |Issue |
+|----------------------------------------------------------------------|
+| Oars            | Completed      |Load image of club          |     -|
+| last results    | In progress    |Display last 15 teams       | [#] -|
+| Finish time     | Completed      |Time,disqualified,excluded  |     -|
+| Team overview   | To be ported   |Team info hover dialog      | [#] -|
+| Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#] -|
+| Menubar         | To be started  |List of matches             | [#] -|
+| View results    | To be started  |List of fields              | [#] -|
+| View toss       | To be started  |List of fields              | [#] -|
+| View clubs      | To be started  |List of clubs               | [#] -|
+| View competitors| Do we want it? |List of fields              | [#] -|
+| Team list       | To be started  |List of teams               | [#] -|
 
-The PRPL pattern, in a nutshell:
 
-* **Push** components required for the initial route
-* **Render** initial route ASAP
-* **Pre-cache** components for remaining routes
-* **Lazy-load** and progressively upgrade next routes on-demand
+### Required logic
 
-### Migrating from Polymer Starter Kit v1?
 
-[Check out our blog post that covers what's changed in PSK2 and how to migrate!](https://www.polymer-project.org/1.0/blog/2016-08-18-polymer-starter-kit-or-polymer-cli.html)
+
+## Polymer
+
+After doing quite some research it was deamed that polymer would be a great choice a framework for hoesnelwasik.nl
+Some explantion about polymer and the setup.
+Usage of JQeury, bootstrap, react, angular2 is a no go because we want to keep it as small as possible
+
+### Polymer 2
+
+Polymer 2 will be released with in a few moments the target is to fully take advantage off the changes.
+Some code has already been written in polymer 2 only with current bugs and missing documentation it made extremely hard.
+It is required to write code which can be easly be ported to polymer 2.
+Have a look at the new class based syntax and other api changes.
 
 ### Setup
 
@@ -78,6 +93,8 @@ against the browsers currently installed on your machine:
     polymer test
 
 ### Adding a new view
+
+NOTE at the moment views are not yet integrated in the current pre alpha state of the software
 
 You can extend the app by adding more views that will be demand-loaded
 e.g. based on the route, or to progressively render non-critical sections of the
