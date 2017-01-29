@@ -18,10 +18,21 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | View clubs      | To be started  |List of clubs               | [#]  |
 | View competitors| Do we want it? |List of fields              | [#]  |
 | Team list       | To be started  |List of teams               | [#]  |
+| Search element  | To be started  |                            | [#]  |
+
 
 
 ### Required logic
 
+| Compoment       | Status         |Description                 |Issue |
+|-----------------|----------------|----------------------------|------|
+| Routing         | To be started  |Routing with in app         | [#]  |
+
+### To think about
+
+| What                       |Description                 |Issues        |
+|----------------------------|----------------------------|--------------|
+| Integration with Paparazzi |Load image of team          | HTTPS,Webcie |
 
 
 ## Polymer
