@@ -1,0 +1,40 @@
+<!-- Load the Polymer.Element base class -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="oars-img">
+  <template>
+
+    <!-- Styles MUST be inside template -->
+    <style>
+      .cluboars {
+        height: 20px;
+        width: 48px;
+        margin: 5px;
+      }
+    </style>
+    <div>
+      <span>
+        <img class="cluboars"
+               src$="http://beta.hoesnelwasik.nl/images/cluboars/[[_lowerCase(club)]].png"
+               onError="this.src='http://beta.hoesnelwasik.nl/images/cluboars/unkown.png';">
+      </span>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'oars-img',
+      _lowerCase : function(name) {
+        return name.toLowerCase()
+      },
+      properties: {
+        club : {
+          type: String,
+          notify:false,
+          readOnly: false,
+          value: 'unkown',
+        }
+      }
+    })
+  </script>
+</dom-module>

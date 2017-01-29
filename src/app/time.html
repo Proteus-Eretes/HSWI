@@ -1,0 +1,70 @@
+<!-- Load the Polymer.Element base class -->
+<!--<link rel="import" href="../bower_components/polymer/polymer-element.html">-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script>
+var FinalTime = function(time, bonussecond) {
+  if (+time === 0) {
+    return 0;
+  }
+  return +time + (+bonussecond);
+};
+
+var FormatTime = function (time) {
+    let centiseconds = Math.round((+time * 10)%10);
+    let seconds = Math.floor(+time % 60);
+    let minutes = Math.floor(+time / 60);
+    let timeString = '';
+    if(centiseconds > 9)
+    {
+      centiseconds = 0;
+      seconds++;
+    }
+    if (minutes >= 0) timeString += (minutes < 10) ? ('0' + minutes) : (minutes);
+    timeString += ":";
+    if (seconds >= 0) timeString += (seconds < 10) ? ('0' + seconds) : (seconds);
+    timeString += ".";
+    timeString += centiseconds;
+
+    return timeString;
+}
+</script>
+<dom-module id="final-time">
+  <template>
+
+    <!-- Styles MUST be inside template -->
+    <style>
+
+    </style>
+    <template is="dom-if" if="[[!hasValue(team.disqualified)]]">
+      Gedisqualificeerd
+    </template>
+    <template is="dom-if" if="[[!hasValue(team.excluded)]]">
+      Excluded
+    </template>
+    <template is="dom-if" if="[[hasValue(team.excluded + team.disqualified)]]">
+      [[displayTime(team.totaltime,team.bonussecond)]]
+    </template>
+  </template>
+
+  <script>
+  'use strict';
+  Polymer({
+    is: 'final-time',
+    displayTime: function(time,bonussecond) {
+      return FormatTime(FinalTime(time,bonussecond));
+    },
+    hasValue: function(field) {
+      return field == 0;
+    },
+    properties: {
+      team : {
+        type: Array,
+        notify:false,
+        readOnly: false,
+      }
+    }
+  })
+
+
+  </script>
+</dom-module>

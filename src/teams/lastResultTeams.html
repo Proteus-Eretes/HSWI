@@ -1,0 +1,200 @@
+<!-- Load the Polymer.Element base class -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../clubs/oars.html">
+<link rel="import" href="../app/time.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="last-result-table">
+  <template>
+
+
+    <!-- Styles MUST be inside template -->
+    <style>
+      .show-gt-md {
+          max-width:150px;
+      }
+      .teamname {
+          font-weight: 500;
+      }
+      .teamname:hover {
+          cursor: pointer;
+      }
+      td {
+          text-align: center;
+      }
+      @media screen and (max-width:800px) {  .show-gt-md {display: none;}}
+      @media screen and (max-width:480px) {  .show-gt-sm {display: none;}}
+    </style>
+    <table>
+      <thead>
+        <tr>
+          <th class="show-gt-md"></th>
+          <th style="max-width: 50px">
+              Pos
+          </th>
+          <th class="show-gt-md">
+              Veld
+          </th>
+          <th>
+              Rug#
+          </th>
+          <th style="max-width: 150px">
+              Ploeg
+          </th>
+          <th class="show-gt-md">
+              Slag
+          </th>
+          <template  is="dom-if"  if=[[displaySplash(1)]]>
+            <th class$=[[setClasses(1)]]>
+                Tussentijd 1
+            </th>
+          </template>
+          <template  is="dom-if"  if=[[displaySplash(2)]]>
+            <th class$=[[setClasses(2)]]>
+                Tussentijd 2
+            </th>
+          </template>
+          <template  is="dom-if"  if=[[displaySplash(3)]]>
+            <th class$=[[setClasses(3)]]>
+                Tussentijd 3
+            </th>
+          </template>
+          <template  is="dom-if"  if=[[displaySplash(4)]]>
+            <th class$=[[setClasses(4)]]>
+                Tussentijd 4
+            </th>
+          </template>
+          <template  is="dom-if"  if=[[displaySplash(5)]]>
+            <th class$=[[setClasses(5)]]>
+                Finishtijd
+            </th>
+          </template>
+        </tr>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="[[teams]]" as="team">
+          <tr>
+            <td class="show-gt-md">
+              <oars-img  club="[[team.clubnameshort]]"></oars-img>
+            </td>
+            <td>
+                [[team.rank]] / [[team.participants]]
+            </td>
+            <td class="show-gt-md">
+              <template is="dom-if" if="[[!hasValue(team.fieldnameshortsub)]]">
+                [[team.fieldnameshortsub]]
+              </template>
+              <template is="dom-if" if="[[hasValue(team.fieldnameshortsub)]]">
+                [[team.fieldnameshort]]
+              </template>
+            </td>
+            <td>
+                [[team.backnumber]]
+            </td>
+            <td class="teamname" style="max-width: 150px">
+                [[team.teamname]]
+            </td>
+            <td class="show-gt-md">
+                [[team.rower8]]
+            </td>
+            <template  is="dom-if"  if=[[displaySplash(1)]]>
+              <td class$=[[setClasses(1)]]>
+                  [[displayTime(team.splash1,0)]]
+              </td>
+            </template>
+            <template  is="dom-if"  if=[[displaySplash(2)]]>
+              <td class$=[[setClasses(2)]]>
+                  [[displayTime(team.splash2,0)]]
+              </td>
+            </template>
+            <template  is="dom-if"  if=[[displaySplash(3)]]>
+              <td class$=[[setClasses(3)]]>
+                  [[displayTime(team.splash3,0)]]
+              </td>
+            </template>
+            <template  is="dom-if"  if=[[displaySplash(4)]]>
+              <td class$=[[setClasses(4)]]>
+                  [[displayTime(team.splash4,0)]]
+              </td>
+            </template>
+            <template  is="dom-if"  if=[[displaySplash(5)]]>
+              <td class$=[[setClasses(5)]]>
+                  <final-time team="[[team]]" ></final-time>
+              </td>
+            </template>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+
+  </template>
+  <script>
+    Polymer({
+      is: 'last-result-table',
+      ready : function() {
+        var self = this;
+        this._reqeustData(self);
+        setInterval(function() {
+          self._reqeustData(self)
+        },5000);
+      },
+      displayTime: function(time,bonussecond) {
+        return FormatTime(FinalTime(time,bonussecond));
+      },
+      setClasses: function(splash) {
+        return (splash === this.splash) ? '' : 'show-gt-md';
+      },
+      hasValue: function(field) {
+        return field == 0;
+      },
+      displaySplash(splash) {
+        if (this.splash === undefined)
+          this.splash = this.getSplash();
+        return this.splash >= splash;
+      },
+      getSplash() {
+        return this.getAttribute('data-splash');
+        console.log(this.getAttribute('data-splash'));
+        let items = this.parentElement.parentElement.children
+
+        for (let i = 0; i< items.length; i++) {
+          if (items[i].nodeName === 'PAPER-TABS') {
+            return items[i].selected + 1;
+          }
+        }
+      },
+      _reqeustData(self) {
+        fetch('http://beta.hoesnelwasik.nl/api/overview/'+self.splash)
+          .then(
+            function(res) {
+              if (res.status !== 200) {
+                console.log('Looks like something did a crash');
+                return;
+              }
+
+              res.json().then(function(data) {
+                self.teams = data.teams;
+              });
+            }
+          )
+          .catch(function(err) {
+            console.log('Something went badly wrong: -S' ,err);
+          });
+      },
+      properties: {
+        teams : {
+          type: Array,
+          notify:false,
+          readOnly:false,
+        },
+        splash: {
+          type: Number,
+          notify: true,
+          readOnly: false,
+          value:5,
+        }
+      },
+    })
+  </script>
+</dom-module>
