@@ -6,7 +6,7 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 ### Required compoments
 
 | Compoment       | Status         |Description                 |Issue |
-|----------------------------------------------------------------------|
+|-----------------|----------------|----------------------------|------|
 | Oars            | Completed      |Load image of club          |     -|
 | last results    | In progress    |Display last 15 teams       | [#] -|
 | Finish time     | Completed      |Time,disqualified,excluded  |     -|
