@@ -31,13 +31,10 @@
         font-size: 22px;
       }
 
-      body {
-        margin: 0;
+      paper-tabs {
+        color: #FFF;
       }
 
-      html {
-          background: #000;
-      }
       .table {
           width: 100%;
           margin-bottom: 1rem;
@@ -70,6 +67,21 @@
       tbody tr:hover {
           background-color: #ECECEC;
       }
+
+      .show-gt-md {
+          max-width:150px;
+      }
+      .teamname {
+          font-weight: 500;
+      }
+      .teamname:hover {
+          cursor: pointer;
+      }
+      td {
+          text-align: center;
+      }
+      @media screen and (max-width:800px) {  .show-gt-md {display: none;}}
+      @media screen and (max-width:480px) {  .show-gt-sm {display: none;}}
 
     </style>
   </template>
