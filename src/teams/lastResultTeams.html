@@ -9,7 +9,7 @@
 
 
     <!-- Styles MUST be inside template -->
-    <style>
+    <style include="shared-styles">
       .show-gt-md {
           max-width:150px;
       }
@@ -25,7 +25,7 @@
       @media screen and (max-width:800px) {  .show-gt-md {display: none;}}
       @media screen and (max-width:480px) {  .show-gt-sm {display: none;}}
     </style>
-    <table>
+    <table class="table">
       <thead>
         <tr>
           <th class="show-gt-md"></th>
