@@ -26,9 +26,11 @@
     <h2 class="matchHeader">
       [[match.match]]
     </h2>
-    <div class="breakingnews">
-      [[match.message]]
-    </div>
+    <template is="dom-if" if=[[news]]>
+      <div class="breakingnews">
+        [[match.message]]
+      </div>
+    </template>
     <template is="dom-if" if="[[!displayError]]">
       <paper-tabs selected="{{splash}}">
         <template is="dom-repeat" items="[[match.setting.name]]">
@@ -62,12 +64,20 @@
   <script>
     Polymer({
       is: 'last-result',
+      displayError: false,
+      news: false,
       ready: function() {
         var self = this;
         reqeustData(self);
         setInterval(function() {
           reqeustData(self)
         },5000);
+      },
+      _matchUpdate: function() {
+        if (this.match) {
+          this.displayError = this.match.error !== false;
+          this.news = this.match.message !== '';
+        }
       },
       displayLocation: function(splash) {
         return splash < this.match.setting.rounds
@@ -78,6 +88,12 @@
           notify: true,
           readOnly: false,
           value:0,
+        },
+        match: {
+          type: Array,
+          notify: true,
+          readOnly: false,
+          observer: '_matchUpdate',
         }
       },
     });
