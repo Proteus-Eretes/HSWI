@@ -113,13 +113,25 @@
         </template>
       </tbody>
     </table>
+    <template is="dom-if" if="[[noTeams]]">
+      <div style="color:#FFF; text-align:center;">
+        Er zijn helaas nog geen ploegen voorbij dit punt.
+      </div>
+    </template>
   </template>
 
   <script>
     Polymer({
       is: 'last-result-table',
+      noTeams: false,
+      _teamsChanged: function() {
+        this.noTeams = this.teams.length === 0;
+      },
       displayTime: function(time,bonussecond) {
         return FormatTime(FinalTime(time,bonussecond));
+      },
+      noTeams: function() {
+        return this.teams.length === 0;
       },
       setClasses: function(splash) {
         if (this.splash === undefined)
@@ -140,8 +152,9 @@
       properties: {
         teams : {
           type: Array,
-          notify:false,
+          notify:true,
           readOnly:false,
+          observer: '_teamsChanged',
         },
         splash: {
           type: Number,
@@ -150,6 +163,6 @@
           value:5,
         }
       },
-    })
+    });
   </script>
 </dom-module>

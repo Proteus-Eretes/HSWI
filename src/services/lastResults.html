@@ -10,6 +10,7 @@
 
             res.json().then(function(data) {
               self.match = data;
+              self.displayError = data.error === 'E:0001';
             });
           }
         )
