@@ -1,14 +1,13 @@
 <!-- Load the Polymer.Element base class -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../clubs/oars.html">
+<link rel="import" href="../views/team.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="last-result-table">
   <template>
-
-
     <!-- Styles MUST be inside template -->
     <style include="shared-styles-tables shared-styles">
 
@@ -114,19 +113,11 @@
         </template>
       </tbody>
     </table>
-
-
   </template>
+
   <script>
     Polymer({
       is: 'last-result-table',
-      /*ready : function() {
-        var self = this;
-        this._reqeustData(self);
-        setInterval(function() {
-          self._reqeustData(self)
-        },5000);
-      },*/
       displayTime: function(time,bonussecond) {
         return FormatTime(FinalTime(time,bonussecond));
       },
@@ -146,24 +137,6 @@
       getSplash() {
         return this.getAttribute('data-splash');
       },
-      /*async _reqeustData(self) {
-        fetch('http://beta.hoesnelwasik.nl/api/overview/'+self.splash)
-          .then(
-            function(res) {
-              if (res.status !== 200) {
-                console.log('Looks like something did a crash');
-                return;
-              }
-
-              res.json().then(function(data) {
-                self.teams = data.teams;
-              });
-            }
-          )
-          .catch(function(err) {
-            console.log('Something went badly wrong: -S' ,err);
-          });
-      },*/
       properties: {
         teams : {
           type: Array,
