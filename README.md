@@ -82,6 +82,8 @@ routing for the app:
 
     polymer serve --open
 
+Add --hostname 0.0.0.0 as parameter to be able to navigate to the app from a different client while developing    
+
 ### Build
 
 This command performs HTML, CSS, and JS minification on the application
