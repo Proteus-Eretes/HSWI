@@ -12,9 +12,8 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="my-icons.html">
-<link rel="import" href="teams/lastResultTeams.html">
-<link rel="import" href="services/lastResults.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="views/lastResult.html">
 
 <dom-module id="my-app">
   <template>
@@ -70,29 +69,7 @@
             <div main-title>Alpha hoesnelwasik</div>
           </app-toolbar>
         </app-header>
-        <div style="color:#FFF">
-          [[match.message]]
-        </div>
-        <paper-tabs selected="{{splash}}">
-          <template is="dom-repeat" items="[[match.setting.name]]">
-            <paper-tab>[[item]]</paper-tab>
-          </template>
-        </paper-tabs>
-        <iron-pages selected="{{splash}}">
-          <template is="dom-if" if="displayLocation(1)">
-            <last-result-table data-splash=1 teams=[[match.teams.splash1]]> </last-result-table>
-          </template>
-          <template is="dom-if" if="displayLocation(2)">
-            <last-result-table data-splash=2 teams=[[match.teams.splash2]]> </last-result-table>
-          </template>
-          <template is="dom-if" if="displayLocation(3)">
-            <last-result-table data-splash=3 teams=[[match.teams.splash3]]> </last-result-table>
-          </template>
-          <template is="dom-if" if="displayLocation(4)">
-            <last-result-table data-splash=4 teams=[[match.teams.splash4]]> </last-result-table>
-          </template>
-          <last-result-table data-splash=5 teams=[[match.teams.totaltime]]> </last-result-table>
-        </iron-pages>
+        <last-result></last-result>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -105,27 +82,11 @@
   <script>
     Polymer({
       is: 'my-app',
-      ready: function() {
-        var self = this;
-        reqeustData(self);
-        setInterval(function() {
-          reqeustData(self)
-        },5000);
-      },
-      displayLocation: function(splash) {
-        return splash < this.match.setting.rounds
-      },
       properties: {
         page: {
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged',
-        },
-        splash: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-          value:0,
         }
       },
 

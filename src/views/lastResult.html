@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../teams/lastResultTeams.html">
+<link rel="import" href="../services/lastResults.html">
+<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="last-result">
+  <template>
+    <style include="shared-styles-tables shared-styles">
+      .breakingnews {
+        color: #FFF;
+        padding: 5px;
+        margin: 5px;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+      }
+    </style>
+    <div class="breakingnews">
+      [[match.message]]
+    </div>
+    <paper-tabs selected="{{splash}}">
+      <template is="dom-repeat" items="[[match.setting.name]]">
+        <paper-tab>[[item]]</paper-tab>
+      </template>
+    </paper-tabs>
+    <iron-pages selected="[[splash]]">
+      <template is="dom-if" if="displayLocation(1)">
+        <last-result-table data-splash=1 teams=[[match.teams.splash1]]> </last-result-table>
+      </template>
+      <template is="dom-if" if="displayLocation(2)">
+        <last-result-table data-splash=2 teams=[[match.teams.splash2]]> </last-result-table>
+      </template>
+      <template is="dom-if" if="displayLocation(3)">
+        <last-result-table data-splash=3 teams=[[match.teams.splash3]]> </last-result-table>
+      </template>
+      <template is="dom-if" if="displayLocation(4)">
+        <last-result-table data-splash=4 teams=[[match.teams.splash4]]> </last-result-table>
+      </template>
+      <last-result-table data-splash=5 teams=[[match.teams.totaltime]]> </last-result-table>
+    </iron-pages>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'last-result',
+      ready: function() {
+        var self = this;
+        reqeustData(self);
+        setInterval(function() {
+          reqeustData(self)
+        },5000);
+      },
+      displayLocation: function(splash) {
+        return splash < this.match.setting.rounds
+      },
+      properties: {
+        splash: {
+          type: Number,
+          notify: true,
+          readOnly: false,
+          value:0,
+        }
+      },
+    });
+  </script>
+</dom-module>
