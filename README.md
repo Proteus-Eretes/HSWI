@@ -20,7 +20,25 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Team list       | To be started  |List of teams               | [#]  |
 | Search element  | To be started  |                            | [#]  |
 
+### Styling
 
+It is required to have a design before it can be fully done
+This is about the compoments decided above
+
+| Compoment       | Status         |Description                 |Issue |
+|-----------------|----------------|----------------------------|------|
+| Oars            | Completed      |                            |     -|
+| last results    | Partial        |Requires design             | [#]  |
+| Finish time     | Completed      |                            |     -|
+| Team overview   | To be started  |Requires design             | [#]  |
+| Headbar         | Partial        |Requires design             | [#]  |
+| Menubar         | To be started  |Requires design             | [#]  |
+| View results    | To be started  |Requires design             | [#]  |
+| View toss       | To be started  |Requires design             | [#]  |
+| View clubs      | To be started  |Requires design             | [#]  |
+| View competitors| Do we want it? |Requires design             | [#]  |
+| Team list       | To be started  |Requires design             | [#]  |
+| Search element  | To be started  |Requires design             | [#]  |
 
 ### Required logic
 
