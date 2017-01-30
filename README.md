@@ -8,7 +8,7 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
 | Oars            | Completed      |Load image of club          |     -|
-| last results    | In progress    |Display last 15 teams       | [#]  |
+| last results    | Error handeling|Display last 15 teams       | [#]  |
 | Finish time     | Completed      |Time,disqualified,excluded  |     -|
 | Team overview   | To be ported   |Team info hover dialog      | [#]  |
 | Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
