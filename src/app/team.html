@@ -1,24 +1,25 @@
 <script>
   var _calculateSplash = function(row) {
-    if (row.splash4 !== '0.00' && row.splash4 !== '0') return 4;
-    if (row.splash3 !== '0.00' && row.splash3 !== '0') return 3;
-    if (row.splash2 !== '0.00' && row.splash2 !== '0') return 2;
-    if (row.splash1 !== '0.00' && row.splash1 !== '0') return 1;
-    return 0;
+    if (row.splash4 !== '0.00' && row.splash4 !== '0') return 5;
+    if (row.splash3 !== '0.00' && row.splash3 !== '0') return 4;
+    if (row.splash2 !== '0.00' && row.splash2 !== '0') return 3;
+    if (row.splash1 !== '0.00' && row.splash1 !== '0') return 2;
+    return 1;
   };
 
   var checkSplash = function (data) {
     var length = data.length;
-    var splash;
+    var splashes = 0;
     for(let i = 0; i < 5; i++)
     {
       var index = Math.floor(Math.random()*10000) % length;
       var row = data[index];
       if(row.times !== undefined) {
-        splashes = Math.max(splashes, calculateSplash(row.times))
+        splashes = Math.max(splashes, _calculateSplash(row.times))
       } else {
-        splashes = Math.max(splashes, calculateSplash(row));
+        splashes = Math.max(splashes, _calculateSplash(row));
       }
     }
+    return splashes;
   };
 </script>

@@ -143,6 +143,9 @@
       noTeams: false,
       _teamsChanged: function() {
         this.noTeams = this.teams.length === 0;
+        if (!this.noTeams) {
+          this.splashCount = checkSplash(this.teams);
+        }
       },
       displayTime: function(time,bonussecond) {
         return FormatTime(FinalTime(time,bonussecond));
