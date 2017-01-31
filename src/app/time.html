@@ -13,12 +13,15 @@ var FormatTime = function (time) {
     var centiseconds = Math.round((+time * 10)%10);
     var seconds = Math.floor(+time % 60);
     var minutes = Math.floor(+time / 60);
+    var hours = Math.floor(minutes / 60);
+    minutes -= hours * 60;
     var timeString = '';
     if(centiseconds > 9)
     {
       centiseconds = 0;
       seconds++;
     }
+    if (hours > 0) timeString += hours + ':';
     if (minutes >= 0) timeString += (minutes < 10) ? ('0' + minutes) : (minutes);
     timeString += ":";
     if (seconds >= 0) timeString += (seconds < 10) ? ('0' + seconds) : (seconds);
