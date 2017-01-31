@@ -38,19 +38,19 @@
         </template>
       </paper-tabs>
       <iron-pages selected="[[splash]]">
-        <template is="dom-if" if="displayLocation(1)">
-          <last-result-table data-splash=1 teams=[[match.teams.splash1]]> </last-result-table>
+        <template is="dom-if" if="[[displayLocation(1)]]">
+          <last-result-table data-splash=1 splash-count=[[match.setting.rounds]] teams=[[match.teams.splash1]]> </last-result-table>
         </template>
-        <template is="dom-if" if="displayLocation(2)">
-          <last-result-table data-splash=2 teams=[[match.teams.splash2]]> </last-result-table>
+        <template is="dom-if" if="[[displayLocation(2)]]">
+          <last-result-table data-splash=2 splash-count=[[match.setting.rounds]] teams=[[match.teams.splash2]]> </last-result-table>
         </template>
-        <template is="dom-if" if="displayLocation(3)">
-          <last-result-table data-splash=3 teams=[[match.teams.splash3]]> </last-result-table>
+        <template is="dom-if" if="[[displayLocation(3)]]">
+          <last-result-table data-splash=3 splash-count=[[match.setting.rounds]] teams=[[match.teams.splash3]]> </last-result-table>
         </template>
-        <template is="dom-if" if="displayLocation(4)">
-          <last-result-table data-splash=4 teams=[[match.teams.splash4]]> </last-result-table>
+        <template is="dom-if" if="[[displayLocation(4)]]">
+          <last-result-table data-splash=4 splash-count=5 teams=[[match.teams.splash4]]> </last-result-table>
         </template>
-        <last-result-table data-splash=5 teams=[[match.teams.totaltime]]> </last-result-table>
+        <last-result-table data-splash=5 splash-count=[[match.setting.rounds]] teams=[[match.teams.totaltime]]> </last-result-table>
       </iron-pages>
     </template>
     <template is="dom-if" if="[[displayError]]">
@@ -80,7 +80,7 @@
         }
       },
       displayLocation: function(splash) {
-        return splash < this.match.setting.rounds
+        return splash < this.match.setting.rounds;
       },
       properties: {
         splash: {

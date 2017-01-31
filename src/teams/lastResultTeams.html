@@ -3,6 +3,7 @@
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../views/team.html">
 <link rel="import" href="../app/time.html">
+<link rel="import" href="../app/team.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -31,25 +32,33 @@
           <th class="show-gt-md">
               Slag
           </th>
-          <template  is="dom-if"  if=[[displaySplash(1)]]>
-            <th class$=[[setClasses(1)]]>
-                Tussentijd 1
-            </th>
+          <template is="dom-if" if=[[splashList[0]]]>
+            <template is="dom-if" if=[[displaySplash(1)]]>
+              <th class$=[[setClasses(1)]]>
+                  Tussentijd 1
+              </th>
+            </template>
           </template>
-          <template  is="dom-if"  if=[[displaySplash(2)]]>
-            <th class$=[[setClasses(2)]]>
-                Tussentijd 2
-            </th>
+          <template is="dom-if" if=[[splashList[1]]]>
+            <template is="dom-if" if=[[displaySplash(2)]]>
+              <th class$=[[setClasses(2)]]>
+                  Tussentijd 2
+              </th>
+            </template>
           </template>
-          <template  is="dom-if"  if=[[displaySplash(3)]]>
-            <th class$=[[setClasses(3)]]>
-                Tussentijd 3
-            </th>
+          <template is="dom-if" if=[[splashList[2]]]>
+            <template is="dom-if" if=[[displaySplash(3)]]>
+              <th class$=[[setClasses(3)]]>
+                  Tussentijd 3
+              </th>
+            </template>
           </template>
-          <template  is="dom-if"  if=[[displaySplash(4)]]>
-            <th class$=[[setClasses(4)]]>
-                Tussentijd 4
-            </th>
+          <template is="dom-if" if=[[splashList[3]]]>
+            <template is="dom-if" if=[[displaySplash(4)]]>
+              <th class$=[[setClasses(4)]]>
+                  Tussentijd 4
+              </th>
+            </template>
           </template>
           <template  is="dom-if"  if=[[displaySplash(5)]]>
             <th class$=[[setClasses(5)]]>
@@ -84,29 +93,37 @@
             <td class="show-gt-md">
                 [[team.rower8]]
             </td>
-            <template  is="dom-if"  if=[[displaySplash(1)]]>
-              <td class$=[[setClasses(1)]]>
-                  [[displayTime(team.splash1,0)]]
-              </td>
+            <template is="dom-if" if=[[splashList[0]]]>
+              <template  is="dom-if"  if=[[displaySplash(1)]]>
+                <td class$=[[setClasses(1)]]>
+                    [[displayTime(team.splash1,0)]]
+                </td>
+              </template>
             </template>
-            <template  is="dom-if"  if=[[displaySplash(2)]]>
-              <td class$=[[setClasses(2)]]>
-                  [[displayTime(team.splash2,0)]]
-              </td>
+            <template is="dom-if" if=[[splashList[1]]]>
+              <template  is="dom-if"  if=[[displaySplash(2)]]>
+                <td class$=[[setClasses(2)]]>
+                    [[displayTime(team.splash2,0)]]
+                </td>
+              </template>
             </template>
-            <template  is="dom-if"  if=[[displaySplash(3)]]>
-              <td class$=[[setClasses(3)]]>
-                  [[displayTime(team.splash3,0)]]
-              </td>
+            <template is="dom-if" if=[[splashList[2]]]>
+              <template  is="dom-if"  if=[[displaySplash(3)]]>
+                <td class$=[[setClasses(3)]]>
+                    [[displayTime(team.splash3,0)]]
+                </td>
+              </template>
             </template>
-            <template  is="dom-if"  if=[[displaySplash(4)]]>
-              <td class$=[[setClasses(4)]]>
-                  [[displayTime(team.splash4,0)]]
-              </td>
+            <template is="dom-if" if=[[splashlist[4]]]>
+              <template  is="dom-if"  if=[[displaySplash(4)]]>
+                <td class$=[[setClasses(4)]]>
+                    [[displayTime(team.splash4,0)]]
+                </td>
+              </template>
             </template>
-            <template  is="dom-if"  if=[[displaySplash(5)]]>
+            <template is="dom-if"  if=[[displaySplash(5)]]>
               <td class$=[[setClasses(5)]]>
-                  <final-time team="[[team]]" ></final-time>
+                  <final-time team="[[team]]"></final-time>
               </td>
             </template>
           </tr>
@@ -135,18 +152,20 @@
       },
       setClasses: function(splash) {
         if (this.splash === undefined)
-          this.splash = this.getSplash();
+          this.getSplash();
         return (splash == this.splash) ? '' : 'show-gt-md';
       },
       hasValue: function(field) {
         return field == 0;
       },
-      displaySplash(splash) {
+      displaySplash: function(splash) {
         if (this.splash === undefined)
           this.splash = this.getSplash();
-        return this.splash >= splash;
+        if (this.splashCount === undefined)
+          return this.splash >= splash;
+        return (this.splash >= splash && splash < this.splashCount) || (this.splash >= splash && splash === 5);
       },
-      getSplash() {
+      getSplash: function() {
         return this.getAttribute('data-splash');
       },
       properties: {
@@ -161,6 +180,11 @@
           notify: true,
           readOnly: false,
           value:5,
+        },
+        splashCount: {
+          type: Number,
+          notify: true,
+          readOnly: false,
         }
       },
     });

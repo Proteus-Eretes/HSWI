@@ -57,7 +57,7 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <app-drawer swipe-open="true"  id="drawer">
+      <app-drawer swipe-open="true" id="drawer">
         <app-toolbar>Wedstrijden</app-toolbar>
         <div style="height: 100%; overflow: auto;">
           <match-list></match-list>
@@ -87,10 +87,6 @@
   <script>
     Polymer({
       is: 'my-app',
-      /*ready: function() {
-          console.log('?');
-          this.$.drawer.responsiveWidth = '10000px';
-      },*/
       properties: {
         page: {
           type: String,

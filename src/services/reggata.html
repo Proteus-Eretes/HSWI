@@ -1,7 +1,7 @@
 <script>
   var fillFields = function (array, field) {
       if (array != null) {
-          let object = {}, i, length = array.length, res = [];
+          var object = {}, i, length = array.length, res = [];
           for (i = 0; i < length; i += 1) {
               object[array[i][field]] = array[i];
           }

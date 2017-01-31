@@ -10,10 +10,10 @@ var FinalTime = function(time, bonussecond) {
 };
 
 var FormatTime = function (time) {
-    let centiseconds = Math.round((+time * 10)%10);
-    let seconds = Math.floor(+time % 60);
-    let minutes = Math.floor(+time / 60);
-    let timeString = '';
+    var centiseconds = Math.round((+time * 10)%10);
+    var seconds = Math.floor(+time % 60);
+    var minutes = Math.floor(+time / 60);
+    var timeString = '';
     if(centiseconds > 9)
     {
       centiseconds = 0;
