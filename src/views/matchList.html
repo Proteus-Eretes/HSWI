@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../services/reggata.html">
+
+<dom-module id="match-list">
+  <template>
+    <style include="shared-styles">
+    </style>
+    <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
+      <div>[[match.regattaname]]</div>
+      <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{getYears(match)}}" sort="_alhpabetSort" >
+        <div>[[year.jaar]]</div>
+      </template>
+    </template>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'match-list',
+      ready: function() {
+        var self = this;
+        reqeustReggataList(self);
+      },
+      getYears: function(basematch) {
+        return function(match) {
+            return basematch.shortname === match.shortname;
+        }
+      },
+      _selectedMatch: function() {
+        console.log('TODO select a match from the list');
+      },
+      _createList: function() {
+        this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
+      },
+      _alhpabetSort: function(a,b) {
+        return a.regattaname.localeCompare(b.regattaname);
+      },
+      properties: {
+        currentMatch: {
+          type: Array,
+          notify: true,
+          readOnly: false,
+          observer: '_selectedMatch',
+        },
+        regattas: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+          observer: '_createList',
+        },
+        reggataList: {
+          type: Array,
+          notify:false,
+          readOnly:false,
+        },
+      },
+    });
+  </script>
+</dom-module>

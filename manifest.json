@@ -6,8 +6,8 @@
 	"lang": "nl",
 	"display": "fullscreen",
  	"orientation": "portrait",
- 	"background_color": "#008",
- 	"theme_color": "#008",
+ 	"background_color": "#000",
+ 	"theme_color": "#000",
  	"scope": "/",
  	"start_url": "/",
 

@@ -14,6 +14,7 @@
 <link rel="import" href="my-icons.html">
 <link rel="import" href="styles/shared-styles.html">
 <link rel="import" href="views/lastResult.html">
+<link rel="import" href="views/matchList.html">
 
 <dom-module id="my-app">
   <template>
@@ -54,10 +55,14 @@
 
     <app-location route="{{route}}"></app-location>
 
-    <app-drawer-layout fullbleed>
+    <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <app-drawer id="drawer">
-        <app-toolbar>Menu</app-toolbar>
+      <app-drawer swipe-open="true"  id="drawer">
+        <app-toolbar>Wedstrijden</app-toolbar>
+        <div style="height: 100%; overflow: auto;">
+          <match-list></match-list>
+        </div>
+
       </app-drawer>
 
       <!-- Main content -->
@@ -82,6 +87,10 @@
   <script>
     Polymer({
       is: 'my-app',
+      /*ready: function() {
+          console.log('?');
+          this.$.drawer.responsiveWidth = '10000px';
+      },*/
       properties: {
         page: {
           type: String,

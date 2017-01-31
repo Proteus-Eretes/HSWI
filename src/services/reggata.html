@@ -1,0 +1,76 @@
+<script>
+  var fillFields = function (array, field) {
+      if (array != null) {
+          let object = {}, i, length = array.length, res = [];
+          for (i = 0; i < length; i += 1) {
+              object[array[i][field]] = array[i];
+          }
+          for (i in object) {
+              res.push(object[i]);
+          }
+          return res;
+      }
+  };
+
+
+  var reqeustReggataList = function(self) {
+      fetch('http://beta.hoesnelwasik.nl/api/')
+        .then(
+          function(res) {
+            if (res.status !== 200) {
+              console.log('Looks like something did a crash');
+              return;
+            }
+
+            res.json().then(function(data) {
+              self.regattas = data;
+            });
+          }
+        )
+        .catch(function(err) {
+          console.log('Something went badly wrong: -S' ,err);
+        });
+    };
+    var reqeustFields = function(self,match,year) {
+      if (year === undefined) {
+        year = 0;
+      }
+      fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
+        .then(
+          function(res) {
+            if (res.status !== 200) {
+              console.log('Looks like something did a crash');
+              return;
+            }
+
+            res.json().then(function(data) {
+              self.fields = data;
+            });
+          }
+        )
+        .catch(function(err) {
+          console.log('Something went badly wrong: -S' ,err);
+        });
+    }
+    var reqeustClubs = function(self,match,year) {
+      if (year === undefined) {
+        year = 0;
+      }
+      fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')
+        .then(
+          function(res) {
+            if (res.status !== 200) {
+              console.log('Looks like something did a crash');
+              return;
+            }
+
+            res.json().then(function(data) {
+              self.clubs = data;
+            });
+          }
+        )
+        .catch(function(err) {
+          console.log('Something went badly wrong: -S' ,err);
+        });
+    }
+</script>
