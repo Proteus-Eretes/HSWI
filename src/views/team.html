@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../app/time.html">
@@ -6,26 +8,23 @@
 
 <dom-module id="team-modal">
   <template>
+
     <style include="shared-styles-tables shared-styles">
       h2 {
         color: #FFF;
         background-color: #000;
-        position: absolute;
-        top: -20px;
-        height: 60px;
-        width: 100%;
-        text-align: center;
         vertical-align: middle;
-        line-height: 60px;
+        width: auto;
+        min-width: 200px;
       }
       .hover-table {
         position: relative;
-        top: 30px;
         text-align: left;
-        margin: 10px;
         width: auto;
+        margin: auto;
       }
-    </style>
+      </style>
+    <paper-dialog id="modal" modal>
     <h2> [[team.teamname]]</h2>
     <table class="table hover-table">
         <tbody>
@@ -216,6 +215,11 @@
           </template>
         </tbody>
       </table>
+      <div class="buttons">
+        <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
+        <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
+      </div>
+    </paper-dialog>
   </template>
 
 
@@ -247,6 +251,10 @@
       },
       displayTime: function(time,bonussecond) {
         return FormatTime(FinalTime(time,bonussecond));
+      },
+      toggle: function(team) {
+        this.team = team;
+        this.$.modal.toggle();
       },
       properties: {
         team: {
