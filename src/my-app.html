@@ -26,9 +26,13 @@
         display: block;
       }
 
-      app-header, app-toolbar {
+      app-header {
         color: #FFF;
         background-color: var(--app-primary-color);
+      }
+
+      .menu-header {
+        background-color: #ECECEC;
       }
 
       app-header paper-icon-button {
@@ -59,7 +63,7 @@
       <!-- Drawer content -->
       <app-drawer swipe-open="true" id="drawer">
         <div style="height: 100%; overflow: auto;">
-        <app-toolbar>Wedstrijden</app-toolbar>
+        <app-toolbar class="menu-header" >Wedstrijden</app-toolbar>
           <match-list route="{{route}}"></match-list>
         </div>
 

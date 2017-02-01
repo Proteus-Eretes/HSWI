@@ -5,21 +5,46 @@
 <dom-module id="match-list">
   <template>
     <style include="shared-styles">
-    .sub-item[data-selected = "false"] {
+    .subitem[data-selected = "false"] {
       display: none;
     }
-    .sub-item[data-selected = "true"] {
+    .subitem[data-selected = "true"] {
       display:inherit;
     }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li.main {
+      line-height: 40px;
+      border-top: 1px solid rgba(0,0,0,.12);
+      padding: 0 16px;
+      margin: 0;
+    }
+
+    li.main:nth-child(even) {
+      background-color: #FFF;
+    }
+
+    li.subitem {
+      line-height: 40px;
+      padding: 0 16px;
+      margin: 0;
+    }
     </style>
-    <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
-      <div on-click="_toggleMatch">[[match.regattaname]]</div>
-      <div class="sub-item" data-selected="false">
-        <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{getYears(match)}}" sort="_yearSort">
-          <div on-click="_openMatch">[[year.jaar]]</div>
-        </template>
-      </div>
-    </template>
+    <ul>
+      <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
+        <li class="main" on-click="_toggleMatch">[[match.regattaname]]
+          <ul class="subitem" data-selected="false">
+            <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{getYears(match)}}" sort="_yearSort">
+              <li class="subitem" on-click="_openMatch">[[year.jaar]]</li>
+            </template>
+          </ul>
+        </li>
+      </template>
+    </ul>
   </template>
 
 
@@ -47,11 +72,11 @@
       _yearSort: function(a,b) {
         return -1 * a.jaar.localeCompare(b.jaar);
       },
-      //TODO might want to make this dynamiced coded
       _toggleMatch: function(e) {
-        var val = e.target.nextSibling.nextSibling.getAttribute('data-selected');
+        if (e.target.querySelector("ul") === null) return;
+        var val = e.target.querySelector("ul").getAttribute('data-selected');
         (val === 'false') ? val = 'true' : val = 'false';
-        e.target.nextSibling.nextSibling.setAttribute('data-selected',val);
+        e.target.querySelector("ul").setAttribute('data-selected',val);
       },
       _openMatch: function(e) {
         this.route.path = e.model.year.shortname + '/' + e.model.year.jaar + '/';
