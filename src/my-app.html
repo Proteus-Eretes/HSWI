@@ -26,7 +26,7 @@
         display: block;
       }
 
-      app-header {
+      app-header, app-toolbar {
         color: #FFF;
         background-color: var(--app-primary-color);
       }
@@ -58,9 +58,9 @@
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
       <app-drawer swipe-open="true" id="drawer">
-        <app-toolbar>Wedstrijden</app-toolbar>
         <div style="height: 100%; overflow: auto;">
-          <match-list></match-list>
+        <app-toolbar>Wedstrijden</app-toolbar>
+          <match-list route="{{route}}"></match-list>
         </div>
 
       </app-drawer>
@@ -100,6 +100,7 @@
       ],
 
       _routePageChanged: function(page) {
+        console.log(this.route);
         this.page = page || 'view1';
 
         if (!this.$.drawer.persistent) {

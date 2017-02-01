@@ -32,7 +32,7 @@ This is about the compoments decided above
 | Finish time     | Completed      |                            |     -|
 | Team overview   | To be started  |Requires design             | [#]  |
 | Headbar         | Partial        |Requires design             | [#]  |
-| Menubar         | To be started  |Requires design             | [#]  |
+| Menubar         | Partial        |Requires design             | [#]  |
 | View results    | To be started  |Requires design             | [#]  |
 | View toss       | To be started  |Requires design             | [#]  |
 | View clubs      | To be started  |Requires design             | [#]  |
@@ -44,7 +44,7 @@ This is about the compoments decided above
 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
-| Routing         | To be started  |Routing with in app         | [#]  |
+| Routing         | Started        |Routing with in app         | [#]  |
 
 ### To think about
 

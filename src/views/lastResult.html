@@ -69,25 +69,28 @@
       ready: function() {
         var self = this;
         reqeustData(self);
+
         setInterval(function() {
           reqeustData(self)
         },5000);
       },
       _matchUpdate: function() {
         if (this.match) {
+          if (this.splash === -1)
+            this.splash = this.match.setting.name.length - 1;
           this.displayError = this.match.error !== false;
           this.news = this.match.message !== '';
         }
       },
       displayLocation: function(splash) {
-        return splash < this.match.setting.rounds;
+        return splash < this.match.setting.name.length;
       },
       properties: {
         splash: {
           type: Number,
           notify: true,
           readOnly: false,
-          value:0,
+          value:-1,
         },
         match: {
           type: Array,
