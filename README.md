@@ -10,7 +10,7 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Oars            | Completed      |Load image of club          |     -|
 | last results    | Completed      |Display last 15 teams       |     -|
 | Finish time     | Completed      |Time,disqualified,excluded  |     -|
-| Team overview   | Nearly finished|Team info hover dialog      | [#]  |
+| Team overview   | Completed      |Team info hover dialog      | [#]  |
 | Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
 | Menubar         | In progress    |List of matches             | [#]  |
 | View results    | To be started  |List of fields              | [#]  |

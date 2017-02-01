@@ -1,5 +1,6 @@
 <!-- Load the Polymer.Element base class -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../views/team.html">
 <link rel="import" href="../app/time.html">
@@ -69,7 +70,7 @@
       </thead>
       <tbody>
         <template is="dom-repeat" items="[[teams]]" as="team">
-          <tr>
+          <tr on-click="_openTeam">
             <td class="show-gt-md">
               <oars-img  club="[[team.clubnameshort]]"></oars-img>
             </td>
@@ -135,6 +136,13 @@
         Er zijn helaas nog geen ploegen voorbij dit punt.
       </div>
     </template>
+    <paper-dialog id="dialog">
+      <team-modal team="[[selectedTeam]]"></team-modal>
+      <div class="buttons">
+        <paper-button style="left: 5px;position: absolute;" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
+        <paper-button dialog-confirm>SLUITEN</paper-button>
+      </div>
+    </paper-dialog>
   </template>
 
   <script>
@@ -170,6 +178,11 @@
       },
       getSplash: function() {
         return this.getAttribute('data-splash');
+      },
+      _openTeam: function(e) {
+        if (e.model.team)
+          this.selectedTeam = e.model.team;
+        this.$.dialog.toggle();
       },
       properties: {
         teams : {

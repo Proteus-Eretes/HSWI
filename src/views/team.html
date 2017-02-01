@@ -1,14 +1,33 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../app/time.html">
 
 
 <dom-module id="team-modal">
   <template>
-    <style include="shared-styles-tables">
+    <style include="shared-styles-tables shared-styles">
+      h2 {
+        color: #FFF;
+        background-color: #000;
+        position: absolute;
+        top: -20px;
+        height: 60px;
+        width: 100%;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 60px;
+      }
+      .hover-table {
+        position: relative;
+        top: 30px;
+        text-align: left;
+        margin: 10px;
+        width: auto;
+      }
     </style>
     <h2> [[team.teamname]]</h2>
-    <table class="table" style="text-align: left">
+    <table class="table hover-table">
         <tbody>
           <template is="dom-if" if=[[show(team.clubname)]]>
             <tr>
@@ -189,10 +208,10 @@
               <td>[[team.comments]]</td>
             </tr>
           </template>
-          <template is="dom-if" if="[[show(team.times[0].comments)]]">
+          <template is="dom-if" if="[[showComment()]]">
             <tr>
               <td><b>Commentaar</b></td>
-              <td>[[team.times[0].comments]]</td>
+              <td>[[_comment()]]</td>
             </tr>
           </template>
         </tbody>
@@ -205,6 +224,14 @@
       is: 'team-modal',
       show: function(val) {
         return val !== null && val !== '' && val !== undefined && val != 0;
+      },
+      showComment: function() {
+        if(this.teams)
+          return this.show(this.team.times[0].comments);
+        return false;
+      },
+      _comment: function () {
+        return this.team.times[0].comments;
       },
       showSubField: function(sub,field) {
         if (this.show(sub)) {
