@@ -2,14 +2,14 @@
 <!--<link rel="import" href="../bower_components/polymer/polymer-element.html">-->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script>
-var FinalTime = function(time, bonussecond) {
+var finalTime = function(time, bonussecond) {
   if (+time === 0) {
     return 0;
   }
   return +time + (+bonussecond);
 };
 
-var FormatTime = function (time) {
+var formatTime = function (time) {
     var centiseconds = Math.round((+time * 10)%10);
     var seconds = Math.floor(+time % 60);
     var minutes = Math.floor(+time / 60);
@@ -38,14 +38,14 @@ var FormatTime = function (time) {
     <style>
 
     </style>
-    <template is="dom-if" if="[[!hasValue(team.disqualified)]]">
+    <template is="dom-if" if="[[!_hasValue(team.disqualified)]]">
       Gedisqualificeerd
     </template>
-    <template is="dom-if" if="[[!hasValue(team.excluded)]]">
+    <template is="dom-if" if="[[!_hasValue(team.excluded)]]">
       Excluded
     </template>
-    <template is="dom-if" if="[[hasValue(team.excluded + team.disqualified)]]">
-      [[displayTime(team.totaltime,team.bonussecond)]]
+    <template is="dom-if" if="[[_hasValue(team.excluded + team.disqualified)]]">
+      [[_displayTime(team.totaltime,team.bonussecond)]]
     </template>
   </template>
 
@@ -53,10 +53,10 @@ var FormatTime = function (time) {
   'use strict';
   Polymer({
     is: 'final-time',
-    displayTime: function(time,bonussecond) {
-      return FormatTime(FinalTime(time,bonussecond));
+    _displayTime: function(time,bonussecond) {
+      return formatTime(finalTime(time,bonussecond));
     },
-    hasValue: function(field) {
+    _hasValue: function(field) {
       return field == 0;
     },
     properties: {

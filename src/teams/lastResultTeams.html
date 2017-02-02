@@ -29,20 +29,20 @@
           <th class="show-gt-md">
               Slag
           </th>
-          <th id="splash" class$=[[setClasses(1)]]>
+          <th id="splash" class$=[[_setClasses(1)]]>
               Tussentijd 1
           </th>
-          <th class$=[[setClasses(2)]]>
+          <th class$=[[_setClasses(2)]]>
               Tussentijd 2
           </th>
-          <th class$=[[setClasses(3)]]>
+          <th class$=[[_setClasses(3)]]>
               Tussentijd 3
           </th>
-          <th class$=[[setClasses(4)]]>
+          <th class$=[[_setClasses(4)]]>
               Tussentijd 4
           </th>
-          <template is="dom-if" if=[[displaySplash(5)]]>
-            <th class$=[[setClasses(5)]]>
+          <template is="dom-if" if=[[_displaySplash(5)]]>
+            <th class$=[[_setClasses(5)]]>
                 Finishtijd
             </th>
           </template>
@@ -58,10 +58,10 @@
                 [[team.rank]] / [[team.participants]]
             </td>
             <td class="show-gt-md">
-              <template is="dom-if" if="[[!hasValue(team.fieldnameshortsub)]]">
+              <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
                 [[team.fieldnameshortsub]]
               </template>
-              <template is="dom-if" if="[[hasValue(team.fieldnameshortsub)]]">
+              <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
                 [[team.fieldnameshort]]
               </template>
             </td>
@@ -74,28 +74,28 @@
             <td class="show-gt-md">
                 [[team.rower8]]
             </td>
-            <template is="dom-if" if=[[displaySplash(1)]]>
-              <td class$=[[setClasses(1)]]>
-                  [[displayTime(team.splash1,0)]]
+            <template is="dom-if" if=[[_displaySplash(1)]]>
+              <td class$=[[_setClasses(1)]]>
+                  [[_displayTime(team.splash1,0)]]
               </td>
             </template>
-            <template is="dom-if" if=[[displaySplash(2)]]>
-              <td class$=[[setClasses(2)]]>
-                  [[displayTime(team.splash2,0)]]
+            <template is="dom-if" if=[[_displaySplash(2)]]>
+              <td class$=[[_setClasses(2)]]>
+                  [[_displayTime(team.splash2,0)]]
               </td>
             </template>
-            <template is="dom-if" if=[[displaySplash(3)]]>
-              <td class$=[[setClasses(3)]]>
-                  [[displayTime(team.splash3,0)]]
+            <template is="dom-if" if=[[_displaySplash(3)]]>
+              <td class$=[[_setClasses(3)]]>
+                  [[_displayTime(team.splash3,0)]]
               </td>
             </template>
-            <template is="dom-if" if=[[displaySplash(4)]]>
-              <td class$=[[setClasses(4)]]>
-                  [[displayTime(team.splash4,0)]]
+            <template is="dom-if" if=[[_displaySplash(4)]]>
+              <td class$=[[_setClasses(4)]]>
+                  [[_displayTime(team.splash4,0)]]
               </td>
             </template>
-            <template is="dom-if" if=[[displaySplash(5)]]>
-              <td class$=[[setClasses(5)]]>
+            <template is="dom-if" if=[[_displaySplash(5)]]>
+              <td class$=[[_setClasses(5)]]>
                   <final-time team="[[team]]"></final-time>
               </td>
             </template>
@@ -120,32 +120,28 @@
           this.splashCount = checkSplash(this.teams);
           var loc = this.$$('#splash');
           for (var i = 1; i < 5; i++) {
-            if (i >= this.splashCount || this.splash < i)
-              loc.style.display = 'none';
+            (i >= this.splashCount || this.splash < i) ? loc.style.display = 'none' : loc.style.display = '';
             loc = loc.nextElementSibling;
           }
         }
       },
-      displayTime: function(time,bonussecond) {
-        return FormatTime(FinalTime(time,bonussecond));
+      _displayTime: function(time,bonussecond) {
+        return formatTime(finalTime(time,bonussecond));
       },
-      noTeams: function() {
-        return this.teams.length === 0;
-      },
-      setClasses: function(splash) {
+      _setClasses: function(splash) {
         if (this.splash === undefined)
-          this.getSplash();
+          this.splash = this._getSplash();
         return (splash == this.splash) ? '' : 'show-gt-md';
       },
-      hasValue: function(field) {
+      _hasValue: function(field) {
         return field == 0;
       },
-      displaySplash: function(splash) {
+      _displaySplash: function(splash) {
         if (this.splash === undefined)
-          this.splash = this.getSplash();
+          this.splash = this._getSplash();
         return (this.splash >= splash && splash < this.splashCount) || (this.splash >= splash && splash === 5);
       },
-      getSplash: function() {
+      _getSplash: function() {
         return this.getAttribute('data-splash');
       },
       _openTeam: function(e) {

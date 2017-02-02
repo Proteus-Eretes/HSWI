@@ -32,63 +32,63 @@
       <paper-dialog-scrollable>
           <table class="table hover-table">
           <tbody>
-            <template is="dom-if" if=[[show(team.clubname)]]>
+            <template is="dom-if" if=[[_show(team.clubname)]]>
               <tr>
                 <td><b>Vereniging</b></td>
                 <td>[[team.clubname]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.backnumber)]]>
+            <template is="dom-if" if=[[_show(team.backnumber)]]>
               <tr>
                 <td><b>Rugnummer</b></td>
                 <td>[[team.backnumber]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.fieldnameshort)]]>
+            <template is="dom-if" if=[[_show(team.fieldnameshort)]]>
               <tr>
                 <td><b>Veld</b></td>
                 <td>[[team.fieldnameshort]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[showSubField(team.fieldnameshortsub,team.fieldnameshort)]]>
+            <template is="dom-if" if=[[_showSubField(team.fieldnameshortsub,team.fieldnameshort)]]>
               <tr>
                 <td><b>Subveld</b></td>
                 <td>[[team.fieldnameshortsub]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[showTime(team.splash1)]]>
+            <template is="dom-if" if=[[_showTime(team.splash1)]]>
               <tr>
                 <td><b>Tussentijd 1</b></td>
-                <td>[[displayTime(team.splash1,0)]]</td>
+                <td>[[_displayTime(team.splash1,0)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[showTime(team.splash2)]]>
+            <template is="dom-if" if=[[_showTime(team.splash2)]]>
               <tr>
                 <td><b>Tussentijd 2</b></td>
-                <td>[[displayTime(team.splash2,0)]]</td>
+                <td>[[_displayTime(team.splash2,0)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[showTime(team.splash3)]]>
+            <template is="dom-if" if=[[_showTime(team.splash3)]]>
               <tr>
                 <td><b>Tussentijd 3</b></td>
-                <td>[[displayTime(team.splash3,0)]]</td>
+                <td>[[_displayTime(team.splash3,0)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[showTime(team.splash4)]]>
+            <template is="dom-if" if=[[_showTime(team.splash4)]]>
               <tr>
                 <td><b>Tussentijd 4</b></td>
-                <td>[[displayTime(team.splash4,0)]]</td>
+                <td>[[_displayTime(team.splash4,0)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.totaltime)]]>
+            <template is="dom-if" if=[[_show(team.totaltime)]]>
               <tr>
                 <td><b>Finishtijd</b></td>
-                <td>[[displayTime(team.totaltime,team.bonussecond)]]</td>
+                <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
               </tr>
             </template>
             <template is="dom-if" if=[[team.times]]>
               <template is="dom-repeat" items="teams.times" as="times">
-                <template is="dom-if" if=[[showTime(times.splash1)]]>
+                <template is="dom-if" if=[[_showTime(times.splash1)]]>
                   <tr>
                     <template is="dom-if" if=[[rounds]]>
                       <td>Tussentijd 1 ronde [[index + 1]]</td>
@@ -96,10 +96,10 @@
                     <template is="dom-if" if=![[rounds]]>
                       <td>Tussentijd 1</td>
                     </template>
-                    <td>[[displayTime(times.splash1,0)]]</td>
+                    <td>[[_displayTime(times.splash1,0)]]</td>
                   </tr>
                 </template>
-                <template is="dom-if" if=[[showTime(times.splash2)]]>
+                <template is="dom-if" if=[[_showTime(times.splash2)]]>
                   <tr>
                     <template is="dom-if" if=[[rounds]]>
                       <td>Tussentijd 2 ronde [[index + 1]]</td>
@@ -107,10 +107,10 @@
                     <template is="dom-if" if=![[rounds]]>
                       <td>Tussentijd 2</td>
                     </template>
-                    <td>[[displayTime(times.splash2,0)]]</td>
+                    <td>[[_displayTime(times.splash2,0)]]</td>
                   </tr>
                 </template>
-                <template is="dom-if" if=[[showTime(times.splash3)]]>
+                <template is="dom-if" if=[[_showTime(times.splash3)]]>
                   <tr>
                     <template is="dom-if" if=[[rounds]]>
                       <td>Tussentijd 3 ronde [[index + 1]]</td>
@@ -118,10 +118,10 @@
                     <template is="dom-if" if=![[rounds]]>
                       <td>Tussentijd 3</td>
                     </template>
-                    <td>[[displayTime(times.splash3,0)]]</td>
+                    <td>[[_displayTime(times.splash3,0)]]</td>
                   </tr>
                 </template>
-                <template is="dom-if" if=[[showTime(times.splash4)]]>
+                <template is="dom-if" if=[[_showTime(times.splash4)]]>
                   <tr>
                     <template is="dom-if" if=[[rounds]]>
                       <td>Tussentijd 4 ronde [[index + 1]]</td>
@@ -129,10 +129,10 @@
                     <template is="dom-if" if=![[rounds]]>
                       <td>Tussentijd 4</td>
                     </template>
-                    <td>[[displayTime(times.splash4,0)]]</td>
+                    <td>[[_displayTime(times.splash4,0)]]</td>
                   </tr>
                 </template>
-                <template is="dom-if" if=[[show(times.totaltime)]]>
+                <template is="dom-if" if=[[_show(times.totaltime)]]>
                   <tr>
                     <template is="dom-if" if=[[rounds]]>
                       <td>Finishtijd ronde [[index + 1]]</td>
@@ -140,78 +140,78 @@
                     <template is="dom-if" if=![[rounds]]>
                       <td>Finishtijd</td>
                     </template>
-                    <td>[[displayTime(times.totaltime,times.bonussecond)]]</td>
+                    <td>[[_displayTime(times.totaltime,times.bonussecond)]]</td>
                   </tr>
                 </template>
               </template>
             </template>
-            <template is="dom-if" if=[[show(team.rower1)]]>
+            <template is="dom-if" if=[[_show(team.rower1)]]>
               <tr>
                 <td><b>Boeg</b></td>
                 <td>[[team.rower1]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower2)]]>
+            <template is="dom-if" if=[[_show(team.rower2)]]>
               <tr>
                 <td><b>2</b></td>
                 <td>[[team.rower2]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower3)]]>
+            <template is="dom-if" if=[[_show(team.rower3)]]>
               <tr>
                 <td><b>3</b></td>
                 <td>[[team.rower3]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower4)]]>
+            <template is="dom-if" if=[[_show(team.rower4)]]>
               <tr>
                 <td><b>4</b></td>
                 <td>[[team.rower4]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower5)]]>
+            <template is="dom-if" if=[[_show(team.rower5)]]>
               <tr>
                 <td><b>5</b></td>
                 <td>[[team.rower5]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower6)]]>
+            <template is="dom-if" if=[[_show(team.rower6)]]>
               <tr>
                 <td><b>6</b></td>
                 <td>[[team.rower6]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower7)]]>
+            <template is="dom-if" if=[[_show(team.rower7)]]>
               <tr>
                 <td><b>7</b></td>
                 <td>[[team.rower7]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.rower8)]]>
+            <template is="dom-if" if=[[_show(team.rower8)]]>
               <tr>
                 <td><b>Slag</b></td>
                 <td>[[team.rower8]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.steername)]]>
+            <template is="dom-if" if=[[_show(team.steername)]]>
               <tr>
                 <td><b>Stuur</b></td>
                 <td>[[team.steername]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.coachnames)]]>
+            <template is="dom-if" if=[[_show(team.coachnames)]]>
               <tr>
                 <td><b>Choach</b></td>
                 <td>[[team.coachnames]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[show(team.comments)]]>
+            <template is="dom-if" if=[[_show(team.comments)]]>
               <tr>
                 <td><b>Commentaar</b></td>
                 <td>[[team.comments]]</td>
               </tr>
             </template>
-            <template is="dom-if" if="[[showComment()]]">
+            <template is="dom-if" if="[[_showComment()]]">
               <tr>
                 <td><b>Commentaar</b></td>
                 <td>[[_comment()]]</td>
@@ -231,31 +231,31 @@
   <script>
     Polymer({
       is: 'team-modal',
-      show: function(val) {
+      _show: function(val) {
         return val !== null && val !== '' && val !== undefined && val != 0;
       },
-      showComment: function() {
+      _showComment: function() {
         if(this.teams)
-          return this.show(this.team.times[0].comments);
+          return this._show(this.team.times[0].comments);
         return false;
       },
       _comment: function () {
         return this.team.times[0].comments;
       },
-      showSubField: function(sub,field) {
-        if (this.show(sub)) {
+      _showSubField: function(sub,field) {
+        if (this._show(sub)) {
           return sub !== field;
         }
         return false;
       },
-      showTime: function(seconds) {
-        if (this.show(seconds)) {
+      _showTime: function(seconds) {
+        if (this._show(seconds)) {
           return seconds !== '0.00';
         }
         return false;
       },
-      displayTime: function(time,bonussecond) {
-        return FormatTime(FinalTime(time,bonussecond));
+      _displayTime: function(time,bonussecond) {
+        return formatTime(finalTime(time,bonussecond));
       },
       toggle: function(team) {
         this.team = team;
