@@ -15,7 +15,7 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Menubar         | Completed      |List of matches             | [#]  |
 | View results    | To be started  |List of fields              | [#]  |
 | View toss       | To be started  |List of fields              | [#]  |
-| View clubs      | To be started  |List of clubs               | [#]  |
+| View clubs      | Nearly done    |List of clubs               | [#]  |
 | View competitors| Do we want it? |List of fields              | [#]  |
 | Team list       | To be started  |List of teams               | [#]  |
 | Search element  | To be started  |                            | [#]  |
@@ -35,7 +35,7 @@ This is about the compoments decided above
 | Menubar         | Partial        |Requires design             | [#]  |
 | View results    | To be started  |Requires design             | [#]  |
 | View toss       | To be started  |Requires design             | [#]  |
-| View clubs      | To be started  |Requires design             | [#]  |
+| View clubs      | Started        |Requires design             | [#]  |
 | View competitors| Do we want it? |Requires design             | [#]  |
 | Team list       | To be started  |Requires design             | [#]  |
 | Search element  | To be started  |Requires design             | [#]  |

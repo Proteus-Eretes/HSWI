@@ -120,7 +120,7 @@
           this.splashCount = checkSplash(this.teams);
           var loc = this.$$('#splash');
           for (var i = 1; i < 5; i++) {
-            (i >= this.splashCount || this.splash < i) ? loc.style.display = 'none' : loc.style.display = '';
+            if (i >= this.splashCount || this.splash < i) loc.style.display = 'none';
             loc = loc.nextElementSibling;
           }
         }

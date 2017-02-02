@@ -15,6 +15,7 @@
 <link rel="import" href="styles/shared-styles.html">
 <link rel="import" href="views/lastResult.html">
 <link rel="import" href="views/matchList.html">
+<link rel="import" href="views/clubs.html">
 
 <dom-module id="my-app">
   <template>
@@ -59,26 +60,36 @@
 
     <app-location route="{{route}}"></app-location>
 
+    <app-route
+      route="{{route}}"
+      pattern="/iframe"
+      data="{{routeData}}"
+      tail="{{subRouteMatch}}"></app-route>
+
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <app-drawer swipe-open="true" id="drawer">
-        <div style="height: 100%; overflow: auto;">
-        <app-toolbar class="menu-header" >Wedstrijden</app-toolbar>
-          <match-list route="{{route}}"></match-list>
-        </div>
-
-      </app-drawer>
+      <template is="dom-if" if="[[iframe]]">
+        <app-drawer swipe-open="true" id="drawer">
+          <div style="height: 100%; overflow: auto;">
+          <app-toolbar class="menu-header" >Wedstrijden</app-toolbar>
+            <match-list route="{{route}}" iroute="{{route}}"></match-list>
+          </div>
+        </app-drawer>
+      </template>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <template is="dom-if" if="[[iframe]]">
+              <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            </template>
             <div main-title>Alpha hoesnelwasik</div>
           </app-toolbar>
         </app-header>
         <last-result></last-result>
+        <club-list iroute="{{route}}" route="{{subRouteMatch}}"></club-list>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -96,6 +107,16 @@
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged',
+        },
+        iframe: {
+          type: Boolean,
+          value: true,
+        },
+        subRouteMatch: {
+          type: Object,
+          notify: true,
+          readOnly: false,
+          observer: '_updateRoute',
         }
       },
 
@@ -103,11 +124,12 @@
         '_routePageChanged(routeData.page)',
       ],
 
-      _routePageChanged: function(page) {
-        console.log(this.route);
-        this.page = page || 'view1';
+      _updateRoute: function() {
+        this.iframe = this.subRouteMatch.prefix !== '/iframe';
+      },
 
-        if (!this.$.drawer.persistent) {
+      _routePageChanged: function(page) {
+        if (!this.iframe && !this.$.drawer.persistent) {
           this.$.drawer.close();
         }
       },

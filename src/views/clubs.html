@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../services/reggata.html">
+<link rel="import" href="../clubs/oars.html">
+
+<dom-module id="club-list">
+  <template>
+    <style include="shared-styles shared-styles-tables">
+    </style>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+          </th>
+          <th>
+              Code
+          </th>
+          <th>
+              Vereniging
+          </th>
+      </thead>
+      <template is="dom-repeat" items="[[clubs.clubs]]" as="club">
+        <tr on-click="_openMatch">
+          <td>
+            <oars-img club="[[club.clubshort]]"></oars-img>
+          </td>
+          <td>
+              [[club.clubshort]]
+          </td>
+          <td>
+              [[club.clubname]]
+          </td>
+        </tr>
+      </template>
+    </table>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'club-list',
+      _openMatch: function(e) {
+        this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
+      },
+      _updateRoute: function() {
+        var route = '';
+        if (this.iroute)
+          route = this.iroute.path;
+        else if (this.route)
+          route = this.route.path;
+        if(route === '' || route === '/' || route.split("/")[1] === 'iframe') return;
+        var self = this;
+        reqeustClubs(self,route.split("/")[1],route.split("/")[2])
+      },
+      properties: {
+        clubs: {
+          type: Array,
+          notify: true,
+          readOnly: false,
+        },
+        route: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+          observer:'_updateRoute'
+        },
+        iroute: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+          observer:'_updateRoute'
+        }
+      },
+    });
+  </script>
+</dom-module>
