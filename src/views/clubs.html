@@ -3,37 +3,43 @@
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../services/reggata.html">
 <link rel="import" href="../clubs/oars.html">
+<link rel="import" href="noMatch.html">
 
 <dom-module id="club-list">
   <template>
     <style include="shared-styles shared-styles-tables">
     </style>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-          </th>
-          <th>
-              Code
-          </th>
-          <th>
-              Vereniging
-          </th>
-      </thead>
-      <template is="dom-repeat" items="[[clubs.clubs]]" as="club">
-        <tr on-click="_openMatch">
-          <td>
-            <oars-img club="[[club.clubshort]]"></oars-img>
-          </td>
-          <td>
-              [[club.clubshort]]
-          </td>
-          <td>
-              [[club.clubname]]
-          </td>
-        </tr>
-      </template>
-    </table>
+    <template is="dom-if" if="[[!displayError]]">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+            </th>
+            <th>
+                Code
+            </th>
+            <th>
+                Vereniging
+            </th>
+        </thead>
+        <template is="dom-repeat" items="[[clubs.clubs]]" as="club">
+          <tr on-click="_openMatch">
+            <td>
+              <oars-img club="[[club.clubshort]]"></oars-img>
+            </td>
+            <td>
+                [[club.clubshort]]
+            </td>
+            <td>
+                [[club.clubname]]
+            </td>
+          </tr>
+        </template>
+      </table>
+    </template>
+    <template is="dom-if" if="[[displayError]]">
+      <no-match></no-match>
+    </template>
   </template>
 
 
@@ -42,6 +48,9 @@
       is: 'club-list',
       _openMatch: function(e) {
         this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
+      },
+      _updatedClubs: function() {
+        this.displayError = this.clubs.error !== false;
       },
       _updateRoute: function() {
         var route = '';
@@ -58,6 +67,7 @@
           type: Array,
           notify: true,
           readOnly: false,
+          observer:'_updatedClubs',
         },
         route: {
           type: Array,
@@ -70,6 +80,12 @@
           notify:true,
           readOnly:false,
           observer:'_updateRoute'
+        },
+        displayError: {
+          type: Boolean,
+          notify:false,
+          readOnly: false,
+          value: false,
         }
       },
     });
