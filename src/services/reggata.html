@@ -12,7 +12,6 @@
       }
   };
 
-
   var reqeustReggataList = function(self) {
       fetch('http://beta.hoesnelwasik.nl/api/')
         .then(
@@ -31,8 +30,9 @@
           console.log('Something went badly wrong: -S' ,err);
         });
     };
+
     var reqeustFields = function(self,match,year) {
-      if (year === undefined) {
+      if (!year) {
         year = 0;
       }
       fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
@@ -52,8 +52,9 @@
           console.log('Something went badly wrong: -S' ,err);
         });
     }
+
     var reqeustClubs = function(self,match,year) {
-      if (year === undefined) {
+      if (!year) {
         year = 0;
       }
       fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')

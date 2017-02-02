@@ -9,7 +9,7 @@
   <template>
     <style include="shared-styles shared-styles-tables">
     </style>
-    <template is="dom-if" if="[[!displayError]]">
+    <template is="dom-if" if="[[!clubs.error]]">
       <table class="table">
         <thead>
           <tr>
@@ -37,7 +37,7 @@
         </template>
       </table>
     </template>
-    <template is="dom-if" if="[[displayError]]">
+    <template is="dom-if" if="[[clubs.error]]">
       <no-match></no-match>
     </template>
   </template>
@@ -49,25 +49,21 @@
       _openMatch: function(e) {
         this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
       },
-      _updatedClubs: function() {
-        this.displayError = this.clubs.error !== false;
-      },
       _updateRoute: function() {
         var route = '';
         if (this.iroute)
           route = this.iroute.path;
         else if (this.route)
           route = this.route.path;
-        if(route === '' || route === '/' || route.split("/")[1] === 'iframe') return;
+        if(route === '' || route === '/' || route.split('/')[1] === 'iframe') return;
         var self = this;
-        reqeustClubs(self,route.split("/")[1],route.split("/")[2])
+        reqeustClubs(self,route.split('/')[1],route.split('/')[2])
       },
       properties: {
         clubs: {
           type: Array,
           notify: true,
           readOnly: false,
-          observer:'_updatedClubs',
         },
         route: {
           type: Array,
@@ -81,12 +77,6 @@
           readOnly:false,
           observer:'_updateRoute'
         },
-        displayError: {
-          type: Boolean,
-          notify:false,
-          readOnly: false,
-          value: false,
-        }
       },
     });
   </script>

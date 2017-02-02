@@ -10,99 +10,101 @@
   <template>
     <style include="shared-styles-tables shared-styles">
     </style>
-    <table class="table">
-      <thead>
-        <tr>
-          <th></th>
-          <th style="max-width: 50px">
-              Pos
-          </th>
-          <th class="show-gt-md">
-              Veld
-          </th>
-          <th>
-              Rug#
-          </th>
-          <th style="max-width: 150px">
-              Ploeg
-          </th>
-          <th class="show-gt-md">
-              Slag
-          </th>
-          <th id="splash" class$=[[_setClasses(1)]]>
-              Tussentijd 1
-          </th>
-          <th class$=[[_setClasses(2)]]>
-              Tussentijd 2
-          </th>
-          <th class$=[[_setClasses(3)]]>
-              Tussentijd 3
-          </th>
-          <th class$=[[_setClasses(4)]]>
-              Tussentijd 4
-          </th>
-          <template is="dom-if" if=[[_displaySplash(5)]]>
-            <th class$=[[_setClasses(5)]]>
-                Finishtijd
+    <template is="dom-if" if="[[!noTeams]]">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="max-width: 50px">
+                Pos
             </th>
-          </template>
-        </tr>
-      </thead>
-      <tbody>
-        <template is="dom-repeat" items="[[teams]]" as="team">
-          <tr on-click="_openTeam">
-            <td>
-              <oars-img club="[[team.clubnameshort]]"></oars-img>
-            </td>
-            <td>
-                [[team.rank]] / [[team.participants]]
-            </td>
-            <td class="show-gt-md">
-              <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
-                [[team.fieldnameshortsub]]
-              </template>
-              <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
-                [[team.fieldnameshort]]
-              </template>
-            </td>
-            <td>
-                [[team.backnumber]]
-            </td>
-            <td class="teamname" style="max-width: 150px">
-                [[team.teamname]]
-            </td>
-            <td class="show-gt-md">
-                [[team.rower8]]
-            </td>
-            <template is="dom-if" if=[[_displaySplash(1)]]>
-              <td class$=[[_setClasses(1)]]>
-                  [[_displayTime(team.splash1,0)]]
-              </td>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(2)]]>
-              <td class$=[[_setClasses(2)]]>
-                  [[_displayTime(team.splash2,0)]]
-              </td>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(3)]]>
-              <td class$=[[_setClasses(3)]]>
-                  [[_displayTime(team.splash3,0)]]
-              </td>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(4)]]>
-              <td class$=[[_setClasses(4)]]>
-                  [[_displayTime(team.splash4,0)]]
-              </td>
-            </template>
+            <th class="show-gt-md">
+                Veld
+            </th>
+            <th>
+                Rug#
+            </th>
+            <th style="max-width: 150px">
+                Ploeg
+            </th>
+            <th class="show-gt-md">
+                Slag
+            </th>
+            <th id="splash" class$=[[_setClasses(1)]]>
+                Tussentijd 1
+            </th>
+            <th class$=[[_setClasses(2)]]>
+                Tussentijd 2
+            </th>
+            <th class$=[[_setClasses(3)]]>
+                Tussentijd 3
+            </th>
+            <th class$=[[_setClasses(4)]]>
+                Tussentijd 4
+            </th>
             <template is="dom-if" if=[[_displaySplash(5)]]>
-              <td class$=[[_setClasses(5)]]>
-                  <final-time team="[[team]]"></final-time>
-              </td>
+              <th class$=[[_setClasses(5)]]>
+                  Finishtijd
+              </th>
             </template>
           </tr>
-        </template>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <template is="dom-repeat" items="[[teams]]" as="team">
+            <tr on-click="_openTeam">
+              <td>
+                <oars-img club="[[team.clubnameshort]]"></oars-img>
+              </td>
+              <td>
+                  [[team.rank]] / [[team.participants]]
+              </td>
+              <td class="show-gt-md">
+                <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
+                  [[team.fieldnameshortsub]]
+                </template>
+                <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
+                  [[team.fieldnameshort]]
+                </template>
+              </td>
+              <td>
+                  [[team.backnumber]]
+              </td>
+              <td class="teamname" style="max-width: 150px">
+                  [[team.teamname]]
+              </td>
+              <td class="show-gt-md">
+                  [[team.rower8]]
+              </td>
+              <template is="dom-if" if=[[_displaySplash(1)]]>
+                <td class$=[[_setClasses(1)]]>
+                    [[_displayTime(team.splash1,0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(2)]]>
+                <td class$=[[_setClasses(2)]]>
+                    [[_displayTime(team.splash2,0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(3)]]>
+                <td class$=[[_setClasses(3)]]>
+                    [[_displayTime(team.splash3,0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(4)]]>
+                <td class$=[[_setClasses(4)]]>
+                    [[_displayTime(team.splash4,0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(5)]]>
+                <td class$=[[_setClasses(5)]]>
+                    <final-time team="[[team]]"></final-time>
+                </td>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
     <template is="dom-if" if="[[noTeams]]">
       <div class="noTeams">
         Er zijn helaas nog geen ploegen voorbij dit punt.
@@ -113,12 +115,11 @@
   <script>
     Polymer({
       is: 'last-result-table',
-      noTeams: false,
       _teamsChanged: function() {
-        this.noTeams = this.teams.length === 0;
-        if (!this.noTeams) {
+        if (this.noTeams === false) {
           this.splashCount = checkSplash(this.teams);
           var loc = this.$$('#splash');
+          if(!loc) return;
           for (var i = 1; i < 5; i++) {
             if (i >= this.splashCount || this.splash < i) loc.style.display = 'none';
             loc = loc.nextElementSibling;
@@ -158,12 +159,17 @@
           type: Number,
           notify: true,
           readOnly: false,
-          value:5,
         },
         splashCount: {
           type: Number,
           notify: true,
           readOnly: false,
+        },
+        noTeams: {
+          type: Boolean,
+          notify: true,
+          readOnly:false,
+          value: true,
         }
       },
     });
