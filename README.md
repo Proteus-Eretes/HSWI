@@ -13,10 +13,10 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Team overview   | Completed      |Team info hover dialog      |     -|
 | Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
 | Menubar         | Completed      |List of matches             |     -|
-| View results    | To be started  |List of fields              | [#]  |
-| View toss       | To be started  |List of fields              | [#]  |
+| View results    | Nearly done    |List of fields              | [#]  |
+| View toss       | Nearly done    |List of fields              | [#]  |
 | View clubs      | Completed      |List of clubs               |     -|
-| View competitors| Do we want it? |List of fields              | [#]  |
+| View competitors| Nearly done    |List of fields              | [#]  |
 | Team list       | To be started  |List of teams               | [#]  |
 | Search element  | To be started  |                            | [#]  |
 

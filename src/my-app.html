@@ -17,6 +17,10 @@
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/clubs.html">
 
+<!--<link rel="import" href="fields/field-list-boat.html">
+<link rel="import" href="fields/field-list-block.html">
+<link rel="import" href="services/reggata.html">-->
+
 <dom-module id="my-app">
   <template>
     <style include="shared-styles">
@@ -68,11 +72,11 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <template is="dom-if" if="[[iframe]]">
+      <template is="dom-if" if="[[!iframe]]">
         <app-drawer swipe-open="true" id="drawer">
           <div style="height: 100%; overflow: auto;">
           <app-toolbar class="menu-header" >Wedstrijden</app-toolbar>
-            <match-list route="{{route}}" iroute="{{route}}"></match-list>
+            <match-list route="{{route}}"></match-list>
           </div>
         </app-drawer>
       </template>
@@ -82,14 +86,16 @@
 
         <app-header reveals effects="waterfall">
           <app-toolbar>
-            <template is="dom-if" if="[[iframe]]">
+            <template is="dom-if" if="[[!iframe]]">
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
             <div main-title>Alpha hoesnelwasik</div>
           </app-toolbar>
         </app-header>
         <last-result></last-result>
-        <club-list iroute="{{route}}" route="{{subRouteMatch}}"></club-list>
+        <club-list route="{{routeMatch}}"></club-list>
+        <!--<field-list-boat fields=[[fields]]></field-list-boat>
+        <field-list-block fields=[[fields]]></field-list-block>-->
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -112,24 +118,34 @@
           type: Boolean,
           value: true,
         },
-        subRouteMatch: {
+        route: {
           type: Object,
           notify: true,
           readOnly: false,
           observer: '_updateRoute',
-        }
+        },
       },
+
+      /*ready: function() {
+        requestFields(this,'ww',0);
+      },*/
 
       observers: [
         '_routePageChanged(routeData.page)',
       ],
 
       _updateRoute: function() {
-        this.iframe = this.subRouteMatch.prefix !== '/iframe';
+        if (this.subRouteMatch) {
+          this.iframe = true;
+          this.routeMatch = this.subRouteMatch;
+        } else {
+          this.routeMatch = this.route;
+          this.iframe = false;
+        }
       },
 
       _routePageChanged: function(page) {
-        if (!this.iframe && !this.$.drawer.persistent) {
+        if (!this.iframe && this.$.drawer && !this.$.drawer.persistent) {
           this.$.drawer.close();
         }
       },

@@ -1,5 +1,5 @@
 <script>
-var reqeustTeams = function(self,match,year,field,choice) {
+var requestTeams = function(self,match,year,field,choice) {
   field = field.replace(/\+/g, '%2B');
   fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/'+field+'/' + choice)
     .then(

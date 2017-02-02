@@ -12,7 +12,7 @@
       }
   };
 
-  var reqeustReggataList = function(self) {
+  var requestReggataList = function(self) {
       fetch('http://beta.hoesnelwasik.nl/api/')
         .then(
           function(res) {
@@ -31,7 +31,7 @@
         });
     };
 
-    var reqeustFields = function(self,match,year) {
+    var requestFields = function(self,match,year) {
       if (!year) {
         year = 0;
       }
@@ -53,7 +53,7 @@
         });
     }
 
-    var reqeustClubs = function(self,match,year) {
+    var requestClubs = function(self,match,year) {
       if (!year) {
         year = 0;
       }

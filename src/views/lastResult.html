@@ -67,11 +67,10 @@
       displayError: false,
       news: false,
       ready: function() {
+        requestData(this);
         var self = this;
-        reqeustData(self);
-
         setInterval(function() {
-          reqeustData(self)
+          requestData(self)
         },5000);
       },
       _matchUpdate: function() {

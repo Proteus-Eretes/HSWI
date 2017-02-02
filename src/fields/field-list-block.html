@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../app/fields.html">
+<link rel="import" href="../views/noMatch.html">
+
+<dom-module id="field-list-block">
+  <template>
+    <style include="shared-styles shared-styles-tables">
+    </style>
+    <template is="dom-if" if="[[!fields.error]]">
+      <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
+        <card>
+          <app-toolbar class="md-default-theme">
+              <div class="md-toolbar-tools">
+                  Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]
+              </div>
+          </app-toolbar>
+          <div class="grid-list-container">
+            <template is="dom-repeat" items="[[fields.fields]]" as="field">
+              <template is="dom-if" if="[[_hasBlock(block,field)]]">
+                <h4 class="regatta-title">[[field.fieldnameshort]]</h4>
+              </template>
+            </template>
+          </div>
+        <card>
+      </template>
+    </template>
+    <template is="dom-if" if="[[fields.error]]">
+      <no-match></no-match>
+    </template>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'field-list-block',
+      _openMatch: function(e) {
+        this.route.path = this.route.path + '/' + e.model.club.clubshort + '/loting';
+      },
+      _updateBlocks: function() {
+        this.blocks = fillFields(this.fields.fields,'blockid');
+      },
+      _hasBlock: function(block,field) {
+        return field.blockid === block.blockid;
+      },
+      _start: function(starttime) {
+        return starttime.slice(0, -2) + ':' + starttime.slice(-2)
+      },
+      _timeSort: function(a,b) {
+        var r = a.daydate.localeCompare(b.daydate);
+        if (r !== 0) return r;
+        return parseInt(a.starttime,10) - parseInt(b.starttime,10)
+      },
+      properties: {
+        route: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+        },
+        fields: {
+          type:Array,
+          notify:false,
+          readOnly:false,
+          value: {error: true},
+          observer: '_updateBlocks',
+        }
+      },
+    });
+  </script>
+</dom-module>

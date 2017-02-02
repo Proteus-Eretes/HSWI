@@ -1,0 +1,73 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../app/fields.html">
+<link rel="import" href="../views/noMatch.html">
+
+<dom-module id="field-list-boat">
+  <template>
+    <style include="shared-styles shared-styles-tables">
+    </style>
+    <template is="dom-if" if="[[!fields.error]]">
+      <template is="dom-repeat" items=[[n]] filter="_hasFields">
+        <card>
+          <app-toolbar class="md-default-theme">
+              <div class="md-toolbar-tools">
+                  <img class="rowimg" src$="http://beta.hoesnelwasik.nl/images/row[[item]].png" style="width: auto; height: 60% !important;">
+              </div>
+          </app-toolbar>
+          <div class="grid-list-container">
+            <template is="dom-repeat" items="[[fields.fields]]" as="field">
+              <template is="dom-if" if="[[_hasRowers(item,field)]]">
+                <h4 class="regatta-title">[[field.fieldnameshort]]</h4>
+              </template>
+            </template>
+          </div>
+        <card>
+      </template>
+    </template>
+    <template is="dom-if" if="[[fields.error]]">
+      <no-match style="color:#FFF;"></no-match>
+    </template>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'field-list-boat',
+      n: [1,2,4,8],
+      _openMatch: function(e) {
+        this.route.path = this.route.path + '/' + e.model.fields.fieldnameshort + '/' + this.target;
+      },
+      _hasFields: function(n) {
+        return hasFields(this.fields.fields,n);
+      },
+      _hasRowers: function(n,field) {
+        return +field.numberofrowers === n;
+      },
+      properties: {
+        route: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+        },
+        target: {
+          type: String,
+          notify:false,
+          readOnly:false,
+          value: 'uitslagen',
+        },
+        fields: {
+          type:Object,
+          notify:true,
+          readOnly:false,
+          value: {error: true},
+        },
+        n: {
+          type: Array,
+          value: [1,2,4,8],
+        }
+      },
+    });
+  </script>
+</dom-module>
