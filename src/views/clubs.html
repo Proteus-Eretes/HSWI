@@ -23,7 +23,7 @@
             </th>
         </thead>
         <template is="dom-repeat" items="[[clubs.clubs]]" as="club">
-          <tr on-click="_openMatch">
+          <tr on-click="_openMatch" style="cursor: pointer;">
             <td>
               <oars-img club="[[club.clubshort]]"></oars-img>
             </td>

@@ -51,7 +51,7 @@
         </thead>
         <tbody>
           <template is="dom-repeat" items="[[teams]]" as="team">
-            <tr on-click="_openTeam">
+            <tr on-click="_openTeam" style="cursor: pointer;">
               <td>
                 <oars-img club="[[team.clubnameshort]]"></oars-img>
               </td>

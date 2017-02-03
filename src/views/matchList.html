@@ -36,10 +36,10 @@
     </style>
     <ul>
       <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
-        <li class="main" on-click="_toggleMatch">[[match.regattaname]]
+        <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
           <ul class="subitem" data-selected="false">
             <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}" sort="_yearSort">
-              <li class="subitem" on-click="_openMatch">[[year.jaar]]</li>
+              <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
             </template>
           </ul>
         </li>
