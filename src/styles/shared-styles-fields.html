@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles-fields">
+  <template>
+    <style>
+      .grid-list-container {
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .grid-tile {
+        float: left;
+        min-height: 35px;
+        width: calc(16.66% - 2px) ; /*Need to calc it*/
+        background-color: #EEEEEE;
+        text-align: center;
+        /*-- our gutter --*/
+        margin: 1px 1px;
+      }
+
+      .grid-tile h4 {
+        margin: 12px 0;
+      }
+
+      .fieldHeader {
+        background-color: #ECECEC;
+        margin: 6px 0;
+        height: auto;
+      }
+
+      .fieldHeader h1 {
+        text-align: center;
+      }
+
+      @media screen and (max-width:800px){
+        .grid-tile {
+          width: calc(33.33% - 2px);
+        }
+      }
+
+      @media screen and (max-width:650px){
+        .grid-tile {
+          width: calc(50% - 2px);
+        }
+      }
+
+      @media screen and (max-width:450px){
+        .grid-tile {
+          width: calc(100% - 2px);
+        }
+      }
+    </style>
+  </template>
+</dom-module>

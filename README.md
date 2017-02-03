@@ -1,7 +1,8 @@
 #HoeSnelWasIk
 
 Hoesnelwasik will be compoment based work using the modern HTML5 techniques.
-The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to support old browser.
+With polymer 2 javascript will be writen in ES6/ES2015/ES2016 which will then be
+ transpilled backwards to support old browser.
 
 ### Required compoments
 
@@ -13,12 +14,13 @@ The javascript will be ES6/ES2015/ES2016 which will be transpilled backwards to 
 | Team overview   | Completed      |Team info hover dialog      |     -|
 | Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
 | Menubar         | Completed      |List of matches             |     -|
-| View results    | Nearly done    |List of fields              | [#]  |
-| View toss       | Nearly done    |List of fields              | [#]  |
+| View results    | Completed      |List of fields              |     -|
+| View toss       | Completed      |List of fields              |     -|
 | View clubs      | Completed      |List of clubs               |     -|
-| View competitors| Nearly done    |List of fields              | [#]  |
+| View competitors| Completed      |List of fields              |     -|
 | Team list       | To be started  |List of teams               | [#]  |
 | Search element  | To be started  |                            | [#]  |
+| Match overview  | To be started  |Group toss,club,results,com | [#] -|
 
 ### Styling
 
@@ -33,12 +35,13 @@ This is about the compoments decided above
 | Team overview   | To be started  |Requires design             | [#]  |
 | Headbar         | Partial        |Requires design             | [#]  |
 | Menubar         | Partial        |Requires design             | [#]  |
-| View results    | To be started  |Requires design             | [#]  |
-| View toss       | To be started  |Requires design             | [#]  |
-| View clubs      | Started        |Requires design             | [#]  |
+| View results    | Partial        |Requires design             | [#]  |
+| View toss       | Partial        |Requires design             | [#]  |
+| View clubs      | Partial        |Requires design             | [#]  |
 | View competitors| Do we want it? |Requires design             | [#]  |
 | Team list       | To be started  |Requires design             | [#]  |
 | Search element  | To be started  |Requires design             | [#]  |
+| Match overview  | To be started  |Group toss,club,results,com | [#] -|
 
 ### Required logic
 

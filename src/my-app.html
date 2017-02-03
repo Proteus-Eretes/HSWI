@@ -17,9 +17,9 @@
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/clubs.html">
 
-<!--<link rel="import" href="fields/field-list-boat.html">
+<<link rel="import" href="fields/field-list-boat.html">
 <link rel="import" href="fields/field-list-block.html">
-<link rel="import" href="services/reggata.html">-->
+<link rel="import" href="services/reggata.html">
 
 <dom-module id="my-app">
   <template>
@@ -94,8 +94,8 @@
         </app-header>
         <last-result></last-result>
         <club-list route="{{routeMatch}}"></club-list>
-        <!--<field-list-boat fields=[[fields]]></field-list-boat>
-        <field-list-block fields=[[fields]]></field-list-block>-->
+        <field-list-boat fields=[[fields]]></field-list-boat>
+        <field-list-block fields=[[fields]]></field-list-block>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -126,9 +126,9 @@
         },
       },
 
-      /*ready: function() {
+      ready: function() {
         requestFields(this,'ww',0);
-      },*/
+      },
 
       observers: [
         '_routePageChanged(routeData.page)',

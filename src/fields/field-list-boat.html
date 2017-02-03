@@ -1,33 +1,39 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../styles/shared-styles.html">
-<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../app/fields.html">
 <link rel="import" href="../views/noMatch.html">
 
 <dom-module id="field-list-boat">
   <template>
-    <style include="shared-styles shared-styles-tables">
+    <style include="shared-styles shared-styles-fields">
+    .rowing {
+      height: 60%;
+      width: auto;
+    }
     </style>
     <template is="dom-if" if="[[!fields.error]]">
       <template is="dom-repeat" items=[[n]] filter="_hasFields">
-        <card>
-          <app-toolbar class="md-default-theme">
-              <div class="md-toolbar-tools">
-                  <img class="rowimg" src$="http://beta.hoesnelwasik.nl/images/row[[item]].png" style="width: auto; height: 60% !important;">
+        <div class="card">
+          <app-toolbar class="fieldHeader">
+              <div>
+                  <img class="rowing" src$="http://beta.hoesnelwasik.nl/images/row[[item]].png">
               </div>
           </app-toolbar>
           <div class="grid-list-container">
             <template is="dom-repeat" items="[[fields.fields]]" as="field">
               <template is="dom-if" if="[[_hasRowers(item,field)]]">
-                <h4 class="regatta-title">[[field.fieldnameshort]]</h4>
+                <div on-click="_openField" class="grid-tile">
+                  <h4>[[field.fieldnameshort]]</h4>
+                </div>
               </template>
             </template>
           </div>
-        <card>
+        </div>
       </template>
     </template>
     <template is="dom-if" if="[[fields.error]]">
-      <no-match style="color:#FFF;"></no-match>
+      <no-match></no-match>
     </template>
   </template>
 
@@ -36,7 +42,8 @@
     Polymer({
       is: 'field-list-boat',
       n: [1,2,4,8],
-      _openMatch: function(e) {
+      _openField: function(e) {
+        //TODO Make sure last element is not 'uitslagen or something else'
         this.route.path = this.route.path + '/' + e.model.fields.fieldnameshort + '/' + this.target;
       },
       _hasFields: function(n) {
