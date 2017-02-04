@@ -10,7 +10,7 @@ var requestTeams = function(self,match,year,field,choice) {
         }
 
         res.json().then(function(data) {
-          self.clubs = data;
+          self.teams = data;
         });
       }
     )

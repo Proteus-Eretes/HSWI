@@ -50,7 +50,7 @@
         this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
       },
       _updateRoute: function() {
-        requestClubs(this,this.route.path.split('/')[1],this.route.path.split('/')[2])
+        requestClubs(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
       },
       properties: {
         clubs: {

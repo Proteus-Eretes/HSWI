@@ -30,18 +30,26 @@
             <th class="show-gt-md">
                 Slag
             </th>
-            <th id="splash" class$=[[_setClasses(1)]]>
-                Tussentijd 1
-            </th>
-            <th class$=[[_setClasses(2)]]>
-                Tussentijd 2
-            </th>
-            <th class$=[[_setClasses(3)]]>
-                Tussentijd 3
-            </th>
-            <th class$=[[_setClasses(4)]]>
-                Tussentijd 4
-            </th>
+            <template is="dom-if" if=[[displaySplash1]]>
+              <th class$=[[_setClasses(1)]]>
+                  Tussentijd 1
+              </th>
+            </template>
+            <template is="dom-if" if=[[displaySplash2]]>
+              <th class$=[[_setClasses(2)]]>
+                  Tussentijd 2
+              </th>
+            </template>
+            <template is="dom-if" if=[[displaySplash3]]>
+              <th class$=[[_setClasses(3)]]>
+                  Tussentijd 3
+              </th>
+            </template>
+            <template is="dom-if" if=[[displaySplash4]]>
+              <th class$=[[_setClasses(4)]]>
+                  Tussentijd 4
+              </th>
+            </template>
             <template is="dom-if" if=[[_displaySplash(5)]]>
               <th class$=[[_setClasses(5)]]>
                   Finishtijd
@@ -75,22 +83,22 @@
               <td class="show-gt-md">
                   [[team.rower8]]
               </td>
-              <template is="dom-if" if=[[_displaySplash(1)]]>
+              <template is="dom-if" if=[[displaySplash1]]>
                 <td class$=[[_setClasses(1)]]>
                     [[_displayTime(team.splash1,0)]]
                 </td>
               </template>
-              <template is="dom-if" if=[[_displaySplash(2)]]>
+              <template is="dom-if" if=[[displaySplash2]]>
                 <td class$=[[_setClasses(2)]]>
                     [[_displayTime(team.splash2,0)]]
                 </td>
               </template>
-              <template is="dom-if" if=[[_displaySplash(3)]]>
+              <template is="dom-if" if=[[displaySplash3]]>
                 <td class$=[[_setClasses(3)]]>
                     [[_displayTime(team.splash3,0)]]
                 </td>
               </template>
-              <template is="dom-if" if=[[_displaySplash(4)]]>
+              <template is="dom-if" if=[[displaySplash4]]>
                 <td class$=[[_setClasses(4)]]>
                     [[_displayTime(team.splash4,0)]]
                 </td>
@@ -120,11 +128,11 @@
           this.splashCount = checkSplash(this.teams);
           var loc = this.$$('#splash');
           if(!loc) return;
-          for (var i = 1; i < 5; i++) {
-            if (i >= this.splashCount || this.splash < i) loc.style.display = 'none';
-            loc = loc.nextElementSibling;
+          this.displaySplash1=this._displaySplash(1);
+          this.displaySplash2=this._displaySplash(2);
+          this.displaySplash3=this._displaySplash(3);
+          this.displaySplash4=this._displaySplash(4);
           }
-        }
       },
       _displayTime: function(time,bonussecond) {
         return formatTime(finalTime(time,bonussecond));
@@ -140,6 +148,8 @@
       _displaySplash: function(splash) {
         if (this.splash === undefined)
           this.splash = this._getSplash();
+        if (this.splashCount === undefined)
+          return this.splash >= splash;
         return (this.splash >= splash && splash < this.splashCount) || (this.splash >= splash && splash === 5);
       },
       _getSplash: function() {

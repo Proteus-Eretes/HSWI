@@ -1,0 +1,209 @@
+<!-- Load the Polymer.Element base class -->
+<!-- An flexible table of the teams
+    view:0 display everything -> results
+    view:1 do not display rank -> search + club view
+    view:2 do not display times -> toss view
+    view:3 do not display backnumber  -> competitors view
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../clubs/oars.html">
+<link rel="import" href="../app/time.html">
+<link rel="import" href="../app/team.html">
+<link rel="import" href="../views/noMatch.html">
+<link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../services/teams.html">
+
+<dom-module id="team-list">
+  <template>
+    <style include="shared-styles-tables shared-styles">
+    </style>
+    <template is="dom-if" if="[[!noTeams]]">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <template is="dom-if" if=[[_displayValue(0)]]>
+              <th style="max-width: 50px">
+                  Pos
+              </th>
+            </template>
+            <th class="show-gt-md">
+                Veld
+            </th>
+            <template is="dom-if" if=[[_displayValue(3)]]>
+              <th>
+                  Rug#
+              </th>
+            </template>
+            <th style="max-width: 150px">
+                Ploeg
+            </th>
+            <th class="show-gt-md">
+                Slag
+            </th>
+            <template is="dom-if" if=[[_displaySplash(1)]]>
+              <th class="show-gt-md">
+                  Tussentijd 1
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displaySplash(2)]]>
+              <th class="show-gt-md">
+                  Tussentijd 2
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displaySplash(3)]]>
+              <th class="show-gt-md">
+                  Tussentijd 3
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displaySplash(4)]]>
+              <th class="show-gt-md">
+                  Tussentijd 4
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displaySplash(5)]]>
+              <th>
+                  Finishtijd
+              </th>
+            </template>
+          </tr>
+        </thead>
+        <tbody>
+          <template is="dom-repeat" items="[[teams.teams]]" as="team">
+            <tr on-click="_openTeam" style="cursor: pointer;">
+              <td>
+                <oars-img club="[[team.clubnameshort]]"></oars-img>
+              </td>
+              <template is="dom-if" if=[[_displayValue(0)]]>
+                <td>
+                  [[_disp(team,'rank')]]
+                </td>
+              </template>
+              <td class="show-gt-md">
+                <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
+                  [[team.fieldnameshortsub]]
+                </template>
+                <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
+                  [[team.fieldnameshort]]
+                </template>
+              </td>
+              <template is="dom-if" if=[[_displayValue(3)]]>
+                <td>
+                  [[_disp(team,'backnumber')]]
+                </td>
+              </template>
+              <td class="teamname" style="max-width: 150px">
+                  [[team.teamname]]
+              </td>
+              <td class="show-gt-md">
+                  [[team.rower8]]
+              </td>
+              <template is="dom-if" if=[[_displaySplash(1)]]>
+                <td class="show-gt-md">
+                    [[_displayTime(team,'splash1',0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(2)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash2',0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(3)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash3',0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(4)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash4',0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displaySplash(5)]]>
+                <td>
+                    <final-time team="[[_final(team.times)]]"></final-time>
+                </td>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
+    <template is="dom-if" if="[[teams.error]]">
+      <no-match></no-match>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'team-list',
+      _updateRoute: function() {
+        requestTeams(this,this.route.path.split('/')[1],this.route.path.split('/')[2],this.route.path.split('/')[3],this.route.path.split('/')[4])
+      },
+      _teamsChanged: function() {
+        if (this.teams.error === false) {
+          this.noTeams = false;
+          this.splashCount = checkSplash(this.teams.teams);
+        } else {
+          this.noTeams = true;
+        }
+      },
+      _disp: function(team,key) {
+        if (this.view >= 2)
+          return team[key];
+        return team.times[0][key];
+      },
+      _final: function(times) {
+        return times[0];
+      },
+      _displayTime: function(time,key,bonussecond) {
+        return formatTime(finalTime(this._disp(time,key),bonussecond));
+      },
+      _hasValue: function(field) {
+        return field == 0;
+      },
+      _displaySplash: function(splash) {
+        //console.log((splash < this.splashCount || splash === 5) && this.view < 2);
+        return (splash < this.splashCount || splash === 5) && this.view < 2;
+      },
+      _displayValue: function(val){
+        return val >= this.view;
+      },
+      _openTeam: function(e) {
+        document.querySelector("team-modal").toggle(e.model.team);
+      },
+      properties: {
+        teams : {
+          type: Array,
+          notify:true,
+          readOnly:false,
+          observer: '_teamsChanged',
+          value: [{error: true}],
+        },
+        splashCount: {
+          type: Number,
+          notify: true,
+          readOnly: false,
+        },
+        route: {
+          type: Object,
+          notify: true,
+          readOnly: false,
+          observer:'_updateRoute'
+        },
+        view: {
+          type: Number,
+          notify: false,
+          readOnly: false,
+          value: 1,
+        },
+        noTeams: {
+          type: Boolean,
+          notify: true,
+          readOnly:false,
+          value: true,
+        }
+      },
+    });
+  </script>
+</dom-module>

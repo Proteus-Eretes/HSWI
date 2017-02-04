@@ -17,9 +17,11 @@
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/clubs.html">
 
-<<link rel="import" href="fields/field-list-boat.html">
+<link rel="import" href="fields/field-list-boat.html">
 <link rel="import" href="fields/field-list-block.html">
 <link rel="import" href="services/reggata.html">
+
+<link rel="import" href="teams/teamlist.html">
 
 <dom-module id="my-app">
   <template>
@@ -96,6 +98,7 @@
         <club-list route="{{routeMatch}}"></club-list>
         <field-list-boat fields=[[fields]]></field-list-boat>
         <field-list-block fields=[[fields]]></field-list-block>
+        <team-list route="{{routeMatch}}"></team-list>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>

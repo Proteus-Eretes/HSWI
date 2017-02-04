@@ -86,7 +86,7 @@
                 <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[team.times]]>
+            <!--<template is="dom-if" if=[[team.times]]>-->
               <template is="dom-repeat" items="teams.times" as="times">
                 <template is="dom-if" if=[[_showTime(times.splash1)]]>
                   <tr>
@@ -144,7 +144,7 @@
                   </tr>
                 </template>
               </template>
-            </template>
+            <!--</template>-->
             <template is="dom-if" if=[[_show(team.rower1)]]>
               <tr>
                 <td><b>Boeg</b></td>
