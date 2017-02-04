@@ -126,8 +126,6 @@
       _teamsChanged: function() {
         if (this.noTeams === false) {
           this.splashCount = checkSplash(this.teams);
-          var loc = this.$$('#splash');
-          if(!loc) return;
           this.displaySplash1=this._displaySplash(1);
           this.displaySplash2=this._displaySplash(2);
           this.displaySplash3=this._displaySplash(3);
