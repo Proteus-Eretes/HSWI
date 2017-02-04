@@ -25,7 +25,7 @@
             <th></th>
             <template is="dom-if" if=[[_displayValue(0)]]>
               <th style="max-width: 50px">
-                  Pos
+                Pos
               </th>
             </template>
             <th class="show-gt-md">
@@ -33,7 +33,7 @@
             </th>
             <template is="dom-if" if=[[_displayValue(3)]]>
               <th>
-                  Rug#
+                Rug#
               </th>
             </template>
             <th style="max-width: 150px">
@@ -44,27 +44,47 @@
             </th>
             <template is="dom-if" if=[[_displaySplash(1)]]>
               <th class="show-gt-md">
-                  Tussentijd 1
+                Tussentijd 1
               </th>
             </template>
             <template is="dom-if" if=[[_displaySplash(2)]]>
               <th class="show-gt-md">
-                  Tussentijd 2
+                Tussentijd 2
               </th>
             </template>
             <template is="dom-if" if=[[_displaySplash(3)]]>
               <th class="show-gt-md">
-                  Tussentijd 3
+                Tussentijd 3
               </th>
             </template>
             <template is="dom-if" if=[[_displaySplash(4)]]>
               <th class="show-gt-md">
-                  Tussentijd 4
+                Tussentijd 4
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displayRound(1)]]>
+              <th class="show-gt-md">
+                Ronde 1
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displayRound(2)]]>
+              <th class="show-gt-md">
+                Ronde 2
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displayRound(3)]]>
+              <th class="show-gt-md">
+                Ronde 3
+              </th>
+            </template>
+            <template is="dom-if" if=[[_displayRound(4)]]>
+              <th class="show-gt-md">
+                Ronde 4
               </th>
             </template>
             <template is="dom-if" if=[[_displaySplash(5)]]>
               <th>
-                  Finishtijd
+                Finishtijd
               </th>
             </template>
           </tr>
@@ -77,7 +97,7 @@
               </td>
               <template is="dom-if" if=[[_displayValue(0)]]>
                 <td>
-                  [[_disp(team,'rank')]]
+                  [[_disp(team,'rank',-1)]]
                 </td>
               </template>
               <td class="show-gt-md">
@@ -90,7 +110,7 @@
               </td>
               <template is="dom-if" if=[[_displayValue(3)]]>
                 <td>
-                  [[_disp(team,'backnumber')]]
+                  [[_disp(team,'backnumber',0)]]
                 </td>
               </template>
               <td class="teamname" style="max-width: 150px">
@@ -101,27 +121,47 @@
               </td>
               <template is="dom-if" if=[[_displaySplash(1)]]>
                 <td class="show-gt-md">
-                    [[_displayTime(team,'splash1',0)]]
+                  [[_displayTime(team,'splash1',0,0)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(2)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash2',0)]]
+                  [[_displayTime(team,'splash2',0,0)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(3)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash3',0)]]
+                  [[_displayTime(team,'splash3',0,0)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(4)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash4',0)]]
+                  [[_displayTime(team,'splash4',0,0)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displayRound(1)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash1',0,1)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displayRound(2)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash2',0,2)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displayRound(3)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash3',0,3)]]
+                </td>
+              </template>
+              <template is="dom-if" if=[[_displayRound(4)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'splash4',0,4)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(5)]]>
                 <td>
-                    <final-time team="[[_final(team.times)]]"></final-time>
+                  <final-time team="[[_final(team.times)]]"></final-time>
                 </td>
               </template>
             </tr>
@@ -148,23 +188,26 @@
           this.noTeams = true;
         }
       },
-      _disp: function(team,key) {
+      _disp: function(team,key,round) {
         if (this.view >= 2)
           return team[key];
-        return team.times[0][key];
+        if (round === -1) round = this.teams.setting.rounds;
+        return team.times[round][key];
       },
       _final: function(times) {
-        return times[0];
+        return times[this.teams.setting.rounds];
       },
-      _displayTime: function(time,key,bonussecond) {
-        return formatTime(finalTime(this._disp(time,key),bonussecond));
+      _displayTime: function(time,key,bonussecond,round) {
+        return formatTime(finalTime(this._disp(time,key,round),bonussecond));
       },
       _hasValue: function(field) {
         return field == 0;
       },
       _displaySplash: function(splash) {
-        //console.log((splash < this.splashCount || splash === 5) && this.view < 2);
         return (splash < this.splashCount || splash === 5) && this.view < 2;
+      },
+      _displayRound: function(splash) {
+        return (splash < this.teams.setting.rounds) && this.view < 2;
       },
       _displayValue: function(val){
         return val >= this.view;
