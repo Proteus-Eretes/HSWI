@@ -43,7 +43,6 @@
       is: 'field-list-boat',
       n: [1,2,4,8],
       _openField: function(e) {
-        //TODO Make sure last element is not 'uitslagen or something else'
         this.route.path = this.route.path + '/' + e.model.fields.fieldnameshort + '/' + this.target;
       },
       _hasFields: function(n) {
@@ -69,6 +68,11 @@
           notify:true,
           readOnly:false,
           value: {error: true},
+        },
+        route: {
+          type: Object,
+          notify:true,
+          readOnly:false,
         },
         n: {
           type: Array,

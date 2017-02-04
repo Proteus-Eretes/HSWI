@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../services/reggata.html">
+<link rel="import" href="../fields/field-list-boat.html">
+<link rel="import" href="../fields/field-list-block.html">
+<link rel="import" href="clubs.html">
+
+
+<dom-module id="main-match">
+  <template>
+    <style include="shared-styles">
+    </style>
+
+    <paper-tabs selected="{{target}}">
+      <paper-tab>Uitslagen</paper-tab>
+      <paper-tab>Loting</paper-tab>
+      <paper-tab>Vereniging</paper-tab>
+      <paper-tab>Inschrijving</paper-tab>
+    </paper-tabs>
+
+    <iron-pages selected="[[target]]">
+      <field-list-boat route="{{route}}" target=[[target]] fields=[[fields]]></field-list-boat>
+      <field-list-block route="{{route}}" target=[[target]] fields=[[fields]]></field-list-block>
+      <club-list route="{{route}}" target=[[target]] clubs=[[clubs]]></club-list>
+      <field-list-boat route="{{route}}" target=[[target]] fields=[[fields]]></field-list-boat>
+    </iron-pages>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'main-match',
+      _updateRoute: function() {
+        requestFields(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
+        requestClubs(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
+        switch (this.route.path.split('/')[3]) {
+          case 'uitslagen':
+            this.target = 0;
+            break;
+          case 'loting':
+            this.target = 1;
+            break;
+          case 'vereniging':
+            this.target = 2;
+            break;
+          case 'inschrijving':
+            this.target = 3;
+            break;
+          default:
+            this.target = 0;
+        }
+      },
+      properties: {
+        route: {
+          type: Object,
+          notify: true,
+          readOnly: false,
+          observer: '_updateRoute',
+        },
+        target: {
+          type: Number,
+          notify: true,
+          readOnly: false,
+        }
+      },
+    });
+  </script>
+</dom-module>

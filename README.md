@@ -18,9 +18,9 @@ With polymer 2 javascript will be writen in ES6/ES2015/ES2016 which will then be
 | View toss       | Completed      |List of fields              |     -|
 | View clubs      | Completed      |List of clubs               |     -|
 | View competitors| Completed      |List of fields              |     -|
-| Team list       | To be started  |List of teams               | [#]  |
+| Team list       | Completed      |List of teams               |     -|
 | Search element  | To be started  |                            | [#]  |
-| Match overview  | To be started  |Group toss,club,results,com | [#] -|
+| Match overview  | Completed      |Group toss,club,results,com |     -|
 
 ### Styling
 
@@ -39,9 +39,9 @@ This is about the compoments decided above
 | View toss       | Partial        |Requires design             | [#]  |
 | View clubs      | Partial        |Requires design             | [#]  |
 | View competitors| Do we want it? |Requires design             | [#]  |
-| Team list       | To be started  |Requires design             | [#]  |
+| Team list       | Partial        |Requires design             | [#]  |
 | Search element  | To be started  |Requires design             | [#]  |
-| Match overview  | To be started  |Group toss,club,results,com | [#] -|
+| Match overview  | Partial        |Group toss,club,results,com | [#]  |
 
 ### Required logic
 
@@ -53,7 +53,7 @@ This is about the compoments decided above
 
 | What                       |Description                 |Issues        |
 |----------------------------|----------------------------|--------------|
-| Integration with Paparazzi |Load image of team          | HTTPS,Webcie |
+| Integration with Paparazzi |Load image of a team        | HTTPS,Webcie |
 
 
 ## Polymer

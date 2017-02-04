@@ -13,15 +13,9 @@
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="styles/shared-styles.html">
-<link rel="import" href="views/lastResult.html">
+<link rel="import" href="views/match.html">
 <link rel="import" href="views/matchList.html">
-<link rel="import" href="views/clubs.html">
-
-<link rel="import" href="fields/field-list-boat.html">
-<link rel="import" href="fields/field-list-block.html">
-<link rel="import" href="services/reggata.html">
-
-<link rel="import" href="teams/teamlist.html">
+<link rel="import" href="views/lastResult.html">
 
 <dom-module id="my-app">
   <template>
@@ -95,9 +89,7 @@
           </app-toolbar>
         </app-header>
         <last-result></last-result>
-        <club-list route="{{routeMatch}}"></club-list>
-        <field-list-boat fields=[[fields]]></field-list-boat>
-        <field-list-block fields=[[fields]]></field-list-block>
+        <main-match route={{routeMatch}}></main-match>
         <team-list route="{{routeMatch}}"></team-list>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
@@ -127,10 +119,6 @@
           readOnly: false,
           observer: '_updateRoute',
         },
-      },
-
-      ready: function() {
-        requestFields(this,'ww',0);
       },
 
       observers: [

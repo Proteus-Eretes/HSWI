@@ -8,6 +8,9 @@
 <dom-module id="club-list">
   <template>
     <style include="shared-styles shared-styles-tables">
+    .table {
+      margin-top: 12px;
+    }
     </style>
     <template is="dom-if" if="[[!clubs.error]]">
       <table class="table">
@@ -47,10 +50,8 @@
     Polymer({
       is: 'club-list',
       _openMatch: function(e) {
+        //TODO fix link
         this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
-      },
-      _updateRoute: function() {
-        requestClubs(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
       },
       properties: {
         clubs: {
@@ -62,7 +63,6 @@
           type: Array,
           notify:true,
           readOnly:false,
-          observer:'_updateRoute'
         }
       },
     });
