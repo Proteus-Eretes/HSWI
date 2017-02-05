@@ -36,7 +36,7 @@
     Polymer({
       is: 'field-list-block',
       _openField: function(e) {
-        this.set('path', this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       },
       _updateBlocks: function() {
         this.blocks = fillFields(this.fields.fields,'blockid');

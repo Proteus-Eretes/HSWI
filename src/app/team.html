@@ -15,7 +15,9 @@
       var index = Math.floor(Math.random()*10000) % length;
       var row = data[index];
       if(row.times !== undefined) {
-        splashes = Math.max(splashes, _calculateSplash(row.times[0]))
+        if(row.times.length === 1) {
+          splashes = Math.max(splashes, _calculateSplash(row.times[0]))
+        }
       } else {
         splashes = Math.max(splashes, _calculateSplash(row));
       }

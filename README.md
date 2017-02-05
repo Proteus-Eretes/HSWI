@@ -47,7 +47,7 @@ This is about the compoments decided above
 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
-| Routing         | Started        |Routing with in app         | [#]  |
+| Routing         | Nearly done    |Routing with in app         | [#]  |
 
 ### To think about
 

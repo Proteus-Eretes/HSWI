@@ -134,7 +134,6 @@
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.iframe = true;
           this.routeMatch = this.subRouteMatch.path;
-          console.log(this.routeMatch);
         } else {
           this.routeMatch = this.route.path;
           this.iframe = false;
@@ -143,7 +142,7 @@
 
       _updateRouteMatch: function() {
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
-          this.set('route.path', '/iframe/' + this.routeMatch);
+          this.set('route.path', '/iframe' + this.routeMatch);
         } else {
           this.set('route.path', this.routeMatch);
         }
