@@ -57,10 +57,10 @@
       },
       _getYears: function(basematch) {
         return function(match) {
-            return basematch.shortname === match.shortname;
+          return basematch.shortname === match.shortname;
         }
       },
-      _selectedMatch: function() {
+      _selectedMatch: function(e) {
         console.log('TODO select a match from the list');
       },
       _createList: function() {
@@ -79,7 +79,7 @@
         e.target.querySelector("ul").setAttribute('data-selected',val);
       },
       _openMatch: function(e) {
-        this.route.path = e.model.year.shortname + '/' + e.model.year.jaar + '/';
+        this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
       },
       properties: {
         currentMatch: {
@@ -100,7 +100,7 @@
           readOnly:false,
         },
         route: {
-          type: Array,
+          type: Object,
           notify:true,
           readOnly:false,
         }

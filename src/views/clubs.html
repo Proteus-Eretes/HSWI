@@ -50,8 +50,7 @@
     Polymer({
       is: 'club-list',
       _openMatch: function(e) {
-        //TODO fix link
-        this.route.path = this.route.path + '/' + e.model.club.clubshort + '/vereniging';
+        this.set('path', this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
       },
       properties: {
         clubs: {
@@ -59,10 +58,16 @@
           notify: true,
           readOnly: false,
         },
-        route: {
-          type: Array,
-          notify:true,
+        path: {
+          type: String,
+          notify: true,
           readOnly:false,
+        },
+        target: {
+          type: String,
+          notify: false,
+          readOnly: false,
+          value: 'vereniging',
         }
       },
     });

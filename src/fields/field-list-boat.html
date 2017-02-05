@@ -43,7 +43,7 @@
       is: 'field-list-boat',
       n: [1,2,4,8],
       _openField: function(e) {
-        this.route.path = this.route.path + '/' + e.model.fields.fieldnameshort + '/' + this.target;
+        this.set('path', this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       },
       _hasFields: function(n) {
         return hasFields(this.fields.fields,n);
@@ -52,8 +52,8 @@
         return +field.numberofrowers === n;
       },
       properties: {
-        route: {
-          type: Array,
+        path: {
+          type: String,
           notify:true,
           readOnly:false,
         },
@@ -68,11 +68,6 @@
           notify:true,
           readOnly:false,
           value: {error: true},
-        },
-        route: {
-          type: Object,
-          notify:true,
-          readOnly:false,
         },
         n: {
           type: Array,

@@ -6,6 +6,7 @@
 <link rel="import" href="../services/reggata.html">
 <link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-block.html">
+<link rel="import" href="../teams/teamlist.html">
 <link rel="import" href="clubs.html">
 
 
@@ -22,11 +23,12 @@
     </paper-tabs>
 
     <iron-pages selected="[[target]]">
-      <field-list-boat route="{{route}}" target=[[target]] fields=[[fields]]></field-list-boat>
-      <field-list-block route="{{route}}" target=[[target]] fields=[[fields]]></field-list-block>
-      <club-list route="{{route}}" target=[[target]] clubs=[[clubs]]></club-list>
-      <field-list-boat route="{{route}}" target=[[target]] fields=[[fields]]></field-list-boat>
+      <field-list-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-boat>
+      <field-list-block path="{{route}}" target="loting" fields=[[fields]]></field-list-block>
+      <club-list path="{{route}}" target="vereniging" clubs=[[clubs]]></club-list>
+      <field-list-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-boat>
     </iron-pages>
+    <team-list view=1 path="{{route}}"></team-list>
   </template>
 
 
@@ -34,9 +36,9 @@
     Polymer({
       is: 'main-match',
       _updateRoute: function() {
-        requestFields(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
-        requestClubs(this,this.route.path.split('/')[1],this.route.path.split('/')[2]);
-        switch (this.route.path.split('/')[3]) {
+        requestFields(this,this.route.split('/')[1],this.route.split('/')[2]);
+        requestClubs(this,this.route.split('/')[1],this.route.split('/')[2]);
+        switch (this.route.split('/')[3]) {
           case 'uitslagen':
             this.target = 0;
             break;
@@ -55,7 +57,7 @@
       },
       properties: {
         route: {
-          type: Object,
+          type: String,
           notify: true,
           readOnly: false,
           observer: '_updateRoute',

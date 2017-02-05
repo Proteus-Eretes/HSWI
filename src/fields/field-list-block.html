@@ -12,9 +12,7 @@
       <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
         <div class="card">
           <app-toolbar class="fieldHeader">
-              <h1>
-                  Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]
-              </h1>
+            <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
           </app-toolbar>
           <div class="grid-list-container">
             <template is="dom-repeat" items="[[fields.fields]]" as="field">
@@ -38,8 +36,7 @@
     Polymer({
       is: 'field-list-block',
       _openField: function(e) {
-        //TODO Make sure last element is not 'uitslagen or something else'
-        this.route.path = this.route.path + '/' + e.model.fields.fieldnameshort + '/' + this.target;
+        this.set('path', this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       },
       _updateBlocks: function() {
         this.blocks = fillFields(this.fields.fields,'blockid');
@@ -56,8 +53,8 @@
         return parseInt(a.starttime,10) - parseInt(b.starttime,10)
       },
       properties: {
-        route: {
-          type: Array,
+        path: {
+          type: String,
           notify:true,
           readOnly:false,
         },
@@ -68,11 +65,12 @@
           value: {error: true},
           observer: '_updateBlocks',
         },
-        route: {
-          type: Object,
-          notify:true,
-          readOnly:false,
-        },
+        target: {
+          type: String,
+          notify:false,
+          readOnly: false,
+          value: 'loting',
+        }
       },
     });
   </script>

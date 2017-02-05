@@ -89,8 +89,7 @@
           </app-toolbar>
         </app-header>
         <last-result></last-result>
-        <main-match route={{routeMatch}}></main-match>
-        <team-list route="{{routeMatch}}"></team-list>
+        <main-match route="{{routeMatch}}"></main-match>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -119,6 +118,12 @@
           readOnly: false,
           observer: '_updateRoute',
         },
+        routeMatch: {
+          type: String,
+          notify: true,
+          readOnly: false,
+          observer: '_updateRouteMatch',
+        }
       },
 
       observers: [
@@ -126,16 +131,26 @@
       ],
 
       _updateRoute: function() {
-        if (this.subRouteMatch) {
+        if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.iframe = true;
-          this.routeMatch = this.subRouteMatch;
+          this.routeMatch = this.subRouteMatch.path;
+          console.log(this.routeMatch);
         } else {
-          this.routeMatch = this.route;
+          this.routeMatch = this.route.path;
           this.iframe = false;
         }
       },
 
+      _updateRouteMatch: function() {
+        if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
+          this.set('route.path', '/iframe/' + this.routeMatch);
+        } else {
+          this.set('route.path', this.routeMatch);
+        }
+      },
+
       _routePageChanged: function(page) {
+        //TODO fix close off drawer
         if (!this.iframe && this.$.drawer && !this.$.drawer.persistent) {
           this.$.drawer.close();
         }

@@ -178,12 +178,13 @@
     Polymer({
       is: 'team-list',
       _updateRoute: function() {
-        requestTeams(this,this.route.path.split('/')[1],this.route.path.split('/')[2],this.route.path.split('/')[3],this.route.path.split('/')[4])
+        requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
       },
       _teamsChanged: function() {
         if (this.teams.error === false) {
           this.noTeams = false;
           this.splashCount = checkSplash(this.teams.teams);
+          console.log(this.splashCount);
         } else {
           this.noTeams = true;
         }
@@ -228,8 +229,8 @@
           notify: true,
           readOnly: false,
         },
-        route: {
-          type: Object,
+        path: {
+          type: String,
           notify: true,
           readOnly: false,
           observer:'_updateRoute'
@@ -238,7 +239,6 @@
           type: Number,
           notify: false,
           readOnly: false,
-          value: 1,
         },
         noTeams: {
           type: Boolean,
