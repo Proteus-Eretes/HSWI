@@ -49,7 +49,7 @@ This is about the compoments decided above
 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
-| Routing         | Nearly done    |Routing with in app         |     -|
+| Routing         | Completed      |Routing with in app         |     -|
 
 ### To think about
 
