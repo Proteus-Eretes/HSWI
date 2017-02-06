@@ -13,12 +13,26 @@
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/teams.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 
 <dom-module id="team-list">
   <template>
     <style include="shared-styles-tables shared-styles">
     </style>
     <template is="dom-if" if="[[!noTeams]]">
+      <paper-tabs selected="[[view]]">
+        <paper-tab on-click="_returnToMatch">
+          <template is="dom-if" if="[[approved]]">
+            Uitslagen
+          </template>
+          <template is="dom-if" if="[[!approved]]">
+            Voorlopige uitslagen
+          </template>
+        </paper-tab>
+        <paper-tab on-click="_returnToMatch">Loting</paper-tab>
+        <paper-tab on-click="_returnToMatch">Vereniging</paper-tab>
+        <paper-tab on-click="_returnToMatch">Inschrijving</paper-tab>
+      </paper-tabs>
       <table class="table">
         <thead>
           <tr>
@@ -62,22 +76,22 @@
                 Tussentijd 4
               </th>
             </template>
-            <template is="dom-if" if=[[_displayRound(1)]]>
+            <template is="dom-if" if=[[_displayRound(0)]]>
               <th class="show-gt-md">
                 Ronde 1
               </th>
             </template>
-            <template is="dom-if" if=[[_displayRound(2)]]>
+            <template is="dom-if" if=[[_displayRound(1)]]>
               <th class="show-gt-md">
                 Ronde 2
               </th>
             </template>
-            <template is="dom-if" if=[[_displayRound(3)]]>
+            <template is="dom-if" if=[[_displayRound(2)]]>
               <th class="show-gt-md">
                 Ronde 3
               </th>
             </template>
-            <template is="dom-if" if=[[_displayRound(4)]]>
+            <template is="dom-if" if=[[_displayRound(3)]]>
               <th class="show-gt-md">
                 Ronde 4
               </th>
@@ -139,24 +153,24 @@
                   [[_displayTime(team,'splash4',0,0)]]
                 </td>
               </template>
+              <template is="dom-if" if=[[_displayRound(0)]]>
+                <td class="show-gt-md">
+                  [[_displayTime(team,'totaltime',0,0)]]
+                </td>
+              </template>
               <template is="dom-if" if=[[_displayRound(1)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash1',0,1)]]
+                  [[_displayTime(team,'totaltime',0,1)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displayRound(2)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash2',0,2)]]
+                  [[_displayTime(team,'totaltime',0,2)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displayRound(3)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'splash3',0,3)]]
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displayRound(4)]]>
-                <td class="show-gt-md">
-                  [[_displayTime(team,'splash4',0,4)]]
+                  [[_displayTime(team,'totaltime',0,3)]]
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(5)]]>
@@ -178,12 +192,56 @@
     Polymer({
       is: 'team-list',
       _updateRoute: function() {
+        if(this.path.split('/').length < 5) return;
         requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
+        this._setView();
+      },
+      _setView: function() {
+        switch (this.path.split('/')[4]) {
+          case 'uitslagen':
+            this.view = 0;
+            break;
+          case 'vereniging':
+            this.view = 1;
+            break;
+          case 'search':
+            this.view = 1;
+            break;
+          case 'loting':
+            this.view = 2;
+            break;
+          case 'inschrijving':
+            this.view = 3;
+            break;
+        }
+      },
+      _setApproved: function () {
+        this.approved = this.teams.teams[0].times[this.teams.setting.rounds].isapproved === '1';
+      },
+      _returnToMatch: function(e) {
+        console.log(e);
+        var target = '';
+        switch (e.model.view) {
+          case 0:
+            target = 'uitslagen';
+            break;
+          case 1:
+            target = 'loting';
+            break;
+          case 2:
+            target = 'vereniging';
+            break;
+          case 3:
+            target = 'inschrijving';
+            break;
+        }
+        this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + target);
       },
       _teamsChanged: function() {
         if (this.teams.error === false) {
           this.noTeams = false;
           this.splashCount = checkSplash(this.teams.teams);
+          this._setApproved();
         } else {
           this.noTeams = true;
         }
@@ -206,8 +264,8 @@
       _displaySplash: function(splash) {
         return (splash < this.splashCount || splash === 5) && this.view < 2;
       },
-      _displayRound: function(splash) {
-        return (splash < this.teams.setting.rounds) && this.view < 2;
+      _displayRound: function(round) {
+        return (round < this.teams.setting.rounds) && this.view < 2;
       },
       _displayValue: function(val){
         return val >= this.view;
@@ -238,6 +296,12 @@
           type: Number,
           notify: false,
           readOnly: false,
+        },
+        approved: {
+          type: Boolean,
+          notify:true,
+          readOnly:false,
+          value: false,
         },
         noTeams: {
           type: Boolean,

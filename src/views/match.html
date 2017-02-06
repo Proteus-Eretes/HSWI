@@ -6,7 +6,6 @@
 <link rel="import" href="../services/reggata.html">
 <link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-block.html">
-<link rel="import" href="../teams/teamlist.html">
 <link rel="import" href="clubs.html">
 
 
@@ -28,7 +27,6 @@
       <club-list path="{{route}}" target="vereniging" clubs=[[clubs]]></club-list>
       <field-list-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-boat>
     </iron-pages>
-    <team-list view=0 path="{{route}}"></team-list>
   </template>
 
 
@@ -36,6 +34,7 @@
     Polymer({
       is: 'main-match',
       _updateRoute: function() {
+        if(this.route.split('/').length < 3) return;
         requestFields(this,this.route.split('/')[1],this.route.split('/')[2]);
         requestClubs(this,this.route.split('/')[1],this.route.split('/')[2]);
         switch (this.route.split('/')[3]) {

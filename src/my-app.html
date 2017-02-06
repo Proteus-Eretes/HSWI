@@ -16,6 +16,7 @@
 <link rel="import" href="views/match.html">
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/lastResult.html">
+<link rel="import" href="teams/teamlist.html">
 
 <dom-module id="my-app">
   <template>
@@ -88,8 +89,15 @@
             <div main-title>Alpha hoesnelwasik</div>
           </app-toolbar>
         </app-header>
-        <last-result></last-result>
-        <main-match route="{{routeMatch}}"></main-match>
+        <template is="dom-if" if="[[homePage]]">
+          <last-result></last-result>
+        </template>
+        <template is="dom-if" if="[[matchPage]]">
+          <main-match route="{{routeMatch}}"></main-match>
+        </template>
+        <template is="dom-if" if="[[resultPage]]">
+          <team-list path="{{routeMatch}}"></team-list>
+        </template>
         <footer style="color: #FFF">
           Copyright <a style="color: #ECECEC" href="http://www.poweredbyiris.nl">PoweredByIRIS</a>
         </footer>
@@ -123,6 +131,24 @@
           notify: true,
           readOnly: false,
           observer: '_updateRouteMatch',
+        },
+        homePage: {
+          type: Boolean,
+          notify:true,
+          readOnly:false,
+          value:false,
+        },
+        matchPage: {
+          type: Boolean,
+          notify:true,
+          readOnly:false,
+          value:false,
+        },
+        resultPage: {
+          type: Boolean,
+          notify:true,
+          readOnly:false,
+          value:false,
         }
       },
 
@@ -138,9 +164,11 @@
           this.routeMatch = this.route.path;
           this.iframe = false;
         }
+        this._location();
       },
 
       _updateRouteMatch: function() {
+        this._location();
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.set('route.path', '/iframe' + this.routeMatch);
         } else {
@@ -152,6 +180,32 @@
         //TODO fix close off drawer
         if (!this.iframe && this.$.drawer && !this.$.drawer.persistent) {
           this.$.drawer.close();
+        }
+      },
+
+      _location: function() {
+        this.homePage = false;
+        this.matchPage = false;
+        this.resultPage = false;
+        switch (this.routeMatch.split('/').length) {
+          case 0:
+            this.homePage = true;
+            break
+          case 1:
+            this.homePage = true;
+            break;
+          case 2:
+            this.homePage = true;
+            break;
+          case 3:
+            this.matchPage = true;
+            break;
+          case 4:
+            this.matchPage = true;
+            break;
+          default:
+            this.resultPage = true;
+            break;
         }
       },
 
