@@ -21,6 +21,7 @@ With polymer 2 javascript will be writen in ES6/ES2015/ES2016 which will then be
 | Team list       | Completed      |List of teams               |     -|
 | Search element  | To be started  |                            | [#]  |
 | Match overview  | Completed      |Group toss,club,results,com |     -|
+| Match I overview| To be started  |Match overview + years      | [#]  |
 
 ### Styling
 
@@ -42,12 +43,13 @@ This is about the compoments decided above
 | Team list       | Partial        |Requires design             | [#]  |
 | Search element  | To be started  |Requires design             | [#]  |
 | Match overview  | Partial        |Group toss,club,results,com | [#]  |
+| Match I overview| To be started  |Match overview + years      | [#]  |
 
 ### Required logic
 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
-| Routing         | Nearly done    |Routing with in app         | [#]  |
+| Routing         | Nearly done    |Routing with in app         |     -|
 
 ### To think about
 
