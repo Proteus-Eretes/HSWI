@@ -184,7 +184,7 @@
       </table>
     </template>
     <template is="dom-if" if="[[teams.error]]">
-      <no-match></no-match>
+      <no-match><div>[[_errorMessage()]]</div></no-match>
     </template>
   </template>
 
@@ -195,6 +195,11 @@
         if(this.path.split('/').length < 5) return;
         requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
         this.name = this.path.split('/')[4];
+      },
+      _errorMessage: function () {
+        if (this.path.split('/')[4] === 'search')
+          return 'U zoek opdracht heeft geen resultaat op geleverd';
+        return 'Dit veld bestaat helaas niet';
       },
       _isField: function (team) {
         switch (this.path.split('/')[4]) {
