@@ -21,7 +21,7 @@
               </div>
           </app-toolbar>
           <div class="grid-list-container">
-            <template is="dom-repeat" items="[[fields.fields]]" as="field">
+            <template is="dom-repeat" items="[[fieldlist]]" as="field">
               <template is="dom-if" if="[[_hasRowers(item,field)]]">
                 <div on-click="_openField" class="grid-tile">
                   <h4>[[field.fieldnameshort]]</h4>
@@ -51,6 +51,13 @@
       _hasRowers: function(n,field) {
         return +field.numberofrowers === n;
       },
+      _uniqBy: function () {
+        if (this.fields.error === false){
+          console.log(this.fields.fields);
+          this.fieldlist = uniqBy(this.fields.fields,'fieldnameshort');
+          console.log(this.fieldlist);
+        }
+      },
       properties: {
         path: {
           type: String,
@@ -64,6 +71,13 @@
           value: 'uitslagen',
         },
         fields: {
+          type:Object,
+          notify:true,
+          readOnly:false,
+          value: {error: true},
+          observer: '_uniqBy'
+        },
+        fieldslist: {
           type:Object,
           notify:true,
           readOnly:false,

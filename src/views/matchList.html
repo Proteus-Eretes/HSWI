@@ -37,7 +37,7 @@
     <ul>
       <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
         <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
-          <ul class="subitem" data-selected="false">
+          <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
             <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}" sort="_yearSort">
               <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
             </template>
@@ -60,8 +60,9 @@
           return basematch.shortname === match.shortname;
         }
       },
-      _selectedMatch: function(e) {
-        console.log('TODO select a match from the list');
+      _selectedMatch: function(match,route) {
+        if (match.shortname === route.path.split('/')[1]) return 'true';
+        return 'false';
       },
       _createList: function() {
         this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
@@ -82,12 +83,6 @@
         this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
       },
       properties: {
-        currentMatch: {
-          type: Array,
-          notify: true,
-          readOnly: false,
-          observer: '_selectedMatch',
-        },
         regattas: {
           type: Array,
           notify:true,
