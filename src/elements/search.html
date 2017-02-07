@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="search-match">
+  <template>
+    <style>
+    </style>
+    <paper-input id="search" label="Zoek op naam, ploeg of vereniging" type=search on-keydown="_search"></paper-input>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'search-match',
+      _search: function (e) {
+        if (e.keyCode === 13 || e.which === 13 || e.key === 'Enter') {
+          this.set('route', this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);
+        }
+      },
+      properties: {
+        route: {
+          type: String,
+          notify: true,
+          readOnly: false,
+        },
+        target: {
+          type: Number,
+          notify: true,
+          readOnly: false,
+          value: 'search'
+        }
+      },
+    });
+  </script>
+</dom-module>

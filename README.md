@@ -19,7 +19,7 @@ With polymer 2 javascript will be writen in ES6/ES2015/ES2016 which will then be
 | View clubs      | Completed      |List of clubs               |     -|
 | View competitors| Completed      |List of fields              |     -|
 | Team list       | Completed      |List of teams               |     -|
-| Search element  | To be started  |                            | [#]  |
+| Search element  | Completed      |                            |     -|
 | Match overview  | Completed      |Group toss,club,results,com |     -|
 | Match I overview| To be started  |Match overview + years      | [#]  |
 

@@ -17,6 +17,7 @@
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/lastResult.html">
 <link rel="import" href="teams/teamlist.html">
+<link rel="import" href="elements/search.html">
 
 <dom-module id="my-app">
   <template>
@@ -69,10 +70,10 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <template is="dom-if" if="[[!iframe]]">
+      <template is="dom-if" id="menu" if="[[!iframe]]">
         <app-drawer swipe-open="true" id="drawer">
           <div style="height: 100%; overflow: auto;">
-          <app-toolbar class="menu-header" >Wedstrijden</app-toolbar>
+            <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
             <match-list route="{{route}}"></match-list>
           </div>
         </app-drawer>
@@ -87,6 +88,12 @@
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
             <div main-title>Alpha hoesnelwasik</div>
+            <template is="dom-if" if="[[matchPage]]">
+              <search-match route="{{routeMatch}}"></search-match>
+            </template>
+            <template is="dom-if" if="[[resultPage]]">
+              <search-match route="{{routeMatch}}"></search-match>
+            </template>
           </app-toolbar>
         </app-header>
         <template is="dom-if" if="[[homePage]]">
@@ -178,7 +185,7 @@
 
       _routePageChanged: function(page) {
         //TODO fix close off drawer
-        if (!this.iframe && this.$.drawer && !this.$.drawer.persistent) {
+        if (!this.iframe && this.$.menu.drawer && !this.$.menu.drawer.persistent) {
           this.$.drawer.close();
         }
       },
