@@ -13,7 +13,7 @@
   };
 
   var requestReggataList = function(self) {
-      fetch('http://beta.hoesnelwasik.nl/api/')
+      fetch('https://beta.hoesnelwasik.nl/api/')
         .then(
           function(res) {
             if (res.status !== 200) {
@@ -35,7 +35,7 @@
       if (!year) {
         year = 0;
       }
-      fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
+      fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
         .then(
           function(res) {
             if (res.status !== 200) {
@@ -57,7 +57,7 @@
       if (!year) {
         year = 0;
       }
-      fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')
+      fetch('http://beta.hoesnelwasik.nl/api/index.php/wd/'+match+'/'+year+'/clublist/')
         .then(
           function(res) {
             if (res.status !== 200) {

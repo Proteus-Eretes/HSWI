@@ -4,7 +4,7 @@ var requestTeams = function(self,match,year,field,choice) {
   if (!year) {
     year = 0;
   }
-  fetch('http://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/'+field+'/' + choice)
+  fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/'+field+'/' + choice)
     .then(
       function(res) {
         if (res.status !== 200) {
