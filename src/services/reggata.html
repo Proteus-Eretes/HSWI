@@ -57,7 +57,7 @@
       if (!year) {
         year = 0;
       }
-      fetch('http://beta.hoesnelwasik.nl/api/index.php/wd/'+match+'/'+year+'/clublist/')
+      fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')
         .then(
           function(res) {
             if (res.status !== 200) {

@@ -86,7 +86,7 @@
             <template is="dom-if" if="[[!iframe]]">
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
-            <div onclick="goHome" main-title>Alpha hoesnelwasik</div>
+            <div on-tap="goHome" main-title>Alpha hoesnelwasik</div>
             <template is="dom-if" if="[[matchPage]]">
               <back-button route="{{routeMatch}}"></back-button>
               <search-match route="{{routeMatch}}"></search-match>
