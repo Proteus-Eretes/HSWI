@@ -14,8 +14,7 @@
     </style>
     <div>
       <span>
-        <img class="cluboars"
-               src$="https://beta.hoesnelwasik.nl/images/cluboars/[[_lowerCase(club)]].png">
+        <img class="cluboars" src$="[[_lowerCase(club)]]">
       </span>
     </div>
   </template>
@@ -24,14 +23,15 @@
     Polymer({
       is: 'oars-img',
       _lowerCase : function(name) {
-        return name.toLowerCase()
+        if (name)
+          return "/images/cluboars/"+name.toLowerCase()+".png";
+        return '';
       },
       properties: {
         club : {
           type: String,
           notify:false,
           readOnly: false,
-          value: 'unkown',
         }
       }
     })

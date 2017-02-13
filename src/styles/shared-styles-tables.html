@@ -41,11 +41,13 @@
           max-width:150px;
       }
       .teamname {
+          max-width: 150px;
           font-weight: 500;
       }
       .teamname:hover {
           cursor: pointer;
       }
+
       td {
           text-align: center;
       }
@@ -55,6 +57,12 @@
         position: relative;
         top: -1.1rem;
         padding: 5px;
+      }
+
+      @media screen and (max-width: 350px) {
+        .teamname {
+          max-width: 90px;
+        }
       }
 
     </style>
