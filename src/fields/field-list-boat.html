@@ -20,10 +20,10 @@
                   <img class="rowing" src$="/images/row[[item]].png">
               </div>
           </app-toolbar>
-          <div class="grid-list-container">
+          <div class="app-grid">
             <template is="dom-repeat" items="[[fieldlist]]" as="field">
               <template is="dom-if" if="[[_hasRowers(item,field)]]">
-                <div on-click="_openField" class="grid-tile">
+                <div on-click="_openField" class="item">
                   <h4>[[field.fieldnameshort]]</h4>
                 </div>
               </template>

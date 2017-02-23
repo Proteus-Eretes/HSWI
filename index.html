@@ -59,7 +59,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'use strict';
 
         var onload = function() {
-          console.log('onload');
           // For native Imports, manually fire WebComponentsReady so user code
           // can use the same code path for native and polyfill'd imports.
           if (!window.HTMLImports) {
@@ -105,6 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </script>
 
+
     <link rel="import" href="/src/my-app.html">
     <link rel="import" href="/src/views/team.html">
 
@@ -119,6 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
   </head>
   <body>
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-92572628-1', 'auto');
+      //ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
     <my-app></my-app>
     <team-modal></team-modal>
   </body>

@@ -86,7 +86,7 @@
             <template is="dom-if" if="[[!iframe]]">
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
-            <div on-tap="goHome" main-title>Alpha hoesnelwasik</div>
+            <div on-click="goHome" main-title>Alpha hoesnelwasik</div>
             <template is="dom-if" if="[[matchPage]]">
               <back-button route="{{routeMatch}}"></back-button>
               <search-match route="{{routeMatch}}"></search-match>
@@ -172,14 +172,15 @@
           this.routeMatch = this.route.path;
           this.iframe = false;
         }
+        ga('send', 'pageview',this.route.path);
         this._location();
       },
 
-      goHome: function() {
+      goHome: function(e) {
         if (this.iframe) {
-          set('routeMatch','/' + this.routeMatch.split('/')[1]);
+          this.set('routeMatch','/' + this.routeMatch.split('/')[1]);
         } else {
-          set('routeMatch','/');
+          this.set('routeMatch','/');
         }
       },
 
@@ -211,7 +212,10 @@
             this.homePage = true;
             break;
           case 2:
-            this.homePage = true;
+            if (this.routeMatch.split('/')[1] != '')
+              this.matchPage = true;
+            else
+              this.homePage = true;
             break;
           case 3:
             this.matchPage = true;

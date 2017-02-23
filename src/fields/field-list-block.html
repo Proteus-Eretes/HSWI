@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../app/fields.html">
@@ -6,7 +7,7 @@
 
 <dom-module id="field-list-block">
   <template>
-    <style include="shared-styles shared-styles-fields">
+    <style include="shared-styles shared-styles-fields app-grid-style">
     </style>
     <template is="dom-if" if="[[!fields.error]]">
       <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
@@ -14,10 +15,10 @@
           <app-toolbar class="fieldHeader">
             <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
           </app-toolbar>
-          <div class="grid-list-container">
+          <div class="app-grid">
             <template is="dom-repeat" items="[[fields.fields]]" as="field">
               <template is="dom-if" if="[[_hasBlock(block,field)]]">
-                <div on-click="_openField" class="grid-tile">
+                <div on-click="_openField" class="item">
                   <h4>[[field.fieldnameshort]]</h4>
                 </div>
               </template>

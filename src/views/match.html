@@ -34,7 +34,12 @@
     Polymer({
       is: 'main-match',
       _updateRoute: function() {
-        if(this.route.split('/').length < 3) return;
+        if(this.route.split('/').length < 3)  {
+          requestFields(this,this.route.split('/')[1],0);
+          requestClubs(this,this.route.split('/')[1],0);
+          this.target = 0;
+          return;
+        }
         requestFields(this,this.route.split('/')[1],this.route.split('/')[2]);
         requestClubs(this,this.route.split('/')[1],this.route.split('/')[2]);
         switch (this.route.split('/')[3]) {
