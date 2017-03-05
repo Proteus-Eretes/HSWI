@@ -33,6 +33,12 @@
         background-color: var(--app-primary-color);
       }
 
+      .img-header-bar {
+        max-height: 64px;
+        width: auto;
+        height: auto;
+        max-width: 64px;
+      }
       .menu-header {
         background-color: #ECECEC;
       }
@@ -86,6 +92,7 @@
             <template is="dom-if" if="[[!iframe]]">
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
+            <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
             <div on-click="goHome">Alpha hoesnelwasik</div>
             <div main-title></div>
             <template is="dom-if" if="[[matchPage]]">
@@ -162,7 +169,7 @@
       },
 
       observers: [
-        '_routePageChanged(routeData.page)',
+        '_routePageChanged(route)',
       ],
 
       _updateRoute: function() {
@@ -195,12 +202,12 @@
       },
 
       _routePageChanged: function(page) {
-        //TODO fix close off drawer
-        if (!this.iframe && this.$.menu.drawer && !this.$.menu.drawer.persistent) {
-          this.$.drawer.close();
+        if (!this.iframe && this.$$('#drawer') && !this.$$('#drawer').persistent) {
+          this.$$('#drawer').close();
         }
       },
 
+      //TODO make this into arrow functions for flexiblity
       _location: function() {
         this.homePage = false;
         this.matchPage = false;
