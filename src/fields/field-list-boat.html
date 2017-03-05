@@ -17,8 +17,7 @@
         <div class="card">
           <app-toolbar class="fieldHeader">
               <div>
-                <!--GET the size-->
-                  <img class="rowing" src$="https://images.poweredbyiris.nl/boats/row[[item]].png">
+                <img class="rowing" src$="[[_img(item)]]">
               </div>
           </app-toolbar>
           <div class="app-grid">
@@ -56,6 +55,11 @@
         if (this.fields.error === false){
           this.fieldlist = uniqBy(this.fields.fields,'fieldnameshort');
         }
+      },
+      _img : function(name) {
+        if (name)
+          return "https://images.poweredbyiris.nl/boats/row"+name+".png";
+        return '';
       },
       properties: {
         path: {
