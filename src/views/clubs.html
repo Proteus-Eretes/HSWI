@@ -47,7 +47,7 @@
     Polymer({
       is: 'club-list',
       _openMatch: function(e) {
-        this.set('path', this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
+        this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
       },
       properties: {
         clubs: {
