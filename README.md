@@ -23,7 +23,7 @@ A view good tutorials to get started
 | last results    | Completed      |Display last 15 teams       |     -|
 | Finish time     | Completed      |Time,disqualified,excluded  |     -|
 | Team overview   | Completed      |Team info hover dialog      |     -|
-| Headbar         | In progress    |Search,Logo,Breadcrumbs     | [#]  |
+| Headbar         | Completed      |Search,Logo,Breadcrumbs     |     -|
 | Menubar         | Completed      |List of matches             |     -|
 | View results    | Completed      |List of fields              |     -|
 | View toss       | Completed      |List of fields              |     -|

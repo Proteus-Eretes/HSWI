@@ -97,9 +97,12 @@
             <div main-title></div>
             <template is="dom-if" if="[[matchPage]]">
               <back-button route="{{routeMatch}}"></back-button>
+              <div on-click="goHome">[[_match(routeMatch)]]</div>
               <search-match route="{{routeMatch}}"></search-match>
             </template>
             <template is="dom-if" if="[[resultPage]]">
+              <div on-click="goHome">[[_match(routeMatch)]] </div>
+              <div on-click="goToMatch">[[_field(routeMatch)]]</div>
               <back-button route="{{routeMatch}}"></back-button>
               <search-match route="{{routeMatch}}"></search-match>
             </template>
@@ -184,12 +187,24 @@
         this._location();
       },
 
+      _match: function(route) {
+        return route.split('/')[1];
+      },
+
+      _field: function(route) {
+        return route.split('/')[3];
+      },
+
       goHome: function(e) {
         if (this.iframe) {
           this.set('routeMatch','/' + this.routeMatch.split('/')[1]);
         } else {
           this.set('routeMatch','/');
         }
+      },
+
+      goToMatch: function(e) {
+        this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
       },
 
       _updateRouteMatch: function() {
