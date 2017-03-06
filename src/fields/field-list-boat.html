@@ -14,7 +14,7 @@
     }
     </style>
     <template is="dom-if" if="[[!fields.error]]">
-      <template is="dom-repeat" items=[[n]] filter="_hasFields">
+      <template is="dom-repeat" items=[[n]]>
         <div class="card">
           <app-toolbar class="fieldHeader">
               <div>
@@ -42,19 +42,23 @@
   <script>
     Polymer({
       is: 'field-list-boat',
-      n: [1,2,4,8],
       _openField: function(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
-      },
-      _hasFields: function(n) {
-        return hasFields(this.fields.fields,n);
       },
       _hasRowers: function(n,field) {
         return +field.numberofrowers === n;
       },
       _uniqBy: function () {
         if (this.fields.error === false){
-          this.fieldlist = uniqBy(this.fields.fields,'fieldnameshort');
+          var n = [];
+          var m = [1,2,4,8];
+          this.set('fieldlist',uniqBy(this.fields.fields,'fieldnameshort'));
+          for (var i = 0; i < m.length; i++) {
+            if(hasFields(this.fieldlist, m[i])) {
+              n.push(m[i])
+            }
+          }
+          this.set('n',n);
         }
       },
       _img : function(name) {
@@ -89,6 +93,8 @@
         },
         n: {
           type: Array,
+          notify:true,
+          readOnly:false,
           value: [1,2,4,8],
         }
       },

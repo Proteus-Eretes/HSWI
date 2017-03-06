@@ -244,7 +244,7 @@
         return team.times[0].backnumber;
       },
       _hasBacknumber: function(team) {
-        if (team.backnumber || team.times[0].backnumber) return true;
+        if (team.backnumber || (team.times && team.times[0].backnumber)) return true;
       },
       _comment: function () {
         return this.team.times[0].comments;
