@@ -28,8 +28,9 @@
       }
       </style>
     <paper-dialog id="modal" modal>
-    <h2> [[team.teamname]]</h2>
+      <h2> [[team.teamname]]</h2>
       <paper-dialog-scrollable>
+        <template is="dom-if" if="[[active]]">
           <table class="table hover-table">
           <tbody>
             <template is="dom-if" if=[[_show(team.clubname)]]>
@@ -219,11 +220,12 @@
             </template>
           </tbody>
         </table>
-      </paper-dialog-scrollable>
-      <div class="buttons">
-        <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
-        <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
-      </div>
+      </template>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+      <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
+      <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
+    </div>
     </paper-dialog>
   </template>
 
@@ -231,11 +233,12 @@
   <script>
     Polymer({
       is: 'team-modal',
+      active:false,
       _show: function(val) {
         return val !== null && val !== '' && val !== undefined && val != 0;
       },
       _showComment: function() {
-        if(this.teams)
+        if(this.team.times)
           return this._show(this.team.times[0].comments);
         return false;
       },
@@ -272,20 +275,27 @@
       },
       toggle: function(team) {
         this.team = team;
+        this.active = true;
         this.$.modal.toggle();
       },
       properties: {
         team: {
           type: Array,
-          notify: false,
+          notify: true,
           readOnly: false,
         },
         rounds: {
           type: Boolean,
-          notify: false,
+          notify: true,
           readOnly: false,
           value: false,
-        }
+        },
+        active: {
+          type: Boolean,
+          notify: true,
+          readOnly: false,
+          value: false,
+        },
       },
     });
   </script>
