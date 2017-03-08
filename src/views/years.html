@@ -58,7 +58,7 @@
         this._updateYear();
       },
       _updateYear: function () {
-        if (this.path.split('/').length === 3 && this.path.split('/')[2] !== '') {
+        if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
           this.set('currentYear',this.path.split('/')[2]);
         } else {
           this.set('currentYear',this.reggataList[0].jaar);
