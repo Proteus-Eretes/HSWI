@@ -197,7 +197,11 @@
 
       goHome: function(e) {
         if (this.iframe) {
-          this.set('routeMatch','/' + this.routeMatch.split('/')[1]);
+          if (this.routeMatch.split('/').length > 2) {
+            this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+          } else {
+            this.set('routeMatch','/' + this.routeMatch.split('/')[1]);
+          }
         } else {
           this.set('routeMatch','/');
         }
