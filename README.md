@@ -32,7 +32,7 @@ A view good tutorials to get started
 | Team list       | Completed      |List of teams               |     -|
 | Search element  | Completed      |                            |     -|
 | Match overview  | Completed      |Group toss,club,results,com |     -|
-| Match I overview| Started        |Match overview + years      | [#]  |
+| Match I overview| Completed      |Match overview + years      |     -|
 
 ### Styling
 
@@ -44,7 +44,7 @@ This is about the compoments decided above
 | Oars            | Completed      |                            |     -|
 | last results    | Partial        |Requires design             | [#]  |
 | Finish time     | Completed      |                            |     -|
-| Team overview   | To be started  |Requires design             | [#]  |
+| Team overview   | Partial        |Requires design             | [#]  |
 | Headbar         | Partial        |Requires design             | [#]  |
 | Menubar         | Partial        |Requires design             | [#]  |
 | View results    | Partial        |Requires design             | [#]  |
@@ -52,15 +52,16 @@ This is about the compoments decided above
 | View clubs      | Partial        |Requires design             | [#]  |
 | View competitors| Do we want it? |Requires design             | [#]  |
 | Team list       | Partial        |Requires design             | [#]  |
-| Search element  | To be started  |Requires design             | [#]  |
+| Search element  | Partial        |Requires design             | [#]  |
 | Match overview  | Partial        |Group toss,club,results,com | [#]  |
-| Match I overview| To be started  |Match overview + years      | [#]  |
+| Match I overview| Partial        |Match overview + years      | [#]  |
 
 ### Required logic
 
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
 | Routing         | Completed      |Routing with in app         |     -|
+| Auto scroll     | To be started  |Scroll logical after click  |  [#]-|
 
 ### To think about
 

@@ -52,8 +52,7 @@
     Polymer({
       is: 'match-list',
       ready: function() {
-        var self = this;
-        requestReggataList(self);
+        requestReggataList(this);
       },
       _getYears: function(basematch) {
         return function(match) {

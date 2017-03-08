@@ -11,13 +11,22 @@
     <style include="shared-styles shared-styles-fields app-grid-style">
     </style>
       <div class="card">
-        <div class="app-grid">
-        <template is="dom-repeat" items="[[reggataList]]" as="year">
-            <div on-click="_openYear" class="item">
-              <h4>[[year.jaar]]</h4>
+        <template is="dom-if" if="[[!selected]]">
+          <div class="app-grid">
+          <template is="dom-repeat" items="[[reggataList]]" as="year">
+              <div on-click="_openYear" class="item">
+                <h4>[[year.jaar]]</h4>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template is="dom-if" if="[[selected]]">
+          <div class="app-grid">
+            <div on-click="_toggleList" class="item">
+              <h4>[[currentYear]] - selecteer een ander jaar</h4>
             </div>
-          </template>
-        </div>
+          </div>
+        </template>
       </div>
     <template is="dom-if" if="[[fields.error]]">
       <no-match><div>Wedstrijd bestaat niet</div></no-match>
@@ -29,7 +38,12 @@
     Polymer({
       is: 'i-year-list',
       _openYear: function(e) {
-        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar + '/' + this.target);
+        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
+        this.set('selected',true);
+        this._updateYear();
+      },
+      _toggleList: function(e) {
+        this.set('selected',false);
       },
       _createList: function() {
         var path = this.path.split('/')[1];
@@ -40,7 +54,15 @@
         );
         this.reggataList.sort(function(a,b) {
           return (+b.jaar) - (+a.jaar) ;
-        })
+        });
+        this._updateYear();
+      },
+      _updateYear: function () {
+        if (this.path.split('/').length === 3 && this.path.split('/')[2] !== '') {
+          this.set('currentYear',this.path.split('/')[2]);
+        } else {
+          this.set('currentYear',this.reggataList[0].jaar);
+        }
       },
       ready: function() {
         requestReggataList(this);
@@ -57,15 +79,16 @@
           notify:false,
           readOnly:false,
         },
-        target: {
-          type: String,
-          notify: true,
-          readOnly: true,
-        },
         path: {
           type: Object,
           notify:true,
           readOnly:false,
+        },
+        selected: {
+          type: Boolean,
+          notify:true,
+          readOnly:false,
+          value:true,
         },
       },
     });
