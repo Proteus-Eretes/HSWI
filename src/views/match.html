@@ -7,12 +7,16 @@
 <link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-block.html">
 <link rel="import" href="clubs.html">
-
+<link rel="import" href="years.html">
 
 <dom-module id="main-match">
   <template>
     <style include="shared-styles">
     </style>
+
+    <template is="dom-if" if="[[iframe]]">
+      <i-year-list path="{{route}}"></i-year-list>
+    </template>
 
     <paper-tabs selected="{{target}}" scrollable fit-container>
       <paper-tab>Uitslagen</paper-tab>
@@ -38,6 +42,7 @@
           requestFields(this,this.route.split('/')[1],0);
           requestClubs(this,this.route.split('/')[1],0);
           this.target = 0;
+          console.log(this.iframe);
           return;
         }
         requestFields(this,this.route.split('/')[1],this.route.split('/')[2]);
@@ -70,7 +75,12 @@
           type: Number,
           notify: true,
           readOnly: false,
-        }
+        },
+        iframe: {
+          type: Boolean,
+          notify: true,
+          readOnly:false,
+        },
       },
     });
   </script>

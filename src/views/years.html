@@ -1,0 +1,73 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-fields.html">
+<link rel="import" href="../app/fields.html">
+<link rel="import" href="../views/noMatch.html">
+<link rel="import" href="../services/reggata.html">
+
+
+<dom-module id="i-year-list">
+  <template>
+    <style include="shared-styles shared-styles-fields app-grid-style">
+    </style>
+      <div class="card">
+        <div class="app-grid">
+        <template is="dom-repeat" items="[[reggataList]]" as="year">
+            <div on-click="_openYear" class="item">
+              <h4>[[year.jaar]]</h4>
+            </div>
+          </template>
+        </div>
+      </div>
+    <template is="dom-if" if="[[fields.error]]">
+      <no-match><div>Wedstrijd bestaat niet</div></no-match>
+    </template>
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'i-year-list',
+      _openYear: function(e) {
+        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar + '/' + this.target);
+      },
+      _createList: function() {
+        var path = this.path.split('/')[1];
+        this.reggataList = this.regattas.regattas.filter(
+          function(match) {
+            return match.shortname === path;
+          }
+        );
+        this.reggataList.sort(function(a,b) {
+          return (+b.jaar) - (+a.jaar) ;
+        })
+      },
+      ready: function() {
+        requestReggataList(this);
+      },
+      properties: {
+        regattas: {
+          type: Array,
+          notify:true,
+          readOnly:false,
+          observer: '_createList',
+        },
+        reggataList: {
+          type: Array,
+          notify:false,
+          readOnly:false,
+        },
+        target: {
+          type: String,
+          notify: true,
+          readOnly: true,
+        },
+        path: {
+          type: Object,
+          notify:true,
+          readOnly:false,
+        },
+      },
+    });
+  </script>
+</dom-module>

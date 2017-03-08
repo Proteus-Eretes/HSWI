@@ -93,7 +93,7 @@
               <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             </template>
             <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
-            <div on-click="goHome">Alpha hoesnelwasik</div>
+            <div on-click="goHome">Hoesnelwasik</div>
             <div main-title></div>
             <template is="dom-if" if="[[matchPage]]">
               <back-button route="{{routeMatch}}"></back-button>
@@ -112,7 +112,7 @@
           <last-result></last-result>
         </template>
         <template is="dom-if" if="[[matchPage]]">
-          <main-match route="{{routeMatch}}"></main-match>
+          <main-match route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
         </template>
         <template is="dom-if" if="[[resultPage]]">
           <team-list path="{{routeMatch}}"></team-list>

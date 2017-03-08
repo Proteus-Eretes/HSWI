@@ -32,7 +32,7 @@ A view good tutorials to get started
 | Team list       | Completed      |List of teams               |     -|
 | Search element  | Completed      |                            |     -|
 | Match overview  | Completed      |Group toss,club,results,com |     -|
-| Match I overview| To be started  |Match overview + years      | [#]  |
+| Match I overview| Started        |Match overview + years      | [#]  |
 
 ### Styling
 
