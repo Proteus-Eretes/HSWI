@@ -248,7 +248,7 @@
           this.approved = true;
         }
       }
-      _returnToMatch(e) {
+      _returnToMatch(newValue, oldValue) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
       }
       _teamsChanged(newValue, oldValue) {
@@ -318,6 +318,7 @@
             type: String,
             notify: true,
             readOnly: false,
+            observer:'_returnToMatch'
           },
           approved: {
             type: Boolean,
