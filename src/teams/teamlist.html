@@ -197,7 +197,7 @@
         super.connectedCallback();
       }
 
-      _updateRoute() {
+      _updateRoute(newValue, oldValue) {
         if(this.path.split('/').length < 5) return;
         requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
         this.name = this.path.split('/')[4];
@@ -251,7 +251,7 @@
       _returnToMatch(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
       }
-      _teamsChanged() {
+      _teamsChanged(newValue, oldValue) {
         if (this.teams.error === false) {
           this.noTeams = false;
           this.splashCount = checkSplash(this.teams.teams);
@@ -318,7 +318,6 @@
             type: String,
             notify: true,
             readOnly: false,
-            observer:'_returnToMatch'
           },
           approved: {
             type: Boolean,

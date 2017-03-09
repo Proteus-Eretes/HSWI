@@ -22,12 +22,10 @@
               </div>
           </app-toolbar>
           <div class="app-grid">
-            <template is="dom-repeat" items="[[fieldlist]]" as="field">
-              <template is="dom-if" if="[[_hasRowers(item,field)]]">
+            <template is="dom-repeat" items="[[_getFieldList(item,fieldlist)]]" as="field">
                 <div on-click="_openField" class="item">
                   <h4>[[field.fieldnameshort]]</h4>
                 </div>
-              </template>
             </template>
           </div>
         </div>
@@ -52,10 +50,13 @@
       _openField(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       }
-      _hasRowers(n,field) {
-        return +field.numberofrowers === n;
+      _getFieldList(n,fieldlist) {
+        return fieldlist.filter(
+          function(field) {
+            return +field.numberofrowers === n;
+        });
       }
-      _uniqBy () {
+      _uniqBy (newValue, oldValue) {
         if (this.fields.error === false){
           var n = [];
           var m = [1,2,4,8];

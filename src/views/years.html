@@ -52,7 +52,7 @@
     _toggleList(e) {
       this.set('selected',false);
     }
-    _createList() {
+    _createList(newValue, oldValue) {
       var path = this.path.split('/')[1];
       this.reggataList = this.regattas.regattas.filter(
         function(match) {

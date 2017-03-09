@@ -129,7 +129,7 @@
         super.connectedCallback();
       }
 
-      _teamsChanged() {
+      _teamsChanged(newValue, oldValue) {
         if (this.noTeams === false) {
           this.splashCount = checkSplash(this.teams);
           this.displaySplash1=this._displaySplash(1);

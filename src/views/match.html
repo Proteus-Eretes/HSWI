@@ -44,7 +44,7 @@
         super.connectedCallback();
       }
 
-      _updateRoute() {
+      _updateRoute(newValue, oldValue) {
         if(this.route.split('/').length < 3)  {
           requestFields(this,this.route.split('/')[1],0);
           requestClubs(this,this.route.split('/')[1],0);

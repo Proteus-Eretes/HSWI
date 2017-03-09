@@ -68,7 +68,7 @@
         if (match.shortname === route.path.split('/')[1]) return 'true';
         return 'false';
       }
-      _createList() {
+      _createList(newValue, oldValue) {
         this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
       }
       _alhpabetSort(a,b) {

@@ -75,23 +75,23 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <template is="dom-if" id="menu" if="[[!iframe]]">
-        <app-drawer swipe-open="true" id="drawer">
+      <!--<template is="dom-if" if="[[!iframe]]">-->
+        <app-drawer swipe-open id="drawer">
           <div style="height: 100%; overflow: auto;">
             <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
             <match-list route="{{route}}"></match-list>
           </div>
         </app-drawer>
-      </template>
+      <!--</template>-->
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header reveals effects="waterfall">
           <app-toolbar>
-            <template is="dom-if" if="[[!iframe]]">
-              <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            </template>
+            <!--<template is="dom-if" if="[[!iframe]]">-->
+              <paper-icon-button id="menu" icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <!--</template>-->
             <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
             <div on-click="goHome">Hoesnelwasik</div>
             <div main-title></div>
@@ -132,8 +132,16 @@
 
       static get is() { return 'my-app' }
 
+      constructor() {
+        super();
+      }
+
       connectedCallback() {
         super.connectedCallback();
+        var self = this;
+        this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
+          self.shadowRoot.querySelector('#drawer').toggle();
+        });
       }
 
       _updateRoute(newValue, oldValue) {
