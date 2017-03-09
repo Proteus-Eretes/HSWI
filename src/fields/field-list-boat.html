@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../app/fields.html">
@@ -22,12 +22,10 @@
               </div>
           </app-toolbar>
           <div class="app-grid">
-            <template is="dom-repeat" items="[[fieldlist]]" as="field">
-              <template is="dom-if" if="[[_hasRowers(item,field)]]">
+            <template is="dom-repeat" items="[[_getFieldList(item,fieldlist)]]" as="field">
                 <div on-click="_openField" class="item">
                   <h4>[[field.fieldnameshort]]</h4>
                 </div>
-              </template>
             </template>
           </div>
         </div>
@@ -40,15 +38,25 @@
 
 
   <script>
-    Polymer({
-      is: 'field-list-boat',
-      _openField: function(e) {
+    // Extend Polymer.Element base class
+    class FieldListBoat extends Polymer.Element {
+
+      static get is() { return 'field-list-boat' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _openField(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
-      },
-      _hasRowers: function(n,field) {
-        return +field.numberofrowers === n;
-      },
-      _uniqBy: function () {
+      }
+      _getFieldList(n,fieldlist) {
+        return fieldlist.filter(
+          function(field) {
+            return +field.numberofrowers === n;
+        });
+      }
+      _uniqBy (newValue, oldValue) {
         if (this.fields.error === false){
           var n = [];
           var m = [1,2,4,8];
@@ -60,44 +68,50 @@
           }
           this.set('n',n);
         }
-      },
-      _img : function(name) {
+      }
+      _img(name) {
         if (name)
           return "https://images.poweredbyiris.nl/boats/row"+name+".png";
         return '';
-      },
-      properties: {
-        path: {
-          type: String,
-          notify:true,
-          readOnly:false,
-        },
-        target: {
-          type: String,
-          notify:false,
-          readOnly:false,
-          value: 'uitslagen',
-        },
-        fields: {
-          type:Object,
-          notify:true,
-          readOnly:false,
-          value: {error: true},
-          observer: '_uniqBy'
-        },
-        fieldslist: {
-          type:Object,
-          notify:true,
-          readOnly:false,
-          value: {error: true},
-        },
-        n: {
-          type: Array,
-          notify:true,
-          readOnly:false,
-          value: [1,2,4,8],
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          path: {
+            type: String,
+            notify:true,
+            readOnly:false,
+          },
+          target: {
+            type: String,
+            notify:false,
+            readOnly:false,
+            value: 'uitslagen',
+          },
+          fields: {
+            type:Object,
+            notify:true,
+            readOnly:false,
+            value: {error: true},
+            observer: '_uniqBy'
+          },
+          fieldslist: {
+            type:Object,
+            notify:true,
+            readOnly:false,
+            value: {error: true},
+          },
+          n: {
+            type: Array,
+            notify:true,
+            readOnly:false,
+            value: [1,2,4,8],
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(FieldListBoat.is, FieldListBoat);
   </script>
 </dom-module>

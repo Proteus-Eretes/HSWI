@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <script>
 var finalTime = function(time, bonussecond) {
   if (+time === 0) {
@@ -42,22 +42,34 @@ var formatTime = function (time) {
     </template>
   </template>
   <script>
-  'use strict';
-  Polymer({
-    is: 'final-time',
-    _displayTime: function(time,bonussecond) {
-      return formatTime(finalTime(time,bonussecond));
-    },
-    _hasValue: function(field) {
-      return field == 0;
-    },
-    properties: {
-      team : {
-        type: Array,
-        notify:false,
-        readOnly: false,
-      }
+  // Extend Polymer.Element base class
+  class FinalTime extends Polymer.Element {
+
+    static get is() { return 'final-time' }
+
+    connectedCallback() {
+      super.connectedCallback();
     }
-  })
+
+    _displayTime(time,bonussecond) {
+      return formatTime(finalTime(time,bonussecond));
+    }
+    _hasValue(field) {
+      return field == 0;
+    }
+
+    static get properties() {
+      return {
+        team : {
+          type: Array,
+          notify:false,
+          readOnly: false,
+        }
+      };
+    }
+  }
+
+  // Register custom element definition using standard platform API
+  customElements.define(FinalTime.is, FinalTime);
   </script>
 </dom-module>

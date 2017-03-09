@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../app/fields.html">
@@ -15,12 +15,10 @@
             <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
           </app-toolbar>
           <div class="app-grid">
-            <template is="dom-repeat" items="[[fields.fields]]" as="field">
-              <template is="dom-if" if="[[_hasBlock(block,field)]]">
-                <div on-click="_openField" class="item">
-                  <h4>[[field.fieldnameshort]]</h4>
-                </div>
-              </template>
+            <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
+              <div on-click="_openField" class="item">
+                <h4>[[field.fieldnameshort]]</h4>
+              </div>
             </template>
           </div>
         </div>
@@ -33,45 +31,61 @@
 
 
   <script>
-    Polymer({
-      is: 'field-list-block',
-      _openField: function(e) {
+    //Extend Polymer.Element base class
+    class FieldListBlock extends Polymer.Element {
+
+      static get is() { return 'field-list-block' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _openField(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
-      },
-      _updateBlocks: function() {
+      }
+      _updateBlocks(newValue, oldValue) {
         this.blocks = fillFields(this.fields.fields,'blockid');
-      },
-      _hasBlock: function(block,field) {
-        return field.blockid === block.blockid;
-      },
-      _start: function(starttime) {
+      }
+      _getFields(block,fields) {
+        return fields.filter(
+          function (field) {
+            return field.blockid === block.blockid;
+          });
+      }
+      _start(starttime) {
         return starttime.slice(0, -2) + ':' + starttime.slice(-2)
-      },
-      _timeSort: function(a,b) {
+      }
+      _timeSort(a,b) {
         var r = a.daydate.localeCompare(b.daydate);
         if (r !== 0) return r;
         return parseInt(a.starttime,10) - parseInt(b.starttime,10)
-      },
-      properties: {
-        path: {
-          type: String,
-          notify:true,
-          readOnly:false,
-        },
-        fields: {
-          type:Array,
-          notify:false,
-          readOnly:false,
-          value: {error: true},
-          observer: '_updateBlocks',
-        },
-        target: {
-          type: String,
-          notify:false,
-          readOnly: false,
-          value: 'loting',
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          path: {
+            type: String,
+            notify:true,
+            readOnly:false,
+          },
+          fields: {
+            type:Array,
+            notify:false,
+            readOnly:false,
+            value: {error: true},
+            observer: '_updateBlocks',
+          },
+          target: {
+            type: String,
+            notify:false,
+            readOnly: false,
+            value: 'loting',
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(FieldListBlock.is, FieldListBlock);
   </script>
 </dom-module>

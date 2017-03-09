@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../app/team.html">
@@ -120,9 +120,16 @@
   </template>
 
   <script>
-    Polymer({
-      is: 'last-result-table',
-      _teamsChanged: function() {
+    // Extend Polymer.Element base class
+    class LastResultTable extends Polymer.Element {
+
+      static get is() { return 'last-result-table' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _teamsChanged(newValue, oldValue) {
         if (this.noTeams === false) {
           this.splashCount = checkSplash(this.teams);
           this.displaySplash1=this._displaySplash(1);
@@ -130,55 +137,61 @@
           this.displaySplash3=this._displaySplash(3);
           this.displaySplash4=this._displaySplash(4);
           }
-      },
-      _displayTime: function(time,bonussecond) {
+      }
+      _displayTime(time,bonussecond) {
         return formatTime(finalTime(time,bonussecond));
-      },
-      _setClasses: function(splash) {
+      }
+      _setClasses(splash) {
         if (this.splash === undefined)
           this.splash = this._getSplash();
         return (splash == this.splash) ? '' : 'show-gt-md';
-      },
-      _hasValue: function(field) {
+      }
+      _hasValue(field) {
         return field == 0;
-      },
-      _displaySplash: function(splash) {
+      }
+      _displaySplash(splash) {
         if (this.splash === undefined)
           this.splash = this._getSplash();
         if (this.splashCount === undefined)
           return this.splash >= splash;
         return (this.splash >= splash && splash < this.splashCount) || (this.splash >= splash && splash === 5);
-      },
-      _getSplash: function() {
+      }
+      _getSplash() {
         return this.getAttribute('data-splash');
-      },
-      _openTeam: function(e) {
+      }
+      _openTeam(e) {
         document.querySelector("team-modal").toggle(e.model.team);
-      },
-      properties: {
-        teams : {
-          type: Array,
-          notify:true,
-          readOnly:false,
-          observer: '_teamsChanged',
-        },
-        splash: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-        },
-        splashCount: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-        },
-        noTeams: {
-          type: Boolean,
-          notify: true,
-          readOnly:false,
-          value: true,
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          teams : {
+            type: Array,
+            notify:true,
+            readOnly:false,
+            observer: '_teamsChanged',
+          },
+          splash: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+          },
+          splashCount: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+          },
+          noTeams: {
+            type: Boolean,
+            notify: true,
+            readOnly:false,
+            value: true,
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(LastResultTable.is, LastResultTable);
   </script>
 </dom-module>

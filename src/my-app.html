@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -75,23 +75,19 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <template is="dom-if" id="menu" if="[[!iframe]]">
-        <app-drawer swipe-open="true" id="drawer">
-          <div style="height: 100%; overflow: auto;">
-            <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
-            <match-list route="{{route}}"></match-list>
-          </div>
-        </app-drawer>
-      </template>
+      <app-drawer style="z-index:1" swipe-open id="drawer">
+        <div style="height: 100%; overflow: auto;">
+          <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
+          <match-list route="{{route}}"></match-list>
+        </div>
+      </app-drawer>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header reveals effects="waterfall">
           <app-toolbar>
-            <template is="dom-if" if="[[!iframe]]">
-              <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            </template>
+            <paper-icon-button style$="[[_hide(iframe)]]" id="menu" icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
             <div on-click="goHome">Hoesnelwasik</div>
             <div main-title></div>
@@ -127,55 +123,29 @@
 
 
   <script>
-    Polymer({
-      is: 'my-app',
-      properties: {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
-        iframe: {
-          type: Boolean,
-          value: true,
-        },
-        route: {
-          type: Object,
-          notify: true,
-          readOnly: false,
-          observer: '_updateRoute',
-        },
-        routeMatch: {
-          type: String,
-          notify: true,
-          readOnly: false,
-          observer: '_updateRouteMatch',
-        },
-        homePage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-        matchPage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-        resultPage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-      },
+    // Extend Polymer.Element base class
+    class MyApp extends Polymer.Element {
 
-      observers: [
-        '_routePageChanged(route)',
-      ],
+      static get is() { return 'my-app' }
 
-      _updateRoute: function() {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        var self = this;
+        this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
+          self.shadowRoot.querySelector('#drawer').toggle();
+        });
+      }
+
+      _hide(iframe) {
+        if(!iframe) return '';
+        return 'display:none';
+      }
+
+      _updateRoute(newValue, oldValue) {
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.iframe = true;
           this.routeMatch = this.subRouteMatch.path;
@@ -185,17 +155,17 @@
         }
         ga('send', 'pageview',this.route.path);
         this._location();
-      },
+      }
 
-      _match: function(route) {
+      _match(route) {
         return route.split('/')[1];
-      },
+      }
 
-      _field: function(route) {
+      _field(route) {
         return route.split('/')[3];
-      },
+      }
 
-      goHome: function(e) {
+      goHome(e) {
         if (this.iframe) {
           if (this.routeMatch.split('/').length > 2) {
             this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
@@ -205,29 +175,29 @@
         } else {
           this.set('routeMatch','/');
         }
-      },
+      }
 
-      goToMatch: function(e) {
+      goToMatch(e) {
         this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-      },
+      }
 
-      _updateRouteMatch: function() {
+      _updateRouteMatch(newValue, oldValue) {
         this._location();
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.set('route.path', '/iframe' + this.routeMatch);
         } else {
           this.set('route.path', this.routeMatch);
         }
-      },
+      }
 
-      _routePageChanged: function(page) {
-        if (!this.iframe && this.$$('#drawer') && !this.$$('#drawer').persistent) {
-          this.$$('#drawer').close();
+      _routePageChanged(page) {
+        if (!this.iframe &&  this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
+          this.shadowRoot.querySelector('#drawer').close();
         }
-      },
+      }
 
       //TODO make this into arrow functions for flexiblity
-      _location: function() {
+      _location() {
         this.homePage = false;
         this.matchPage = false;
         this.resultPage = false;
@@ -254,7 +224,57 @@
             this.resultPage = true;
             break;
         }
-      },
-    });
+      }
+
+      static get observers() {
+        return ['_routePageChanged(route)'];
+      }
+
+      static get properties() {
+        return {
+          iframe: {
+            type: Boolean,
+            value: true,
+          },
+          route: {
+            type: Object,
+            notify: true,
+            readOnly: false,
+            observer: '_updateRoute',
+          },
+          routeMatch: {
+            type: String,
+            notify: true,
+            readOnly: false,
+            observer: '_updateRouteMatch',
+          },
+          homePage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          },
+          matchPage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          },
+          resultPage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          }
+        };
+      }
+
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(MyApp.is, MyApp);
+
+
+
   </script>
 </dom-module>

@@ -81,14 +81,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.head.appendChild(script);
           script = document.createElement('script');
           script.async = true;
-          script.src = '/bower_components/es6-promise/dist/es6-promise.auto.min.js';
+          script.src = '/bower_components/es6-promise/es6-promise.auto.min.js';
           document.head.appendChild(script);
         }
 
         if (!webComponentsSupported) {
           var script = document.createElement('script');
           script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.js';
           script.onload = onload;
           document.head.appendChild(script);
         } else {

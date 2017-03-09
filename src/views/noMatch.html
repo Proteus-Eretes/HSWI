@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="no-match">
   <template>
@@ -10,8 +10,15 @@
     <slot select="div"></slot>
   </template>
   <script>
-    Polymer({
-      is: 'no-match',
-    });
+  // Extend Polymer.Element base class
+  class NoMatch extends Polymer.Element {
+    static get is() { return 'no-match' }
+    connectedCallback() {
+      super.connectedCallback();
+    }
+  }
+
+  // Register custom element definition using standard platform API
+  customElements.define(NoMatch.is, NoMatch);
   </script>
 </dom-module>
