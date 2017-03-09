@@ -4,9 +4,12 @@ Hoesnelwasik will be compoment based work using the modern HTML5 techniques.
 
 ## Tutorials
 A view good tutorials to get started
-[A single compoment] https://codelabs.developers.google.com/codelabs/polymer-first-elements/index.html#0
-[Intro in polymer-2] https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#0
-[Intro in web-app] https://codelabs.developers.google.com/codelabs/pwa-from-scratch/index.html#0
+
+[A single compoment](https://codelabs.developers.google.com/codelabs/polymer-first-elements/index.html#0)
+
+[Intro in polymer-2](https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#0)
+
+[Intro in web-app](https://codelabs.developers.google.com/codelabs/pwa-from-scratch/index.html#0)
 
 ## Deploy
 
