@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../app/fields.html">
@@ -35,39 +35,45 @@
 
 
   <script>
-    Polymer({
-      is: 'i-year-list',
-      _openYear: function(e) {
-        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
-        this.set('selected',true);
-        this._updateYear();
-      },
-      _toggleList: function(e) {
-        this.set('selected',false);
-      },
-      _createList: function() {
-        var path = this.path.split('/')[1];
-        this.reggataList = this.regattas.regattas.filter(
-          function(match) {
-            return match.shortname === path;
-          }
-        );
-        this.reggataList.sort(function(a,b) {
-          return (+b.jaar) - (+a.jaar) ;
-        });
-        this._updateYear();
-      },
-      _updateYear: function () {
-        if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
-          this.set('currentYear',this.path.split('/')[2]);
-        } else {
-          this.set('currentYear',this.reggataList[0].jaar);
+  class IYearList extends Polymer.Element {
+
+    static get is() { return 'i-year-list' }
+
+    connectedCallback() {
+      super.connectedCallback();
+      requestReggataList(this);
+    }
+
+    _openYear(e) {
+      this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
+      this.set('selected',true);
+      this._updateYear();
+    }
+    _toggleList(e) {
+      this.set('selected',false);
+    }
+    _createList() {
+      var path = this.path.split('/')[1];
+      this.reggataList = this.regattas.regattas.filter(
+        function(match) {
+          return match.shortname === path;
         }
-      },
-      ready: function() {
-        requestReggataList(this);
-      },
-      properties: {
+      );
+      this.reggataList.sort(function(a,b) {
+        return (+b.jaar) - (+a.jaar) ;
+      });
+      this._updateYear();
+    }
+    _updateYear() {
+      if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
+        this.set('currentYear',this.path.split('/')[2]);
+      } else {
+        this.set('currentYear',this.reggataList[0].jaar);
+      }
+    }
+
+    static get properties() {
+      return {
         regattas: {
           type: Array,
           notify:true,
@@ -89,8 +95,10 @@
           notify:true,
           readOnly:false,
           value:true,
-        },
-      },
-    });
+        }
+      };
+    }
+  }
+  customElements.define(IYearList.is, IYearList);
   </script>
 </dom-module>

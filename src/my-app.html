@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -127,55 +127,16 @@
 
 
   <script>
-    Polymer({
-      is: 'my-app',
-      properties: {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
-        iframe: {
-          type: Boolean,
-          value: true,
-        },
-        route: {
-          type: Object,
-          notify: true,
-          readOnly: false,
-          observer: '_updateRoute',
-        },
-        routeMatch: {
-          type: String,
-          notify: true,
-          readOnly: false,
-          observer: '_updateRouteMatch',
-        },
-        homePage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-        matchPage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-        resultPage: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:false,
-        },
-      },
+    // Extend Polymer.Element base class
+    class MyApp extends Polymer.Element {
 
-      observers: [
-        '_routePageChanged(route)',
-      ],
+      static get is() { return 'my-app' }
 
-      _updateRoute: function() {
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _updateRoute(newValue, oldValue) {
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.iframe = true;
           this.routeMatch = this.subRouteMatch.path;
@@ -185,17 +146,17 @@
         }
         ga('send', 'pageview',this.route.path);
         this._location();
-      },
+      }
 
-      _match: function(route) {
+      _match(route) {
         return route.split('/')[1];
-      },
+      }
 
-      _field: function(route) {
+      _field(route) {
         return route.split('/')[3];
-      },
+      }
 
-      goHome: function(e) {
+      goHome(e) {
         if (this.iframe) {
           if (this.routeMatch.split('/').length > 2) {
             this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
@@ -205,29 +166,29 @@
         } else {
           this.set('routeMatch','/');
         }
-      },
+      }
 
-      goToMatch: function(e) {
+      goToMatch(e) {
         this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-      },
+      }
 
-      _updateRouteMatch: function() {
+      _updateRouteMatch(newValue, oldValue) {
         this._location();
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.set('route.path', '/iframe' + this.routeMatch);
         } else {
           this.set('route.path', this.routeMatch);
         }
-      },
+      }
 
-      _routePageChanged: function(page) {
-        if (!this.iframe && this.$$('#drawer') && !this.$$('#drawer').persistent) {
-          this.$$('#drawer').close();
+      _routePageChanged(page) {
+        if (!this.iframe &&  this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
+          this.shadowRoot.querySelector('#drawer').close();
         }
-      },
+      }
 
       //TODO make this into arrow functions for flexiblity
-      _location: function() {
+      _location() {
         this.homePage = false;
         this.matchPage = false;
         this.resultPage = false;
@@ -254,7 +215,57 @@
             this.resultPage = true;
             break;
         }
-      },
-    });
+      }
+
+      static get observers() {
+        return ['_routePageChanged(route)'];
+      }
+
+      static get properties() {
+        return {
+          iframe: {
+            type: Boolean,
+            value: true,
+          },
+          route: {
+            type: Object,
+            notify: true,
+            readOnly: false,
+            observer: '_updateRoute',
+          },
+          routeMatch: {
+            type: String,
+            notify: true,
+            readOnly: false,
+            observer: '_updateRouteMatch',
+          },
+          homePage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          },
+          matchPage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          },
+          resultPage: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value:false,
+          }
+        };
+      }
+
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(MyApp.is, MyApp);
+
+
+
   </script>
 </dom-module>

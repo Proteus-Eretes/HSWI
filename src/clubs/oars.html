@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="oars-img">
   <template>
@@ -17,20 +17,34 @@
   </template>
 
   <script>
-    Polymer({
-      is: 'oars-img',
-      _lowerCase : function(name) {
+    // Extend Polymer.Element base class
+    class OarsImg extends Polymer.Element {
+
+      static get is() { return 'oars-img' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _lowerCase(name) {
         if (name)
           return "https://images.poweredbyiris.nl/0/30/cluboars/"+name.toLowerCase()+".png";
         return '';
-      },
-      properties: {
-        club : {
-          type: String,
-          notify:false,
-          readOnly: false,
-        }
       }
-    })
+
+      static get properties() {
+        return {
+          club: {
+            type: String,
+            notify: false,
+            readOnly: false,
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(OarsImg.is, OarsImg);
+
   </script>
 </dom-module>

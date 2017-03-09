@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../services/reggata.html">
@@ -44,12 +44,21 @@
 
 
   <script>
-    Polymer({
-      is: 'club-list',
-      _openMatch: function(e) {
-        this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
-      },
-      properties: {
+  // Extend Polymer.Element base class
+  class ClubList extends Polymer.Element {
+
+    static get is() { return 'club-list' }
+
+    connectedCallback() {
+      super.connectedCallback();
+    }
+
+    _openMatch(e) {
+      this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
+    }
+
+    static get properties() {
+      return {
         clubs: {
           type: Array,
           notify: true,
@@ -66,7 +75,10 @@
           readOnly: false,
           value: 'vereniging',
         }
-      },
-    });
+      };
+    }
+  }
+  // Register custom element definition using standard platform API
+  customElements.define(ClubList.is, ClubList);
   </script>
 </dom-module>

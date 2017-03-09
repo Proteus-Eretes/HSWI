@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/reggata.html">
 
@@ -49,56 +49,67 @@
 
 
   <script>
-    Polymer({
-      is: 'match-list',
-      ready: function() {
+    // Extend Polymer.Element base class
+    class MatchList extends Polymer.Element {
+
+      static get is() { return 'match-list' }
+
+      connectedCallback() {
+        super.connectedCallback();
         requestReggataList(this);
-      },
-      _getYears: function(basematch) {
+      }
+
+      _getYears(basematch) {
         return function(match) {
           return basematch.shortname === match.shortname;
         }
-      },
-      _selectedMatch: function(match,route) {
+      }
+      _selectedMatch(match,route) {
         if (match.shortname === route.path.split('/')[1]) return 'true';
         return 'false';
-      },
-      _createList: function() {
+      }
+      _createList() {
         this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
-      },
-      _alhpabetSort: function(a,b) {
+      }
+      _alhpabetSort(a,b) {
         return a.regattaname.localeCompare(b.regattaname);
-      },
-      _yearSort: function(a,b) {
+      }
+      _yearSort(a,b) {
         return -1 * a.jaar.localeCompare(b.jaar);
-      },
-      _toggleMatch: function(e) {
+      }
+      _toggleMatch(e) {
         if (e.target.querySelector("ul") === null) return;
         var val = e.target.querySelector("ul").getAttribute('data-selected');
         (val === 'false') ? val = 'true' : val = 'false';
         e.target.querySelector("ul").setAttribute('data-selected',val);
-      },
-      _openMatch: function(e) {
+      }
+      _openMatch(e) {
         this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
-      },
-      properties: {
-        regattas: {
-          type: Array,
-          notify:true,
-          readOnly:false,
-          observer: '_createList',
-        },
-        reggataList: {
-          type: Array,
-          notify:false,
-          readOnly:false,
-        },
-        route: {
-          type: Object,
-          notify:true,
-          readOnly:false,
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          regattas: {
+            type: Array,
+            notify:true,
+            readOnly:false,
+            observer: '_createList',
+          },
+          reggataList: {
+            type: Array,
+            notify:false,
+            readOnly:false,
+          },
+          route: {
+            type: Object,
+            notify:true,
+            readOnly:false,
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(MatchList.is, MatchList);
   </script>
 </dom-module>

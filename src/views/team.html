@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -231,72 +231,82 @@
 
 
   <script>
-    Polymer({
-      is: 'team-modal',
-      active:false,
-      _show: function(val) {
+    class TeamModal extends Polymer.Element {
+      static get is() {return 'team-modal'}
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _show(val) {
         return val !== null && val !== '' && val !== undefined && val != 0;
-      },
-      _showComment: function() {
+      }
+      _showComment() {
         if(this.team.times)
           return this._show(this.team.times[0].comments);
         return false;
-      },
-      _showBacknumber: function(team) {
+      }
+      _showBacknumber(team) {
         if (team.backnumber) return team.backnumber;
         return team.times[0].backnumber;
-      },
-      _hasBacknumber: function(team) {
+      }
+      _hasBacknumber(team) {
         if (team.backnumber || (team.times && team.times[0].backnumber)) return true;
-      },
-      _comment: function () {
+      }
+      _comment() {
         return this.team.times[0].comments;
-      },
-      _exists: function(val) {
+      }
+      _exists(val) {
         if (val) {
           return true;
         }
         return false;
-      },
-      _showSubField: function(sub,field) {
+      }
+      _showSubField(sub,field) {
         if (this._show(sub)) {
           return sub !== field;
         }
         return false;
-      },
-      _showTime: function(seconds) {
+      }
+      _showTime(seconds) {
         if (this._show(seconds)) {
           return seconds !== '0.00';
         }
         return false;
-      },
-      _displayTime: function(time,bonussecond) {
+      }
+      _displayTime(time,bonussecond) {
         return formatTime(finalTime(time,bonussecond));
-      },
-      toggle: function(team) {
+      }
+      toggle(team) {
         this.team = team;
         this.active = true;
         this.$.modal.toggle();
-      },
-      properties: {
-        team: {
-          type: Array,
-          notify: true,
-          readOnly: false,
-        },
-        rounds: {
-          type: Boolean,
-          notify: true,
-          readOnly: false,
-          value: false,
-        },
-        active: {
-          type: Boolean,
-          notify: true,
-          readOnly: false,
-          value: false,
-        },
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          team: {
+            type: Array,
+            notify: true,
+            readOnly: false,
+          },
+          rounds: {
+            type: Boolean,
+            notify: true,
+            readOnly: false,
+            value: false,
+          },
+          active: {
+            type: Boolean,
+            notify: true,
+            readOnly: false,
+            value: false,
+          }
+        };
+      }
+
+    }
+
+    customElements.define(TeamModal.is,TeamModal);
   </script>
 </dom-module>

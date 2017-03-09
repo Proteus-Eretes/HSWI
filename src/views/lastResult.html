@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
@@ -62,42 +62,58 @@
 
 
   <script>
-    Polymer({
-      is: 'last-result',
-      displayError: false,
-      news: false,
-      ready: function() {
+    class LastResult extends Polymer.Element {
+      static get is() {return 'last-result'}
+
+      connectedCallback() {
+        this.news = false;
+        super.connectedCallback();
         requestData(this);
         var self = this;
         setInterval(function() {
           requestData(self)
         },5000);
-      },
-      _matchUpdate: function() {
+      }
+
+      _matchUpdate(match) {
         if (this.match) {
-          if (this.splash === -1)
+          if (!this.splash || this.splash === -1)
             this.splash = this.match.setting.name.length - 1;
-          this.displayError = this.match.error !== false;
+          this.displayError = this.match.error;
           this.news = this.match.message !== '';
         }
-      },
-      _displayLocation: function(splash) {
+      }
+
+      _displayLocation(splash) {
         return splash < this.match.setting.name.length;
-      },
-      properties: {
-        splash: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-          value:-1,
-        },
-        match: {
-          type: Array,
-          notify: true,
-          readOnly: false,
-          observer: '_matchUpdate',
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          splash: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+            value:-1,
+          },
+          match: {
+            type: Array,
+            notify: true,
+            readOnly: false,
+          },
+          displayError: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+          }
+        };
+      }
+
+      static get observers() {
+        return ['_matchUpdate(match.*)'];
+      }
+    }
+
+    customElements.define(LastResult.is,LastResult);
   </script>
 </dom-module>

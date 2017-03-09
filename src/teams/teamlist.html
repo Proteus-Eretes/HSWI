@@ -4,7 +4,7 @@
     view:2 do not display times -> toss view
     view:3 do not display backnumber  -> competitors view
 -->
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../app/team.html">
@@ -188,19 +188,26 @@
   </template>
 
   <script>
-    Polymer({
-      is: 'team-list',
-      _updateRoute: function() {
+    // Extend Polymer.Element base class
+    class TeamList extends Polymer.Element {
+
+      static get is() { return 'team-list' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _updateRoute() {
         if(this.path.split('/').length < 5) return;
         requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
         this.name = this.path.split('/')[4];
-      },
-      _errorMessage: function () {
+      }
+      _errorMessage() {
         if (this.path.split('/')[4] === 'search')
           return 'U zoek opdracht heeft geen resultaat op geleverd';
         return 'Dit veld bestaat helaas niet';
-      },
-      _isField: function (team) {
+      }
+      _isField(team) {
         switch (this.path.split('/')[4]) {
           case 'uitslagen':
             return team.fieldnameshort === this.path.split('/')[3];
@@ -214,8 +221,8 @@
           case 'inschrijving':
             return team.fieldnameshort === this.path.split('/')[3];
         }
-      },
-      _setView: function() {
+      }
+      _setView() {
         switch (this.path.split('/')[4]) {
           case 'uitslagen':
             this.view = 0;
@@ -233,18 +240,18 @@
             this.view = 3;
             break;
         }
-      },
-      _setApproved: function () {
+      }
+      _setApproved () {
         if (this.view === 0) {
           this.approved = this.teams.teams[0].times[this.teams.setting.rounds].isapproved === '1';
         } else {
           this.approved = true;
         }
-      },
-      _returnToMatch: function(e) {
+      }
+      _returnToMatch(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-      },
-      _teamsChanged: function() {
+      }
+      _teamsChanged() {
         if (this.teams.error === false) {
           this.noTeams = false;
           this.splashCount = checkSplash(this.teams.teams);
@@ -253,77 +260,83 @@
         } else {
           this.noTeams = true;
         }
-      },
-      _disp: function(team,key,round) {
+      }
+      _disp(team,key,round) {
         if (this.view >= 2)
           return team[key];
         if (round === -1) round = this.teams.setting.rounds;
         return team.times[round][key];
-      },
-      _final: function(times,view) {
+      }
+      _final(times,view) {
         return times[this.teams.setting.rounds];
-      },
-      _displayTime: function(time,key,bonussecond,round) {
+      }
+      _displayTime(time,key,bonussecond,round) {
         return formatTime(finalTime(this._disp(time,key,round),bonussecond));
-      },
-      _hasValue: function(field) {
+      }
+      _hasValue(field) {
         return field == 0;
-      },
-      _displaySplash: function(splash,view) {
+      }
+      _displaySplash(splash,view) {
         return (splash < this.splashCount || splash === 5) && this.view < 2;
-      },
-      _displayRound: function(round,view) {
+      }
+      _displayRound(round,view) {
         return (round < this.teams.setting.rounds) && this.view < 2;
-      },
-      _displayValue: function(val,view){
+      }
+      _displayValue(val,view){
         return val >= this.view;
-      },
-      _openTeam: function(e) {
+      }
+      _openTeam(e) {
         document.querySelector("team-modal").toggle(e.model.team);
-      },
-      properties: {
-        teams : {
-          type: Array,
-          notify:true,
-          readOnly:false,
-          observer: '_teamsChanged',
-          value: [{error: true}],
-        },
-        splashCount: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-        },
-        path: {
-          type: String,
-          notify: true,
-          readOnly: false,
-          observer:'_updateRoute'
-        },
-        view: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-        },
-        name: {
-          type: String,
-          notify: true,
-          readOnly: false,
-          observer:'_returnToMatch'
-        },
-        approved: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value: false,
-        },
-        noTeams: {
-          type: Boolean,
-          notify: true,
-          readOnly:false,
-          value: true,
-        }
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          teams : {
+            type: Array,
+            notify:true,
+            readOnly:false,
+            observer: '_teamsChanged',
+            value: [{error: true}],
+          },
+          splashCount: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+          },
+          path: {
+            type: String,
+            notify: true,
+            readOnly: false,
+            observer:'_updateRoute'
+          },
+          view: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+          },
+          name: {
+            type: String,
+            notify: true,
+            readOnly: false,
+            observer:'_returnToMatch'
+          },
+          approved: {
+            type: Boolean,
+            notify:true,
+            readOnly:false,
+            value: false,
+          },
+          noTeams: {
+            type: Boolean,
+            notify: true,
+            readOnly:false,
+            value: true,
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(TeamList.is, TeamList);
   </script>
 </dom-module>

@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
@@ -35,9 +35,16 @@
 
 
   <script>
-    Polymer({
-      is: 'main-match',
-      _updateRoute: function() {
+    // Extend Polymer.Element base class
+    class MainMatch extends Polymer.Element {
+
+      static get is() { return 'main-match' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _updateRoute() {
         if(this.route.split('/').length < 3)  {
           requestFields(this,this.route.split('/')[1],0);
           requestClubs(this,this.route.split('/')[1],0);
@@ -62,25 +69,31 @@
           default:
             this.target = 0;
         }
-      },
-      properties: {
-        route: {
-          type: String,
-          notify: true,
-          readOnly: false,
-          observer: '_updateRoute',
-        },
-        target: {
-          type: Number,
-          notify: true,
-          readOnly: false,
-        },
-        iframe: {
-          type: Boolean,
-          notify: true,
-          readOnly:false,
-        },
-      },
-    });
+      }
+
+      static get properties() {
+        return {
+          route: {
+            type: String,
+            notify: true,
+            readOnly: false,
+            observer: '_updateRoute',
+          },
+          target: {
+            type: Number,
+            notify: true,
+            readOnly: false,
+          },
+          iframe: {
+            type: Boolean,
+            notify: true,
+            readOnly:false,
+          }
+        };
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(MainMatch.is, MainMatch);
   </script>
 </dom-module>

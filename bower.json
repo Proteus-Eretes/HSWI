@@ -5,26 +5,27 @@
   ],
   "license": "none",
   "dependencies": {
-    "app-layout": "PolymerElements/app-layout#^0.10.0",
-    "app-route": "PolymerElements/app-route#^0.9.0",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
-    "iron-icon": "PolymerElements/iron-icon#^1.0.0",
-    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
-    "iron-localstorage": "PolymerElements/iron-localstorage#^1.0.0",
-    "iron-media-query": "PolymerElements/iron-media-query#^1.0.0",
-    "iron-pages": "PolymerElements/iron-pages#^1.0.0",
-    "iron-selector": "PolymerElements/iron-selector#^1.0.0",
-    "polymer": "Polymer/polymer#^1.6.0",
-    "paper-tabs": "PolymerElements/paper-tabs#^1.7.0",
-    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
-    "paper-button": "PolymerElements/paper-button#^1.0.14",
-    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#^1.1.5",
-    "paper-input": "PolymerElements/paper-input#^1.1.23",
+    "app-layout": "PolymerElements/app-layout#2.0-preview",
+    "app-route": "PolymerElements/app-route#2.0-preview",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#2.0-preview",
+    "iron-icon": "PolymerElements/iron-icon#2.0-preview",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#2.0-preview",
+    "iron-localstorage": "PolymerElements/iron-localstorage#2.0-preview",
+    "iron-media-query": "PolymerElements/iron-media-query#2.0-preview",
+    "iron-pages": "PolymerElements/iron-pages#2.0-preview",
+    "iron-selector": "PolymerElements/iron-selector#2.0-preview",
+    "polymer": "Polymer/polymer#^2.0.0-rc.2",
+    "paper-tabs": "PolymerElements/paper-tabs#2.0-preview",
+    "paper-dialog": "PolymerElements/paper-dialog#2.0-preview",
+    "paper-button": "PolymerElements/paper-button#2.0-preview",
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#2.0-preview",
+    "paper-input": "PolymerElements/paper-input#2.0-preview",
     "fetch": "^2.0.2",
-    "es6-promise": "^4.0.5"
+    "es6-promise": "^4.0.5",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5"
   },
   "devDependencies": {
-    "web-component-tester": "^4.0.0"
+    "web-component-tester": "^6.0.0"
   },
   "private": true
 }
