@@ -4,15 +4,15 @@
   "fragments": [
     "src/views/team.html"
   ],
-  "sourceGlobs": [
+  "sources": [
     "src/**/*",
     "images/**/*",
     "bower.json"
   ],
-  "includeDependencies": [
+  "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "bower_components/webcomponentsjs/webcomponents-lite.js",
     "bower_components/fetch/fetch.js",
-    "bower_components/es6-promise/dist/es6-promise.auto.min.js"
+    "bower_components/es6-promise/es6-promise.auto.min.js"
   ]
 }

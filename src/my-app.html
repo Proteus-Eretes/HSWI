@@ -75,23 +75,19 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <!--<template is="dom-if" if="[[!iframe]]">-->
-        <app-drawer swipe-open id="drawer">
-          <div style="height: 100%; overflow: auto;">
-            <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
-            <match-list route="{{route}}"></match-list>
-          </div>
-        </app-drawer>
-      <!--</template>-->
+      <app-drawer style="z-index:1" swipe-open id="drawer">
+        <div style="height: 100%; overflow: auto;">
+          <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
+          <match-list route="{{route}}"></match-list>
+        </div>
+      </app-drawer>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header reveals effects="waterfall">
           <app-toolbar>
-            <!--<template is="dom-if" if="[[!iframe]]">-->
-              <paper-icon-button id="menu" icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <!--</template>-->
+            <paper-icon-button style$="[[_hide(iframe)]]" id="menu" icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
             <div on-click="goHome">Hoesnelwasik</div>
             <div main-title></div>
@@ -142,6 +138,11 @@
         this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
           self.shadowRoot.querySelector('#drawer').toggle();
         });
+      }
+
+      _hide(iframe) {
+        if(!iframe) return '';
+        return 'display:none';
       }
 
       _updateRoute(newValue, oldValue) {

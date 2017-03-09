@@ -1,12 +1,10 @@
 #HoeSnelWasIk
 
 Hoesnelwasik will be compoment based work using the modern HTML5 techniques.
-With polymer 2 javascript will be writen in ES6/ES2015/ES2016 which will then be
- transpilled backwards to support old browser.
 
 ## Tutorials
 A view good tutorials to get started
-[A singel compoment] https://codelabs.developers.google.com/codelabs/polymer-first-elements/index.html#0
+[A single compoment] https://codelabs.developers.google.com/codelabs/polymer-first-elements/index.html#0
 [Intro in polymer-2] https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#0
 [Intro in web-app] https://codelabs.developers.google.com/codelabs/pwa-from-scratch/index.html#0
 
@@ -71,18 +69,9 @@ This is about the compoments decided above
 | Firebase cloud messaging   |Send notification to users  |             -|
 
 
-## Polymer
+## Polymer 2
 
-After doing quite some research it was deamed that polymer would be a great choice a framework for hoesnelwasik.nl
-Some explantion about polymer and the setup.
-Usage of JQeury, bootstrap, react, angular2 is a no go because we want to keep it as small as possible
-
-### Polymer 2
-
-Polymer 2 will be released with in a few moments the target is to fully take advantage off the changes.
-Some code has already been written in polymer 2 only with current bugs and missing documentation it made extremely hard.
-It is required to write code which can be easly be ported to polymer 2.
-Have a look at the new class based syntax and other api changes.
+After some research it was deciced to use polymer 2
 
 ### Setup
 
@@ -91,7 +80,7 @@ Have a look at the new class based syntax and other api changes.
 First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
 [npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
-    npm install -g polymer-cli
+    npm install -g polymer-cli@next
 
 ### Start the development server
 
@@ -114,7 +103,12 @@ In addition the command also creates a fallback `build/bundled` folder,
 generated using fragment bundling, suitable for serving from non
 H2/push-compatible servers or to clients that do not support H2/Push.
 
-    polymer build --html.collapseWhitespace
+    polymer build --add-service-worker --css-minify --html-minify  --js-minify
+
+For or stupid browsers:
+
+    polymer build --bundle --css-minify --html-minify  --js-minify --js-compile
+
 
 ### Preview the build
 
