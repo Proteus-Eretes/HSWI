@@ -22,6 +22,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="/manifest.json">
 
+    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+
     <!-- See https://goo.gl/qRE0vM -->
     <meta name="theme-color" content="#000">
 
@@ -68,12 +70,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         };
 
-        var webComponentsSupported = (
-          'registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')
-        );
-
         if (!self.fetch) {
           var script = document.createElement('script');
           script.async = true;
@@ -84,17 +80,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           script.src = '/bower_components/es6-promise/es6-promise.auto.min.js';
           document.head.appendChild(script);
         }
-
-        if (!webComponentsSupported) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.js';
-          script.onload = onload;
-          document.head.appendChild(script);
-        } else {
-          onload();
-        }
-      })();
 
       // Load pre-caching Service Worker
       if ('serviceWorker' in navigator) {
