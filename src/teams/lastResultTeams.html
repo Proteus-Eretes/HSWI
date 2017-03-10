@@ -57,7 +57,7 @@
           </tr>
         </thead>
         <tbody>
-          <template is="dom-repeat" items="[[teams]]" as="team">
+          <template is="dom-repeat" items="[[teams]]" as="team" targetFramerate=15>
             <tr on-click="_openTeam" style="cursor: pointer;">
               <td>
                 <oars-img club="[[team.clubnameshort]]"></oars-img>
