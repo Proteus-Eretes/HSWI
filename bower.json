@@ -22,10 +22,14 @@
     "paper-input": "PolymerElements/paper-input#2.0-preview",
     "fetch": "^2.0.2",
     "es6-promise": "^4.0.5",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5",
+    "shadycss": "webcomponents/shadycss#v1.0.0-rc.2"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "shadycss": "v1.0.0-rc.2"
+  }
 }
