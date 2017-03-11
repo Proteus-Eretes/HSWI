@@ -77,7 +77,7 @@
 
       _matchUpdate(match) {
         if (this.match) {
-          if (!this.splash || this.splash === -1)
+          if (this.splash === undefined || this.splash === -1)
             this.splash = this.match.setting.name.length - 1;
           this.displayError = this.match.error;
           this.news = this.match.message !== '';
