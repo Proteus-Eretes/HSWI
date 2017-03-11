@@ -19,7 +19,7 @@
     <style include="shared-styles-tables shared-styles">
     </style>
     <template is="dom-if" if="[[!noTeams]]">
-      <paper-tabs selected="{{name}}" attr-for-selected="name" scrollable fit-container>
+      <paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
         <paper-tab name="uitslagen">
           <template is="dom-if" if="[[approved]]">
             Uitslagen
@@ -248,6 +248,7 @@
           this.approved = true;
         }
       }
+
       _returnToMatch(newValue, oldValue) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
       }
@@ -318,7 +319,6 @@
             type: String,
             notify: true,
             readOnly: false,
-            observer:'_returnToMatch'
           },
           approved: {
             type: Boolean,

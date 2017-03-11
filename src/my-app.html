@@ -63,6 +63,10 @@
         color: black;
         font-weight: bold;
       }
+
+      .menu {
+        z-index: 1;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -75,7 +79,7 @@
 
     <app-drawer-layout responsive-width="1280px" fullbleed>
       <!-- Drawer content -->
-      <app-drawer style="z-index:1" swipe-open id="drawer">
+      <app-drawer style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
         <div style="height: 100%; overflow: auto;">
           <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
           <match-list route="{{route}}"></match-list>
@@ -182,12 +186,12 @@
       }
 
       _updateRouteMatch(newValue, oldValue) {
-        this._location();
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.set('route.path', '/iframe' + this.routeMatch);
         } else {
           this.set('route.path', this.routeMatch);
         }
+        this._location();
       }
 
       _routePageChanged(page) {
