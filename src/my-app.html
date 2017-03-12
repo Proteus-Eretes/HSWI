@@ -109,7 +109,7 @@
           </app-toolbar>
         </app-header>
         <template is="dom-if" if="[[homePage]]">
-          <last-result></last-result>
+          <last-result path="{{routeMatch}}" ></last-result>
         </template>
         <template is="dom-if" if="[[matchPage]]">
           <main-match route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
@@ -144,11 +144,18 @@
         });
       }
 
+      /**
+       * Are we in Ifram mode hide the menu
+       */
       _hide(iframe) {
         if(!iframe) return '';
         return 'display:none';
       }
 
+      /**
+       * If a route has happend the routeMatch strip iframe
+       * Send google pageview
+       */
       _updateRoute(newValue, oldValue) {
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.iframe = true;
@@ -161,14 +168,23 @@
         this._location();
       }
 
+      /**
+       * Return match name
+       */
       _match(route) {
         return route.split('/')[1];
       }
 
+      /**
+       * Return field name
+       */
       _field(route) {
         return route.split('/')[3];
       }
 
+      /**
+       * Go to the mainpage
+       */
       goHome(e) {
         if (this.iframe) {
           if (this.routeMatch.split('/').length > 2) {
@@ -181,10 +197,16 @@
         }
       }
 
+      /**
+       * return to the match
+       */
       goToMatch(e) {
         this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
       }
 
+      /**
+       * If a route has happend update the route object make sure iframe mode is honnuerd
+       */
       _updateRouteMatch(newValue, oldValue) {
         if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
           this.set('route.path', '/iframe' + this.routeMatch);
@@ -194,17 +216,26 @@
         this._location();
       }
 
+      /**
+       * Close app drawer when route change has happend
+       */
       _routePageChanged(page) {
         if (!this.iframe &&  this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
           this.shadowRoot.querySelector('#drawer').close();
         }
       }
 
+      /**
+       * Go to the top of the page
+       */
       toTop() {
         this.shadowRoot.querySelector('#top').scrollIntoView();
       }
 
       //TODO make this into arrow functions for flexiblity
+      /**
+       * Which page should be open
+       */
       _location() {
         this.homePage = false;
         this.matchPage = false;

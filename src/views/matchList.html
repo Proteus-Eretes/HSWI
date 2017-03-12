@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/reggata.html">
+<link rel="import" href="../my-icons.html">
 
 <dom-module id="match-list">
   <template>
@@ -12,6 +14,7 @@
       display:inherit;
     }
     ul {
+
       list-style-type: none;
       padding: 0;
       margin: 0;
@@ -33,10 +36,18 @@
       padding: 0 16px;
       margin: 0;
     }
+
+    .img {
+      margin-top: 6px;
+      clear: right;
+      float: right;
+    }
+
     </style>
     <ul>
       <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
         <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
+          <iron-icon class="img" icon$="[[_getImg(match)]]"></iron-icon>
           <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
             <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}" sort="_yearSort">
               <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
@@ -59,33 +70,69 @@
         requestReggataList(this);
       }
 
+      /**
+       * Get the years of a match
+       */
       _getYears(basematch) {
         return function(match) {
           return basematch.shortname === match.shortname;
         }
       }
+
+      /**
+       * Is a match opened?
+       */
       _selectedMatch(match,route) {
         if (match.shortname === route.path.split('/')[1]) return 'true';
         return 'false';
       }
+
+      /**
+       * Create a list of regattas
+       */
       _createList(newValue, oldValue) {
         this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
       }
+
+      /**
+       * Sort
+       */
       _alhpabetSort(a,b) {
         return a.regattaname.localeCompare(b.regattaname);
       }
+
+      /**
+       * Negative sort
+       */
       _yearSort(a,b) {
         return -1 * a.jaar.localeCompare(b.jaar);
       }
+
+      /**
+       * Toggle the view of the years of a match
+       */
       _toggleMatch(e) {
         if (e.target.querySelector("ul") === null) return;
         let val = e.target.querySelector("ul").getAttribute('data-selected');
         (val === 'false') ? val = 'true' : val = 'false';
         e.target.querySelector("ul").setAttribute('data-selected',val);
+        e.target.querySelector("iron-icon").setAttribute('icon',(val === 'false') ? 'my-icons:expand' : 'my-icons:close-expanded');
         if(val) e.target.scrollIntoView();
       }
+
+      /**
+       * Open a match
+       */
       _openMatch(e) {
         this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+      }
+
+      /**
+       * Which image should be on display
+       */
+      _getImg(match) {
+        if (this._selectedMatch(match,this.route) === 'true') return 'my-icons:close-expanded';
+        return 'my-icons:expand';
       }
 
       static get properties() {

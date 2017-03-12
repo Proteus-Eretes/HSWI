@@ -1,13 +1,20 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <script>
-var finalTime = function(time, bonussecond) {
-  if (+time === 0) {
-    return 0;
-  }
-  return +time + (+bonussecond);
-};
+  /**
+   * Return the final time
+   * If team has no time don't show the bonusseconds
+   */
+  var finalTime = function(time, bonussecond) {
+    if (+time === 0) {
+      return 0;
+    }
+    return +time + (+bonussecond);
+  };
 
-var formatTime = function (time) {
+  /**
+   * formatTime a of format [h:]mm:ss.n
+   */
+  var formatTime = function (time) {
     let centiseconds = Math.round((+time * 10)%10);
     let seconds = Math.floor(+time % 60);
     let minutes = Math.floor(+time / 60);
@@ -27,7 +34,7 @@ var formatTime = function (time) {
     timeString += centiseconds;
 
     return timeString;
-}
+  };
 </script>
 <dom-module id="final-time">
   <template>

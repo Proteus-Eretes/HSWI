@@ -5,6 +5,7 @@
     view:3 do not display backnumber  -> competitors view
 -->
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../app/team.html">
@@ -12,7 +13,6 @@
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/teams.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 
 <dom-module id="team-list">
   <template>
@@ -154,27 +154,27 @@
               </template>
               <template is="dom-if" if=[[_displayRound(0,view)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'totaltime',0,0)]]
+                  <final-time team="[[_final(team.times,view,0)]]"></final-time>
                 </td>
               </template>
               <template is="dom-if" if=[[_displayRound(1,view)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'totaltime',0,1)]]
+                  <final-time team="[[_final(team.times,view,1)]]"></final-time>
                 </td>
               </template>
               <template is="dom-if" if=[[_displayRound(2,view)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'totaltime',0,2)]]
+                  <final-time team="[[_final(team.times,view,2)]]"></final-time>
                 </td>
               </template>
               <template is="dom-if" if=[[_displayRound(3,view)]]>
                 <td class="show-gt-md">
-                  [[_displayTime(team,'totaltime',0,3)]]
+                  <final-time team="[[_final(team.times,view,3)]]"></final-time>
                 </td>
               </template>
               <template is="dom-if" if=[[_displaySplash(5,view)]]>
                 <td>
-                  <final-time team="[[_final(team.times,view)]]"></final-time>
+                  <final-time team="[[_final(team.times,view,-1)]]"></final-time>
                 </td>
               </template>
             </tr>
@@ -197,16 +197,27 @@
         super.connectedCallback();
       }
 
+      /**
+       * Route has changed request new teams
+       */
       _updateRoute(newValue, oldValue) {
         if(this.path.split('/').length < 5) return;
         requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
         this.name = this.path.split('/')[4];
       }
+
+      /**
+       * Display error based on if search has no result or that field does not exist
+       */
       _errorMessage() {
         if (this.path.split('/')[4] === 'search')
           return 'U zoek opdracht heeft geen resultaat op geleverd';
         return 'Dit veld bestaat helaas niet';
       }
+
+      /**
+       * Filter to make sure we do not display double teams
+       */
       _isField(team) {
         switch (this.path.split('/')[4]) {
           case 'uitslagen':
@@ -222,6 +233,10 @@
             return team.fieldnameshort === this.path.split('/')[3];
         }
       }
+
+      /**
+       * Determine the view from url parameter
+       */
       _setView() {
         switch (this.path.split('/')[4]) {
           case 'uitslagen':
@@ -241,6 +256,10 @@
             break;
         }
       }
+
+      /**
+       * Is the field approved?
+       */
       _setApproved () {
         if (this.view === 0) {
           this.approved = this.teams.teams[0].times[this.teams.setting.rounds].isapproved === '1';
@@ -249,9 +268,16 @@
         }
       }
 
+      /**
+       * Return to the match change the route
+       */
       _returnToMatch(newValue, oldValue) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
       }
+
+      /**
+       * After we have new teams which times ar avaible
+       */
       _teamsChanged(newValue, oldValue) {
         if (this.teams.error === false) {
           this.noTeams = false;
@@ -262,30 +288,63 @@
           this.noTeams = true;
         }
       }
+
+      /**
+       * Return a element from a team
+       */
       _disp(team,key,round) {
         if (this.view >= 2) return team[key];
         if (round === -1) round = this.teams.setting.rounds;
         if (!team.times) return '';
         return team.times[round][key];
       }
-      _final(times,view) {
-        if (times) return times[this.teams.setting.rounds];
+
+      /**
+       * Return the final time array of a round
+       */
+      _final(times,view,round) {
+        if (round === -1) round = this.teams.setting.rounds;
+        if (times) return times[round];
       }
+
+      /**
+       * Display a splash time in HH:MM:SS.n
+       */
       _displayTime(time,key,bonussecond,round) {
         return formatTime(finalTime(this._disp(time,key,round),bonussecond));
       }
+
+      /**
+       * Do we have a subfield?
+       */
       _hasValue(field) {
         return field == 0;
       }
+
+      /**
+       * Do we display the splashes
+       */
       _displaySplash(splash,view) {
         return (splash < this.splashCount || splash === 5) && this.view < 2;
       }
+
+      /**
+       * Do we display a round
+       */
       _displayRound(round,view) {
         return (round < this.teams.setting.rounds) && this.view < 2;
       }
+
+      /**
+       * Do we display a field based on location
+       */
       _displayValue(val,view){
         return val >= this.view;
       }
+
+      /**
+       * Call the function to open a team overview window
+       */
       _openTeam(e) {
         document.querySelector("team-modal").toggle(e.model.team);
       }

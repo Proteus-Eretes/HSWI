@@ -22,6 +22,9 @@
         super.connectedCallback();
       }
 
+      /**
+       * Only on enter request data from server
+       */
       _search(e) {
         if (e.keyCode === 13 || e.which === 13 || e.key === 'Enter') {
           this.set('route', '/' + this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);

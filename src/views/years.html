@@ -50,9 +50,14 @@
       this._updateYear();
       document.querySelector("my-app").toTop();
     }
+
     _toggleList(e) {
       this.set('selected',false);
     }
+
+    /**
+     * Create the list of years of the current match
+     */
     _createList(newValue, oldValue) {
       var path = this.path.split('/')[1];
       this.reggataList = this.regattas.regattas.filter(
@@ -65,6 +70,10 @@
       });
       this._updateYear();
     }
+
+    /**
+     * Select the current viewing year
+     */
     _updateYear() {
       if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
         this.set('currentYear',this.path.split('/')[2]);

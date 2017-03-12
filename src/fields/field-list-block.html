@@ -43,18 +43,34 @@
       _openField(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       }
+
+      /**
+       * Create new list of blocks
+       */
       _updateBlocks(newValue, oldValue) {
         this.blocks = fillFields(this.fields.fields,'blockid');
       }
+
+      /**
+       * Create a filter to find out which fields are in a block
+       */
       _getFields(block,fields) {
         return fields.filter(
           function (field) {
             return field.blockid === block.blockid;
           });
       }
+
+      /**
+       * Return the starttime of a field
+       */
       _start(starttime) {
         return starttime.slice(0, -2) + ':' + starttime.slice(-2)
       }
+
+      /**
+       * Do a sort of the time
+       */
       _timeSort(a,b) {
         let r = a.daydate.localeCompare(b.daydate);
         if (r !== 0) return r;

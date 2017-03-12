@@ -1,20 +1,23 @@
 <script>
-    var requestData = function(self) {
-      fetch('https://beta.hoesnelwasik.nl/api/overview/')
-        .then(
-          function(res) {
-            if (res.status !== 200) {
-              console.log('Looks like something did a crash');
-              return;
-            }
-
-            res.json().then(function(data) {
-              self.match = data;
-            });
+  /**
+   * Get the last results from the server
+   */
+  var requestData = function(self) {
+    fetch('https://beta.hoesnelwasik.nl/api/overview/')
+      .then(
+        function(res) {
+          if (res.status !== 200) {
+            console.log('Looks like something did a crash');
+            return;
           }
-        )
-        .catch(function(err) {
-          console.log('Something went badly wrong: -S' ,err);
-        });
-    };
+
+          res.json().then(function(data) {
+            self.match = data;
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Something went badly wrong: -S' ,err);
+      });
+  };
 </script>

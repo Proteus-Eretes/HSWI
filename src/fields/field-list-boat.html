@@ -50,12 +50,20 @@
       _openField(e) {
         this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
       }
+
+      /**
+       * Return the fields which have n rowers
+       */
       _getFieldList(n,fieldlist) {
         return fieldlist.filter(
           function(field) {
             return +field.numberofrowers === n;
         });
       }
+
+      /**
+       * Create a uniq field list uniqBy fieldnameshort
+       */
       _uniqBy (newValue, oldValue) {
         if (this.fields.error === false){
           var n = [];
@@ -69,6 +77,10 @@
           this.set('n',n);
         }
       }
+
+      /**
+       * Return correct boat image
+       */
       _img(name) {
         if (name)
           return "https://images.poweredbyiris.nl/boats/row"+name+".png";

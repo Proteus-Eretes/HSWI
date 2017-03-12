@@ -1,4 +1,7 @@
 <script>
+  /**
+   * _calculateSplash how many splashes are passed in a race
+   */
   var _calculateSplash = function(row) {
     if (row.splash4 !== '0.00' && row.splash4 !== '0') return 5;
     if (row.splash3 !== '0.00' && row.splash3 !== '0') return 4;
@@ -7,6 +10,9 @@
     return 1;
   };
 
+  /**
+   * checkSplash get amount of splashes in a set of teams
+   */
   var checkSplash = function (data) {
     if (!data || data.length === 0) return 0;
     let length = data.length;

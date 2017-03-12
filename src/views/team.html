@@ -87,7 +87,7 @@
                 <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
               </tr>
             </template>
-            <template is="dom-if" if=[[_exists(team.times)]]>
+            <template is="dom-if" if=[[_show(team.times)]]>
               <template is="dom-repeat" items="[[team.times]]" as="time">
                 <template is="dom-if" if=[[_showTime(time.splash1)]]>
                   <tr>
@@ -213,49 +213,82 @@
         super.connectedCallback();
       }
 
+      /**
+       * If val some we want to show?
+       */
       _show(val) {
         return val !== null && val !== '' && val !== undefined && val != 0;
       }
+
+      /**
+       * Is their a comment to show?
+       */
       _showComment() {
         if(this.team.times)
           return this._show(this.team.times[0].comments);
         return false;
       }
+
+      /**
+       * Get the backnumber
+       */
       _showBacknumber(team) {
         if (team.backnumber) return team.backnumber;
         return team.times[0].backnumber;
       }
+
+      /**
+       * Does a team have a backnumber?
+       */
       _hasBacknumber(team) {
         if (team.backnumber || (team.times && team.times[0].backnumber)) return true;
       }
+
+      /**
+       * Show the comment from the time array
+       */
       _comment() {
         return this.team.times[0].comments;
       }
+
+      /**
+       * name of the splash
+       */
       _elementSplashName(round,name,index) {
         if (!round) return name;
         return name + " ronde" + (index+1);
       }
-      _exists(val) {
-        if (val) {
-          return true;
-        }
-        return false;
-      }
+
+      /**
+       * Do we have a subfield and is this new information
+       */
       _showSubField(sub,field) {
         if (this._show(sub)) {
           return sub !== field;
         }
         return false;
       }
+
+      /**
+       * Only show time if something usefull is their
+       */
       _showTime(seconds) {
         if (this._show(seconds)) {
           return seconds !== '0.00';
         }
         return false;
       }
+
+      /**
+       * Format the time
+       */
       _displayTime(time,bonussecond) {
         return formatTime(finalTime(time,bonussecond));
       }
+
+      /**
+       * Toggle the modal window
+       */
       toggle(team) {
         this.team = team;
         this.active = true;

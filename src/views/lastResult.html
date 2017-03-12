@@ -23,7 +23,7 @@
         text-align: center;
       }
     </style>
-    <h2 class="matchHeader">
+    <h2 on-click="_goToMatch" class="matchHeader">
       [[match.match]]
     </h2>
     <template is="dom-if" if=[[news]]>
@@ -65,6 +65,9 @@
     class LastResult extends Polymer.Element {
       static get is() {return 'last-result'}
 
+      /**
+       * Init the settings
+       */
       connectedCallback() {
         this.news = false;
         super.connectedCallback();
@@ -75,6 +78,9 @@
         },5000);
       }
 
+      /**
+       * Update message or error
+       */
       _matchUpdate(match) {
         if (this.match) {
           if (this.splash === undefined || this.splash === -1)
@@ -84,8 +90,18 @@
         }
       }
 
+      /**
+       * If a match has multiple splash location make it possible to view them
+       */
       _displayLocation(splash) {
         return splash < this.match.setting.name.length;
+      }
+
+      /**
+       * Goto the match which is live
+       */
+      _goToMatch(e) {
+        this.set('path','/' + this.match.setting.match + '/' + this.match.setting.year);
       }
 
       static get properties() {
@@ -103,6 +119,11 @@
           },
           displayError: {
             type: Boolean,
+            notify:true,
+            readOnly:false,
+          },
+          path: {
+            type: String,
             notify:true,
             readOnly:false,
           }

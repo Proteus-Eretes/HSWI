@@ -62,7 +62,7 @@ This is about the compoments decided above
 | Compoment       | Status         |Description                 |Issue |
 |-----------------|----------------|----------------------------|------|
 | Routing         | Completed      |Routing with in app         |     -|
-| Auto scroll     | To be started  |Scroll logical after click  |  [#]-|
+| Auto scroll     | Completed      |Scroll logical after click  |     -|
 
 ### To think about
 
