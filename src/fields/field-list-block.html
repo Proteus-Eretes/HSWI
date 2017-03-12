@@ -56,7 +56,7 @@
         return starttime.slice(0, -2) + ':' + starttime.slice(-2)
       }
       _timeSort(a,b) {
-        var r = a.daydate.localeCompare(b.daydate);
+        let r = a.daydate.localeCompare(b.daydate);
         if (r !== 0) return r;
         return parseInt(a.starttime,10) - parseInt(b.starttime,10)
       }

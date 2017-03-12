@@ -61,7 +61,7 @@
           var n = [];
           var m = [1,2,4,8];
           this.set('fieldlist',uniqBy(this.fields.fields,'fieldnameshort'));
-          for (var i = 0; i < m.length; i++) {
+          for (let i = 0; i < m.length; i++) {
             if(hasFields(this.fieldlist, m[i])) {
               n.push(m[i])
             }

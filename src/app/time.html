@@ -8,12 +8,12 @@ var finalTime = function(time, bonussecond) {
 };
 
 var formatTime = function (time) {
-    var centiseconds = Math.round((+time * 10)%10);
-    var seconds = Math.floor(+time % 60);
-    var minutes = Math.floor(+time / 60);
-    var hours = Math.floor(minutes / 60);
+    let centiseconds = Math.round((+time * 10)%10);
+    let seconds = Math.floor(+time % 60);
+    let minutes = Math.floor(+time / 60);
+    let hours = Math.floor(minutes / 60);
     minutes -= hours * 60;
-    var timeString = '';
+    let timeString = '';
     if(centiseconds > 9)
     {
       centiseconds = 0;

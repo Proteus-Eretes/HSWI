@@ -1,7 +1,7 @@
 <script>
   var checkFields = function(array){
     array[array.length - 1].isapproved = array[array.length - 1].isapproved === '1';
-    for (var i = array.length - 2; i >= 0; i++) {
+    for (let i = array.length - 2; i >= 0; i++) {
       if (array[i + 1].fieldnameshort !== array[i].fieldnameshort) {
         array[i].isapproved = array[i].isapproved === '1';
       } else {
@@ -14,13 +14,13 @@
   function uniqBy(a, key) {
     var seen = {};
     return a.filter(function(item) {
-        var k = item[key];
+        let k = item[key];
         return seen.hasOwnProperty(k) ? false : (seen[k] = true);
     })
 }
 
   var hasFields = function(fieldlist,n) {
-      for(var i = 0; i < fieldlist.length; i++)
+      for(let i = 0; i < fieldlist.length; i++)
       {
           if(parseInt(fieldlist[i].numberofrowers,10) === n){
               return true;
@@ -31,7 +31,7 @@
 
   var fillFields = function (array, field) {
       if (array != null) {
-          var object = {}, i, length = array.length, res = [];
+          let object = {}, i, length = array.length, res = [];
           for (i = 0; i < length; i += 1) {
               object[array[i][field]] = array[i];
           }

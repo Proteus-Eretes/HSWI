@@ -263,13 +263,13 @@
         }
       }
       _disp(team,key,round) {
-        if (this.view >= 2)
-          return team[key];
+        if (this.view >= 2) return team[key];
         if (round === -1) round = this.teams.setting.rounds;
+        if (!team.times) return '';
         return team.times[round][key];
       }
       _final(times,view) {
-        return times[this.teams.setting.rounds];
+        if (times) return times[this.teams.setting.rounds];
       }
       _displayTime(time,key,bonussecond,round) {
         return formatTime(finalTime(this._disp(time,key,round),bonussecond));
