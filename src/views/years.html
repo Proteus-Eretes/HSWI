@@ -48,6 +48,7 @@
       this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
       this.set('selected',true);
       this._updateYear();
+      document.querySelector("my-app").toTop();
     }
     _toggleList(e) {
       this.set('selected',false);

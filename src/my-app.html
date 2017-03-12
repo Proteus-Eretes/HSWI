@@ -90,7 +90,7 @@
       <app-header-layout has-scrolling-region>
 
         <app-header reveals effects="waterfall">
-          <app-toolbar>
+          <app-toolbar id="top">
             <paper-icon-button style$="[[_hide(iframe)]]" id="menu" icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <img class="img-header-bar" src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"></img>
             <div on-click="goHome">Hoesnelwasik</div>
@@ -198,6 +198,10 @@
         if (!this.iframe &&  this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
           this.shadowRoot.querySelector('#drawer').close();
         }
+      }
+
+      toTop() {
+        this.shadowRoot.querySelector('#top').scrollIntoView();
       }
 
       //TODO make this into arrow functions for flexiblity

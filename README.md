@@ -118,12 +118,12 @@ For or stupid browsers:
 This command serves the minified version of the app at `http://localhost:8080`
 in an unbundled state, as it would be served by a push-compatible server:
 
-    polymer serve build/unbundled
+    polymer serve FIXME --hostname 0.0.0.0
 
 This command serves the minified version of the app at `http://localhost:8080`
 generated using fragment bundling:
 
-    polymer serve build/bundled
+    polymer serve FIXME --hostname 0.0.0.0
 
 ### Run tests
 
