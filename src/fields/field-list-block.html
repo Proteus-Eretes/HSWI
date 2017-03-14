@@ -41,7 +41,11 @@
       }
 
       _openField(e) {
-        this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        try {
+          this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        } catch (a) {
+          document.querySelector("my-app").ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        }
       }
 
       /**

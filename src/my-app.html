@@ -25,6 +25,7 @@
       :host {
         --app-primary-color: #000;
         --app-secondary-color: #FFF;
+        --app-drawer-width: 320px;
         display: block;
       }
 
@@ -202,6 +203,17 @@
        */
       goToMatch(e) {
         this.set('routeMatch','/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+      }
+
+      /**
+       * IE router
+       */
+      ieWindowloc(link) {
+        if (this.iframe) {
+          window.location.href = '/iframe'+link;
+        } else {
+          window.location.href = '/'+link;
+        }
       }
 
       /**

@@ -2,7 +2,8 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../teams/lastResultTeams.html">
+<<link rel="import" href="../teams/lastResultTeams.html">
+<!--<link rel="import" href="../teams/lastResultTeamsIE.html">-->
 <link rel="import" href="../services/lastResults.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
@@ -101,7 +102,11 @@
        * Goto the match which is live
        */
       _goToMatch(e) {
-        this.set('path','/' + this.match.setting.match + '/' + this.match.setting.year);
+        try {
+          this.set('path','/' + this.match.setting.match + '/' + this.match.setting.year);
+        } catch (a) {
+          document.querySelector("my-app").ieWindowloc('/' + this.match.setting.match + '/' + this.match.setting.year);
+        }
       }
 
       static get properties() {
