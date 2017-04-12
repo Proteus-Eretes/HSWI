@@ -23,20 +23,20 @@
         text-align: center;
       }
     </style>
-    <h2 on-click="_goToMatch" class="matchHeader">
+    <!-- <h2 on-click="_goToMatch" class="matchHeader">
       [[match.match]]
-    </h2>
+  </h2> --> <!-- will come back later, in a different form -->
     <template is="dom-if" if=[[news]]>
       <div class="breakingnews">
         [[match.message]]
       </div>
     </template>
     <template is="dom-if" if="[[!displayError]]">
-      <paper-tabs selected="{{splash}}" scrollable fit-container>
+      <!-- <paper-tabs selected="{{splash}}" scrollable fit-container>
         <template is="dom-repeat" items="[[match.setting.name]]">
           <paper-tab>[[item]]</paper-tab>
         </template>
-      </paper-tabs>
+	</paper-tabs> --> <!-- not working? -->
       <iron-pages selected="[[splash]]">
         <template is="dom-if" if="[[_displayLocation(1)]]">
           <last-result-table data-splash=1 no-teams=[[match.error]] teams=[[match.teams.splash1]]> </last-result-table>

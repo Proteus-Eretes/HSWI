@@ -8,13 +8,24 @@
 
 <dom-module id="i-year-list">
   <template>
-    <style include="shared-styles shared-styles-fields app-grid-style">
+    <style include="shared-styles shared-styles-fields">
+		.card {
+			width: 50px;
+			height: inherit;
+		}
+
+		.dropDownItem {
+			height: 20px;
+			width: 100%;
+		}
+
+
     </style>
       <div class="card">
         <template is="dom-if" if="[[!selected]]">
           <div class="app-grid">
           <template is="dom-repeat" items="[[reggataList]]" as="year">
-              <div on-click="_openYear" class="item">
+              <div on-click="_openYear" class="dropDownItem">
                 <h4>[[year.jaar]]</h4>
               </div>
             </template>
@@ -22,8 +33,7 @@
         </template>
         <template is="dom-if" if="[[selected]]">
           <div class="app-grid">
-            <div on-click="_toggleList" class="item">
-              <h4>[[currentYear]] - selecteer een ander jaar</h4>
+            <div on-click="_toggleList" class="dropDownItem">
             </div>
           </div>
         </template>
@@ -42,6 +52,7 @@
     connectedCallback() {
       super.connectedCallback();
       requestReggataList(this);
+	  console.log("fetch regattas");
     }
 
     _openYear(e) {
@@ -75,6 +86,7 @@
      * Select the current viewing year
      */
     _updateYear() {
+		if (!this.regattas || this.regattas.length === 0) return;
       if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
         this.set('currentYear',this.path.split('/')[2]);
       } else {
@@ -99,6 +111,7 @@
           type: Object,
           notify:true,
           readOnly:false,
+		  observer: '_createList'
         },
         selected: {
           type: Boolean,
