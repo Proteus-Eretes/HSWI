@@ -2,7 +2,7 @@
 
   /**
    * request Teams of a mathc
-   * @param  {object} self   
+   * @param  {object} self
    * @param  {string} match
    * @param  {string} year
    * @param  {string} field
@@ -12,6 +12,9 @@
     field = field.replace(/\+/g, '%2B');
     if (!year) {
       year = 0;
+    }
+    if (!match) {
+      match = 0;
     }
     fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/'+field+'/' + choice)
       .then(

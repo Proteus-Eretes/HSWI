@@ -52,7 +52,6 @@
     connectedCallback() {
       super.connectedCallback();
       requestReggataList(this);
-	  console.log("fetch regattas");
     }
 
     _openYear(e) {
@@ -70,7 +69,9 @@
      * Create the list of years of the current match
      */
     _createList(newValue, oldValue) {
-      var path = this.path.split('/')[1];
+      console.log(document.querySelector('#match'));
+      var path = document.querySelector("main-match").getMatchName();
+      if (!this.regattas) return;
       this.reggataList = this.regattas.regattas.filter(
         function(match) {
           return match.shortname === path;
@@ -108,10 +109,10 @@
           readOnly:false,
         },
         path: {
-          type: Object,
+          type: String,
           notify:true,
           readOnly:false,
-		  observer: '_createList'
+		      observer: '_createList'
         },
         selected: {
           type: Boolean,

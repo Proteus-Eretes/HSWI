@@ -16,6 +16,7 @@
 <link rel="import" href="views/match.html">
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/lastResult.html">
+<link rel="import" href="views/years.html">
 <link rel="import" href="teams/teamlist.html">
 <link rel="import" href="elements/search.html">
 
@@ -101,18 +102,18 @@
 
 					<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
-					<button class="dropDownMatch" on-click="_toggleYearDropdown">{{_matchYear(routeMatch)}}</button>
-					<template is="dom-if" if="dropDownVar">
+					<button class="dropDownMatch" on-click="_toggleYearDropdown">[[_matchYear(routeMatch)]]</button>
+					<template is="dom-if" if="[[dropDownVar]]">
 						<i-year-list path="{{routeMatch}}"></i-year-list>
 					</template>
 
 				</app-header>
 
-				<template is="dom-if" if="[[matchPage || homePage]]">
-					<main-match route="{{_getRoute(routeMatch)}}" iframe="[[iframe]]"></main-match>
+				<template is="dom-if" if="[[matchPage]]">
+					<main-match route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
 				</template>
 				<template is="dom-if" if="[[resultPage]]">
-					<team-list path="{{_getRoute(routeMatch)}}"></team-list>
+					<team-list path="{{routeMatch}}"></team-list>
 				</template>
 				<footer style="color: #FFF">
 					Copyright
@@ -154,7 +155,6 @@
 
 			_toggleYearDropdown() {
 				this.dropDownVar = !this.dropDownVar;
-				console.log(this.dropDownVar);
 			}
 			/**
        * If a route has happend the routeMatch strip iframe
@@ -172,12 +172,6 @@
 				this._location();
 			}
 
-			_getRoute(route) {
-				if (route !== "/" && route) {
-					return route;
-				}
-				return "/0/0"
-			}
 			/**
        * Return match name
        */
@@ -256,25 +250,13 @@
        * Which page should be open
        */
 			_location() {
-				this.homePage = false;
 				this.matchPage = false;
 				this.resultPage = false;
 				switch (this.routeMatch.split('/').length) {
 					case 0:
-						this.homePage = true;
-						break
 					case 1:
-						this.homePage = true;
-						break;
 					case 2:
-						if (this.routeMatch.split('/')[1] != '')
-							this.matchPage = true;
-						else
-							this.homePage = true;
-						break;
 					case 3:
-						this.matchPage = true;
-						break;
 					case 4:
 						this.matchPage = true;
 						break;
@@ -305,12 +287,6 @@
 						notify: true,
 						readOnly: false,
 						observer: '_updateRouteMatch'
-					},
-					homePage: {
-						type: Boolean,
-						notify: true,
-						readOnly: false,
-						value: false
 					},
 					matchPage: {
 						type: Boolean,

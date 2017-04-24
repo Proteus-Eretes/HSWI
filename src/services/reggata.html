@@ -50,6 +50,9 @@
     if (!year) {
       year = 0;
     }
+    if (!match) {
+      match = 0;
+    }
     fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
       .then(
         function(res) {
@@ -77,6 +80,9 @@
   var requestClubs = function(self,match,year) {
     if (!year) {
       year = 0;
+    }
+    if (!match) {
+      match = 0;
     }
     fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')
       .then(
