@@ -102,7 +102,7 @@
 
 					<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
-					<button class="dropDownMatch" on-click="_toggleYearDropdown">[[_matchYear(routeMatch)]]</button>
+					<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>
 					<template is="dom-if" if="[[dropDownVar]]">
 						<i-year-list path="{{routeMatch}}"></i-year-list>
 					</template>
@@ -110,7 +110,7 @@
 				</app-header>
 
 				<template is="dom-if" if="[[matchPage]]">
-					<main-match route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
+					<main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
 				</template>
 				<template is="dom-if" if="[[resultPage]]">
 					<team-list path="{{routeMatch}}"></team-list>
@@ -137,8 +137,8 @@
 			}
 
 			connectedCallback() {
+				this.match = '';
 				super.connectedCallback();
-				var self = this;
 				// this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
 				// self.shadowRoot.querySelector('#drawer').toggle(); });
 			}
@@ -172,20 +172,8 @@
 				this._location();
 			}
 
-			/**
-       * Return match name
-       */
-			_match(route) {
-				return route.split('/')[1];
-			}
-
 			_year(route) {
 				return route.split('/')[2];
-			}
-
-			_matchYear(route) {
-				var split = route.split('/');
-				return split[1] + " " + split[2];
 			}
 
 			/**
@@ -245,6 +233,17 @@
 				this.shadowRoot.querySelector('#top').scrollIntoView();
 			}
 
+			/**
+			 * Rerturn the match name
+			 */
+			getMatchShortName() {
+				return this.match.split(' ')[0];
+      }
+
+			setMatch(match) {
+				this.match = match;
+			}
+
 			//TODO make this into arrow functions for flexiblity
 			/**
        * Which page should be open
@@ -299,6 +298,11 @@
 						notify: true,
 						readOnly: false,
 						value: false
+					},
+					match: {
+						type: Array,
+						notify: true,
+						readOnly: false,
 					},
 					dropDownVar: {
 						type: Boolean,

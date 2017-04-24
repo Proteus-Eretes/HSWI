@@ -69,12 +69,11 @@
      * Create the list of years of the current match
      */
     _createList(newValue, oldValue) {
-      console.log(document.querySelector('#match'));
-      var path = document.querySelector("main-match").getMatchName();
+      var shortname = document.querySelector("my-app").getMatchShortName();
       if (!this.regattas) return;
       this.reggataList = this.regattas.regattas.filter(
         function(match) {
-          return match.shortname === path;
+          return match.shortname === shortname;
         }
       );
       this.reggataList.sort(function(a,b) {

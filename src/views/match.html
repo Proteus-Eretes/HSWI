@@ -39,10 +39,6 @@
         super.connectedCallback();
       }
 
-      getMatchName() {
-        return this.fields.name;
-      }
-
       /**
        * If route has updated request new data and select correct view
        */
@@ -73,6 +69,10 @@
         }
       }
 
+      _updateMatch(newValue, oldValue) {
+        document.querySelector('my-app').setMatch(this.fields.name);
+      }
+
       static get properties() {
         return {
           route: {
@@ -85,6 +85,12 @@
             type: Number,
             notify: true,
             readOnly: false,
+          },
+          fields: {
+            type: Array,
+            notify: true,
+            readOnly: false,
+            observer: '_updateMatch'
           },
           iframe: {
             type: Boolean,
