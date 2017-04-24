@@ -102,10 +102,10 @@
 
 					<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
-					<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>
-					<template is="dom-if" if="[[dropDownVar]]">
-						<i-year-list path="{{routeMatch}}"></i-year-list>
-					</template>
+					<!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
+					<!--<template is="dom-if" if="[[dropDownVar]]">-->
+						<i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
+					<!--</template>-->
 
 				</app-header>
 

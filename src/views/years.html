@@ -22,7 +22,7 @@
 
     </style>
       <div class="card">
-        <template is="dom-if" if="[[!selected]]">
+        <template is="dom-if" if="[[selected]]">
           <div class="app-grid">
           <template is="dom-repeat" items="[[reggataList]]" as="year">
               <div on-click="_openYear" class="dropDownItem">
@@ -31,9 +31,10 @@
             </template>
           </div>
         </template>
-        <template is="dom-if" if="[[selected]]">
+        <template is="dom-if" if="[[!selected]]">
           <div class="app-grid">
             <div on-click="_toggleList" class="dropDownItem">
+              [[match]]
             </div>
           </div>
         </template>
@@ -56,13 +57,13 @@
 
     _openYear(e) {
       this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
-      this.set('selected',true);
+      this.set('selected',false);
       this._updateYear();
       document.querySelector("my-app").toTop();
     }
 
     _toggleList(e) {
-      this.set('selected',false);
+      this.set('selected',true);
     }
 
     /**
@@ -117,7 +118,12 @@
           type: Boolean,
           notify:true,
           readOnly:false,
-          value:true,
+          value:false,
+        },
+        match: {
+          type: String,
+          notify: true,
+          readOnly: false
         }
       };
     }
