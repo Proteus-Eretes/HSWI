@@ -2,69 +2,72 @@
 
 <!-- shared styles for all tables -->
 <dom-module id="shared-styles-tables">
-  <template>
-    <style>
-      .table {
-          width: 100%;
-          margin-bottom: 1rem;
-          background-color: #FFF;
-          border-collapse: collapse;
-          border-spacing: 0;
-      }
+    <template>
+        <style>
+            .table {
+                width: 100%;
+                margin-bottom: 1rem;
+                background-color: #FFF;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
 
-      .table th,
-      .table td {
-          padding-top: 0.75rem;
-          vertical-align: top;
-          border-top: 1px solid #eceeef;
-          border-left: 0;
-          padding-right: 0;
-          padding-left: 0;
-          margin: 0;
-          border-right: 0;
-      }
+            .table th,
+            .table td {
+                padding-top: 0.75rem;
+                vertical-align: top;
+                border-top: 1px solid #eceeef;
+                border-left: 0;
+                padding-right: 0;
+                padding-left: 0;
+                margin: 0;
+                border-right: 0;
+            }
 
-      .table thead th {
-          vertical-align: bottom;
-          border-bottom: 2px solid #eceeef;
-      }
+            .table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #eceeef;
+            }
 
-      .table tbody + tbody {
-          border-top: 2px solid #eceeef;
-      }
+            .table tbody + tbody {
+                border-top: 2px solid #eceeef;
+            }
 
-      tbody tr:hover {
-          background-color: #ECECEC;
-      }
+            tbody tr:hover {
+                background-color: #ECECEC;
+            }
 
-      .show-gt-md {
-          max-width:150px;
-      }
-      .teamname {
-          max-width: 150px;
-          font-weight: 500;
-      }
-      .teamname:hover {
-          cursor: pointer;
-      }
+            .show-gt-md {
+                max-width: 150px;
+            }
 
-      td {
-          text-align: center;
-      }
-      .noTeams {
-        background:#FFF;
-        text-align:center;
-        position: relative;
-        top: -1.1rem;
-        padding: 5px;
-      }
+            .teamname {
+                max-width: 150px;
+                font-weight: 500;
+            }
 
-      @media screen and (max-width: 350px) {
-        .teamname {
-          max-width: 90px;
-        }
-      }
+            .teamname:hover {
+                cursor: pointer;
+            }
 
-    </style>
-  </template>
+            td {
+                text-align: center;
+            }
+
+            .noTeams {
+                background: #FFF;
+                text-align: center;
+                position: relative;
+                top: -1.1rem;
+                padding: 5px;
+            }
+
+            @media screen and (max-width: 350px) {
+                .teamname {
+                    max-width: 90px;
+                }
+            }
+
+        </style>
+    </template>
 </dom-module>

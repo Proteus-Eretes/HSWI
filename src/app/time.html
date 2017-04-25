@@ -1,82 +1,84 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <script>
-  /**
-   * Return the final time
-   * If team has no time don't show the bonusseconds
-   */
-  var finalTime = function(time, bonussecond) {
-    if (+time === 0) {
-      return 0;
-    }
-    return +time + (+bonussecond);
-  };
+    /**
+     * Return the final time
+     * If team has no time don't show the bonusseconds
+     */
+    const finalTime = function(time, bonussecond) {
+        if (+time === 0) {
+            return 0;
+        }
+        return +time + (+bonussecond);
+    };
 
-  /**
-   * formatTime a of format [h:]mm:ss.n
-   */
-  var formatTime = function (time) {
-    let centiseconds = Math.round((+time * 10)%10);
-    let seconds = Math.floor(+time % 60);
-    let minutes = Math.floor(+time / 60);
-    let hours = Math.floor(minutes / 60);
-    minutes -= hours * 60;
-    let timeString = '';
-    if(centiseconds > 9)
-    {
-      centiseconds = 0;
-      seconds++;
-    }
-    if (hours > 0) timeString += hours + ':';
-    if (minutes >= 0) timeString += (minutes < 10) ? ('0' + minutes) : (minutes);
-    timeString += ":";
-    if (seconds >= 0) timeString += (seconds < 10) ? ('0' + seconds) : (seconds);
-    timeString += ".";
-    timeString += centiseconds;
+    /**
+     * formatTime a of format [h:]mm:ss.n
+     */
+    const formatTime = function(time) {
+        let centiseconds = Math.round((+time * 10) % 10);
+        let seconds = Math.floor(+time % 60);
+        let minutes = Math.floor(+time / 60);
+        let hours = Math.floor(minutes / 60);
+        minutes -= hours * 60;
+        let timeString = '';
+        if (centiseconds > 9) {
+            centiseconds = 0;
+            seconds++;
+        }
+        if (hours > 0) timeString += hours + ':';
+        if (minutes >= 0) timeString += (minutes < 10) ? ('0' + minutes) : (minutes);
+        timeString += ':';
+        if (seconds >= 0) timeString += (seconds < 10) ? ('0' + seconds) : (seconds);
+        timeString += '.';
+        timeString += centiseconds;
 
-    return timeString;
-  };
+        return timeString;
+    };
 </script>
 <dom-module id="final-time">
-  <template>
-    <template is="dom-if" if="[[!_hasValue(team.disqualified)]]">
-      Gedisqualificeerd
+    <template>
+        <template is="dom-if" if="[[!_hasValue(team.disqualified)]]">
+            Gedisqualificeerd
+        </template>
+        <template is="dom-if" if="[[!_hasValue(team.excluded)]]">
+            Excluded
+        </template>
+        <template is="dom-if" if="[[_hasValue(team.excluded + team.disqualified)]]">
+            [[_displayTime(team.totaltime,team.bonussecond)]]
+        </template>
     </template>
-    <template is="dom-if" if="[[!_hasValue(team.excluded)]]">
-      Excluded
-    </template>
-    <template is="dom-if" if="[[_hasValue(team.excluded + team.disqualified)]]">
-      [[_displayTime(team.totaltime,team.bonussecond)]]
-    </template>
-  </template>
-  <script>
-  // Extend Polymer.Element base class
-  class FinalTime extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class FinalTime extends Polymer.Element {
 
-    static get is() { return 'final-time' }
+            static get is() {
+                return 'final-time';
+            }
 
-    connectedCallback() {
-      super.connectedCallback();
-    }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-    _displayTime(time,bonussecond) {
-      return formatTime(finalTime(time,bonussecond));
-    }
-    _hasValue(field) {
-      return field == 0;
-    }
+            _displayTime(time, bonussecond) {
+                return formatTime(finalTime(time, bonussecond));
+            }
 
-    static get properties() {
-      return {
-        team : {
-          type: Array,
-          notify:false,
-          readOnly: false,
+            _hasValue(field) {
+                return field == 0;
+            }
+
+            static get properties() {
+                return {
+                    team: {
+                        type: Array,
+                        notify: false,
+                        readOnly: false
+                    }
+                };
+            }
         }
-      };
-    }
-  }
 
-  // Register custom element definition using standard platform API
-  customElements.define(FinalTime.is, FinalTime);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(FinalTime.is, FinalTime);
+    </script>
 </dom-module>

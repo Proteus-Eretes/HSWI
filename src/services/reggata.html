@@ -1,104 +1,84 @@
 <script>
-/**
- * Get a subset of data of a array
- * @param  {array||object} array the base data
- * @param  {string} field value you want a array
- * @return array
- */
-  var fillFields = function (array, field) {
-      if (array != null) {
-          var object = {}, i, length = array.length, res = [];
-          for (i = 0; i < length; i += 1) {
-              object[array[i][field]] = array[i];
-          }
-          for (i in object) {
-              res.push(object[i]);
-          }
-          return res;
-      }
-  };
 
-  /**
-   * Get the list of reggatas
-   */
-  var requestReggataList = function(self) {
-      fetch('https://beta.hoesnelwasik.nl/api/')
-        .then(
-          function(res) {
-            if (res.status !== 200) {
-              console.log('Looks like something did a crash');
-              return;
-            }
 
-            res.json().then(function(data) {
-              self.regattas = data;
+    /**
+     * Get the list of reggatas
+     */
+    const requestReggataList = function(self) {
+        fetch('https://beta.hoesnelwasik.nl/api/')
+            .then(
+                function (res) {
+                    if (res.status !== 200) {
+                        return;
+                    }
+
+                    res.json().then(function (data) {
+                        self.regattas = data;
+                    });
+                }
+            )
+            .catch(function (err) {
+                console.log('Something went badly wrong: -S', err);
             });
-          }
-        )
-      .catch(function(err) {
-        console.log('Something went badly wrong: -S' ,err);
-      });
-  };
+    };
 
-  /**
-   * get the fields in a regatta
-   * @param  {object} self
-   * @param  {string} match
-   * @param  {string} year
-   */
-  var requestFields = function(self,match,year) {
-    if (!year) {
-      year = 0;
-    }
-    if (!match) {
-      match = 0;
-    }
-    fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/velden/')
-      .then(
-        function(res) {
-          if (res.status !== 200) {
-            console.log('Looks like something did a crash');
-            return;
-          }
-
-          res.json().then(function(data) {
-            self.fields = data;
-          });
+    /**
+     * get the fields in a regatta
+     * @param  {object} self
+     * @param  {string} match
+     * @param  {string} year
+     */
+    const requestFields = function(self, match, year) {
+        if (!year) {
+            year = 0;
         }
-      )
-      .catch(function(err) {
-        console.log('Something went badly wrong: -S' ,err);
-      });
-  }
-
-  /**
-   * get the clubs in a regatta
-   * @param  {object} self
-   * @param  {string} match
-   * @param  {string} year
-   */
-  var requestClubs = function(self,match,year) {
-    if (!year) {
-      year = 0;
-    }
-    if (!match) {
-      match = 0;
-    }
-    fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/clublist/')
-      .then(
-        function(res) {
-          if (res.status !== 200) {
-            console.log('Looks like something did a crash');
-            return;
-          }
-
-          res.json().then(function(data) {
-            self.clubs = data;
-          });
+        if (!match) {
+            match = 0;
         }
-      )
-      .catch(function(err) {
-        console.log('Something went badly wrong: -S' ,err);
-      });
-  }
+        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/velden/')
+            .then(
+                function (res) {
+                    if (res.status !== 200) {
+                        return;
+                    }
+
+                    res.json().then(function (data) {
+                        self.fields = data;
+                    });
+                }
+            )
+            .catch(function(err) {
+                console.log('Something went badly wrong: -S', err);
+            });
+    }
+
+    /**
+     * get the clubs in a regatta
+     * @param  {object} self
+     * @param  {string} match
+     * @param  {string} year
+     */
+    const requestClubs = function (self, match, year) {
+        if (!year) {
+            year = 0;
+        }
+        if (!match) {
+            match = 0;
+        }
+        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/clublist/')
+            .then(
+                function (res) {
+                    if (res.status !== 200) {
+                        return;
+                    }
+
+                    res.json().then(function (data) {
+                        self.clubs = data;
+                    });
+                }
+            )
+            .catch(function(err) {
+                console.log('Something went badly wrong: -S', err);
+            });
+    }
 </script>

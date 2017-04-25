@@ -21,324 +21,316 @@
 <link rel="import" href="elements/search.html">
 
 <dom-module id="my-app">
-  <template>
+    <template>
 
 
-    <style include="shared-styles">
-      :host {
-        --app-primary-color: #000;
-        --app-secondary-color: #FFF;
-        --app-drawer-width: 320px;
-        display: block;
-      }
+        <style include="shared-styles">
+            :host {
+                --app-primary-color: #000;
+                --app-secondary-color: #FFF;
+                --app-drawer-width: 320px;
+                display: block;
+            }
 
-      app-header {
-        color: #FFF;
-        background-color: var(--app-primary-color);
-      }
+            app-header {
+                color: #FFF;
+                background-color: var(--app-primary-color);
+            }
 
-      .header-bar {
-        height: 48px;
-        display: flex;
-      }
+            .header-bar {
+                height: 48px;
+                display: flex;
+            }
 
-      .img-header-bar {
-        height: calc(100% - 8px);
-        padding: 8px 4px 4px;
-        float: left;
-      }
+            .img-header-bar {
+                height: calc(100% - 8px);
+                padding: 8px 4px 4px;
+                float: left;
+            }
 
-      .menu-header {
-        background-color: #ECECEC;
-      }
+            .menu-header {
+                background-color: #ECECEC;
+            }
 
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
 
-      .drawer-list {
-        margin: 0 20px;
-      }
+            .drawer-list {
+                margin: 0 20px;
+            }
 
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-      }
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+                line-height: 40px;
+            }
 
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
-      }
+            .drawer-list a.iron-selected {
+                color: black;
+                font-weight: bold;
+            }
 
-      .menu {
-        z-index: 1;
-      }
+            .menu {
+                z-index: 1;
+            }
 
-    </style>
+        </style>
 
-    <app-location route="{{route}}"></app-location>
+        <app-location route="{{route}}"></app-location>
 
-    <app-route route="{{route}}" pattern="/iframe" data="{{routeData}}" tail="{{subRouteMatch}}"></app-route>
+        <app-route route="{{route}}" pattern="/iframe" data="{{routeData}}" tail="{{subRouteMatch}}"></app-route>
 
-    <app-drawer-layout responsive-width="1280px" fullbleed>
-      <!-- Drawer content -->
-      <app-drawer slot="drawer" style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
-        <div style="height: 100%; overflow: auto;">
-          <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
-          <match-list route="{{route}}"></match-list>
-        </div>
-      </app-drawer>
+        <app-drawer-layout responsive-width="1280px" fullbleed>
+            <!-- Drawer content -->
+            <app-drawer slot="drawer" style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
+                <div style="height: 100%; overflow: auto;">
+                    <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
+                    <match-list route="{{route}}"></match-list>
+                </div>
+            </app-drawer>
 
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
 
-        <!-- header, shell -->
-        <app-header class="header-bar" reveals effects="waterfall">
-          <app-toolbar id="top">
-            <img
-              class="img-header-bar"
-              src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
-              on-click="goHome"></img>
+                <!-- header, shell -->
+                <app-header class="header-bar" reveals effects="waterfall">
+                    <app-toolbar id="top">
+                        <img
+                                class="img-header-bar"
+                                src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
+                                on-click="goHome"/>
 
-            <!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
+                        <!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
-            <!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
-            <!--<template is="dom-if" if="[[dropDownVar]]">-->
-              <i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
-            <!--</template>-->
-            <!--Filler-->
-            <div main-title></div>
-            <search-match route="{{routeMatch}}"></search-match>
-          </app-toolbar>
-        </app-header>
+                        <!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
+                        <!--<template is="dom-if" if="[[dropDownVar]]">-->
+                        <i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
+                        <!--</template>-->
+                        <!--Filler-->
+                        <div main-title></div>
+                        <search-match route="{{routeMatch}}"></search-match>
+                    </app-toolbar>
+                </app-header>
 
-        <template is="dom-if" if="[[matchPage]]">
-          <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
-        </template>
-        <template is="dom-if" if="[[resultPage]]">
-          <team-list path="{{routeMatch}}"></team-list>
-        </template>
-        <footer style="color: #FFF">
-          Copyright
-          <a style="color: #ECECEC" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
-        </footer>
-      </app-header-layout>
-    </app-drawer-layout>
+                <template is="dom-if" if="[[matchPage]]">
+                    <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
+                </template>
+                <template is="dom-if" if="[[resultPage]]">
+                    <team-list path="{{routeMatch}}"></team-list>
+                </template>
+                <footer style="color: #FFF">
+                    Copyright
+                    <a style="color: #ECECEC" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
+                </footer>
+            </app-header-layout>
+        </app-drawer-layout>
 
-  </template>
+    </template>
 
-  <script>
-    // Extend Polymer.Element base class
-    class MyApp extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class MyApp extends Polymer.Element {
 
-      static get is() {
-        return 'my-app'
-      }
+            static get is() {
+                return 'my-app';
+            }
 
-      constructor() {
-        super();
-      }
+            connectedCallback() {
+                this.match = '';
+                super.connectedCallback();
+                // this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
+                // self.shadowRoot.querySelector('#drawer').toggle(); });
+            }
 
-      connectedCallback() {
-        this.match = '';
-        super.connectedCallback();
-        // this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
-        // self.shadowRoot.querySelector('#drawer').toggle(); });
-      }
+            /**
+             * Are we in Ifram mode hide the menu
+             */
+            _hide(iframe) {
+                if (!iframe)
+                    return '';
+                return 'display:none';
+            }
 
-      /**
-       * Are we in Ifram mode hide the menu
-       */
-      _hide(iframe) {
-        if (!iframe)
-          return '';
-        return 'display:none';
-      }
+            /**
+             * If a route has happend the routeMatch strip iframe
+             * Send google pageview
+             */
+            _updateRoute(newValue, oldValue) {
+                if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
+                    this.iframe = true;
+                    this.routeMatch = this.subRouteMatch.path;
+                } else {
+                    this.routeMatch = this.route.path;
+                    this.iframe = false;
+                }
+                ga('send', 'pageview', this.route.path);
+                this._location();
+            }
 
-      _toggleYearDropdown() {
-        this.dropDownVar = !this.dropDownVar;
-      }
+            _year(route) {
+                return route.split('/')[2];
+            }
 
-      /**
-       * If a route has happend the routeMatch strip iframe
-       * Send google pageview
-       */
-      _updateRoute(newValue, oldValue) {
-        if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
-          this.iframe = true;
-          this.routeMatch = this.subRouteMatch.path;
-        } else {
-          this.routeMatch = this.route.path;
-          this.iframe = false;
+            /**
+             * Return field name
+             */
+            _field(route) {
+                return route.split('/')[3];
+            }
+
+            /**
+             * Go to the mainpage
+             */
+            goHome(e) {
+                if (this.iframe) {
+                    if (this.routeMatch.split('/').length > 2) {
+                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+                    } else {
+                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1]);
+                    }
+                } else {
+                    this.set('routeMatch', '/');
+                }
+            }
+
+            /**
+             * return to the match
+             */
+            goToMatch(e) {
+                this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+            }
+
+            /**
+             * IE router
+             */
+            ieWindowloc(link) {
+                if (this.iframe) {
+                    window.location.href = 'iframe/' + link;
+                } else {
+                    window.location.href = link;
+                }
+            }
+
+            /**
+             * If a route has happend update the route object make sure iframe mode is honnuerd
+             */
+            _updateRouteMatch(newValue, oldValue) {
+                if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
+                    this.set('route.path', '/iframe' + this.routeMatch);
+                } else {
+                    this.set('route.path', this.routeMatch);
+                }
+                this._location();
+            }
+
+            /**
+             * Close app drawer when route change has happend
+             */
+            _routePageChanged(page) {
+                if (!this.iframe && this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
+                    this.shadowRoot.querySelector('#drawer').close();
+                }
+            }
+
+            /**
+             * Go to the top of the page
+             */
+            toTop() {
+                this.shadowRoot.querySelector('#top').scrollIntoView();
+            }
+
+            /**
+             * Rerturn the match name
+             */
+            getMatchShortName() {
+                return this.match.split(' ')[0];
+            }
+
+            /**
+             * Rerturn the match name
+             */
+            getMatchShort() {
+                return this.match;
+            }
+
+            setMatch(match) {
+                this.match = match;
+            }
+
+            //TODO make this into arrow functions for flexiblity
+            /**
+             * Which page should be open
+             */
+            _location() {
+                this.matchPage = false;
+                this.resultPage = false;
+                switch (this.routeMatch.split('/').length) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        this.matchPage = true;
+                        break;
+                    default:
+                        this.resultPage = true;
+                        break;
+                }
+            }
+
+            static get observers() {
+                return ['_routePageChanged(route)'];
+            }
+
+            static get properties() {
+                return {
+                    iframe: {
+                        type: Boolean,
+                        value: true
+                    },
+                    route: {
+                        type: Object,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateRoute'
+                    },
+                    routeMatch: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateRouteMatch'
+                    },
+                    matchPage: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    },
+                    resultPage: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    },
+                    match: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false
+                    },
+                    dropDownVar: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
+            }
         }
-        ga('send', 'pageview', this.route.path);
-        this._location();
-      }
 
-      _year(route) {
-        return route.split('/')[2];
-      }
-
-      /**
-       * Return field name
-       */
-      _field(route) {
-        return route.split('/')[3];
-      }
-
-      /**
-       * Go to the mainpage
-       */
-      goHome(e) {
-        if (this.iframe) {
-          if (this.routeMatch.split('/').length > 2) {
-            this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-          } else {
-            this.set('routeMatch', '/' + this.routeMatch.split('/')[1]);
-          }
-        } else {
-          this.set('routeMatch', '/');
-        }
-      }
-
-      /**
-       * return to the match
-       */
-      goToMatch(e) {
-        this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-      }
-
-      /**
-       * IE router
-       */
-      ieWindowloc(link) {
-        if (this.iframe) {
-          window.location.href = 'iframe/'+link;
-        } else {
-          window.location.href = link;
-        }
-      }
-
-      /**
-       * If a route has happend update the route object make sure iframe mode is honnuerd
-       */
-      _updateRouteMatch(newValue, oldValue) {
-        if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
-          this.set('route.path', '/iframe' + this.routeMatch);
-        } else {
-          this.set('route.path', this.routeMatch);
-        }
-        this._location();
-      }
-
-      /**
-       * Close app drawer when route change has happend
-       */
-      _routePageChanged(page) {
-        if (!this.iframe && this.shadowRoot.querySelector('#drawer') && !this.shadowRoot.querySelector('#drawer').persistent) {
-          this.shadowRoot.querySelector('#drawer').close();
-        }
-      }
-
-      /**
-       * Go to the top of the page
-       */
-      toTop() {
-        this.shadowRoot.querySelector('#top').scrollIntoView();
-      }
-
-      /**
-       * Rerturn the match name
-       */
-      getMatchShortName() {
-        return this.match.split(' ')[0];
-      }
-
-      /**
-       * Rerturn the match name
-       */
-      getMatchShort() {
-        return this.match;
-      }
-
-      setMatch(match) {
-        this.match = match;
-      }
-
-      //TODO make this into arrow functions for flexiblity
-      /**
-       * Which page should be open
-       */
-      _location() {
-        this.matchPage = false;
-        this.resultPage = false;
-        switch (this.routeMatch.split('/').length) {
-          case 0:
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-            this.matchPage = true;
-            break;
-          default:
-            this.resultPage = true;
-            break;
-        }
-      }
-
-      static get observers() {
-        return ['_routePageChanged(route)'];
-      }
-
-      static get properties() {
-        return {
-          iframe: {
-            type: Boolean,
-            value: true
-          },
-          route: {
-            type: Object,
-            notify: true,
-            readOnly: false,
-            observer: '_updateRoute'
-          },
-          routeMatch: {
-            type: String,
-            notify: true,
-            readOnly: false,
-            observer: '_updateRouteMatch'
-          },
-          matchPage: {
-            type: Boolean,
-            notify: true,
-            readOnly: false,
-            value: false
-          },
-          resultPage: {
-            type: Boolean,
-            notify: true,
-            readOnly: false,
-            value: false
-          },
-          match: {
-            type: Array,
-            notify: true,
-            readOnly: false,
-          },
-          dropDownVar: {
-            type: Boolean,
-            value: false,
-            notify: true,
-            readOnly: false
-          }
-        };
-      }
-    }
-
-    // Register custom element definition using standard platform API
-    customElements.define(MyApp.is, MyApp);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(MyApp.is, MyApp);
+    </script>
 </dom-module>

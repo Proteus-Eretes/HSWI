@@ -1,5 +1,12 @@
 {
-  "extends": ["eslint:recommended", "google"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "jsx": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
   "env": {
     "browser": true
   },
@@ -8,9 +15,26 @@
   ],
   "rules": {
     "no-var": "off",
-    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }]
+    "comma-dangle": "off",
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": [
+          "Polymer"
+        ]
+      }
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 200
+      }
+    ],
+    "valid-jsdoc": "warn",
+    "require-jsdoc": "warn"
   },
   "globals": {
-    "Polymer": true
+    "Polymer": true,
+    "ga": true
   }
 }

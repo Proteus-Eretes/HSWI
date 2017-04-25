@@ -9,99 +9,101 @@
 <link rel="import" href="clubs.html">
 
 <dom-module id="main-match">
-  <template>
-    <style include="shared-styles">
-    </style>
+    <template>
+        <style include="shared-styles">
+        </style>
 
-    <paper-tabs selected="{{target}}" scrollable fit-container>
-      <paper-tab>Uitslagen</paper-tab>
-      <paper-tab>Loting</paper-tab>
-      <paper-tab>Vereniging</paper-tab>
-      <paper-tab>Inschrijving</paper-tab>
-    </paper-tabs>
+        <paper-tabs selected="{{target}}" scrollable fit-container>
+            <paper-tab>Uitslagen</paper-tab>
+            <paper-tab>Loting</paper-tab>
+            <paper-tab>Vereniging</paper-tab>
+            <paper-tab>Inschrijving</paper-tab>
+        </paper-tabs>
 
-    <iron-pages selected="[[target]]">
-      <field-list-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-boat>
-      <field-list-block path="{{route}}" target="loting" fields=[[fields]]></field-list-block>
-      <club-list path="{{route}}" target="vereniging" clubs=[[clubs]]></club-list>
-      <field-list-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-boat>
-    </iron-pages>
-  </template>
+        <iron-pages selected="[[target]]">
+            <field-list-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-boat>
+            <field-list-block path="{{route}}" target="loting" fields=[[fields]]></field-list-block>
+            <club-list path="{{route}}" target="vereniging" clubs=[[clubs]]></club-list>
+            <field-list-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-boat>
+        </iron-pages>
+    </template>
 
 
-  <script>
-    // Extend Polymer.Element base class
-    class MainMatch extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class MainMatch extends Polymer.Element {
 
-      static get is() { return 'main-match' }
+            static get is() {
+                return 'main-match';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-      }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-      /**
-       * If route has updated request new data and select correct view
-       */
-      _updateRoute(newValue, oldValue) {
-        if(this.route.split('/').length < 3)  {
-          requestFields(this,this.route.split('/')[1],0);
-          requestClubs(this,this.route.split('/')[1],0);
-          this.target = 0;
-          return;
+            /**
+             * If route has updated request new data and select correct view
+             */
+            _updateRoute(newValue, oldValue) {
+                if (this.route.split('/').length < 3) {
+                    requestFields(this, this.route.split('/')[1], 0);
+                    requestClubs(this, this.route.split('/')[1], 0);
+                    this.target = 0;
+                    return;
+                }
+                requestFields(this, this.route.split('/')[1], this.route.split('/')[2]);
+                requestClubs(this, this.route.split('/')[1], this.route.split('/')[2]);
+                switch (this.route.split('/')[3]) {
+                    case 'uitslagen':
+                        this.target = 0;
+                        break;
+                    case 'loting':
+                        this.target = 1;
+                        break;
+                    case 'vereniging':
+                        this.target = 2;
+                        break;
+                    case 'inschrijving':
+                        this.target = 3;
+                        break;
+                    default:
+                        this.target = 0;
+                }
+            }
+
+            _updateMatch(newValue, oldValue) {
+                document.querySelector('my-app').setMatch(this.fields.name);
+            }
+
+            static get properties() {
+                return {
+                    route: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateRoute'
+                    },
+                    target: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false
+                    },
+                    fields: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateMatch'
+                    },
+                    iframe: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
+            }
         }
-        requestFields(this,this.route.split('/')[1],this.route.split('/')[2]);
-        requestClubs(this,this.route.split('/')[1],this.route.split('/')[2]);
-        switch (this.route.split('/')[3]) {
-          case 'uitslagen':
-            this.target = 0;
-            break;
-          case 'loting':
-            this.target = 1;
-            break;
-          case 'vereniging':
-            this.target = 2;
-            break;
-          case 'inschrijving':
-            this.target = 3;
-            break;
-          default:
-            this.target = 0;
-        }
-      }
 
-      _updateMatch(newValue, oldValue) {
-        document.querySelector('my-app').setMatch(this.fields.name);
-      }
-
-      static get properties() {
-        return {
-          route: {
-            type: String,
-            notify: true,
-            readOnly: false,
-            observer: '_updateRoute',
-          },
-          target: {
-            type: Number,
-            notify: true,
-            readOnly: false,
-          },
-          fields: {
-            type: Array,
-            notify: true,
-            readOnly: false,
-            observer: '_updateMatch'
-          },
-          iframe: {
-            type: Boolean,
-            notify: true,
-            readOnly:false,
-          }
-        };
-      }
-    }
-
-    // Register custom element definition using standard platform API
-    customElements.define(MainMatch.is, MainMatch);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(MainMatch.is, MainMatch);
+    </script>
 </dom-module>

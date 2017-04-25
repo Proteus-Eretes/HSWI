@@ -2,144 +2,152 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<<link rel="import" href="../teams/lastResultTeams.html">
+<link rel="import" href="../teams/lastResultTeams.html">
 <!--<link rel="import" href="../teams/lastResultTeamsIE.html">-->
 <link rel="import" href="../services/lastResults.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="last-result">
-  <template>
-    <style include="shared-styles-tables shared-styles">
-      .breakingnews {
-        color: #FFF;
-        padding: 5px;
-        margin: 5px;
-        font-size: 18px;
-        font-weight: 600;
-        text-align: center;
-      }
-      .matchHeader {
-        color: #FFF;
-        text-align: center;
-      }
-    </style>
-    <!-- <h2 on-click="_goToMatch" class="matchHeader">
-      [[match.match]]
-  </h2> --> <!-- will come back later, in a different form -->
-    <template is="dom-if" if=[[news]]>
-      <div class="breakingnews">
-        [[match.message]]
-      </div>
+    <template>
+        <style include="shared-styles-tables shared-styles">
+            .breakingnews {
+                color: #FFF;
+                padding: 5px;
+                margin: 5px;
+                font-size: 18px;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .matchHeader {
+                color: #FFF;
+                text-align: center;
+            }
+        </style>
+        <!-- <h2 on-click="_goToMatch" class="matchHeader">
+          [[match.match]]
+      </h2> --> <!-- will come back later, in a different form -->
+        <template is="dom-if" if=[[news]]>
+            <div class="breakingnews">
+                [[match.message]]
+            </div>
+        </template>
+        <template is="dom-if" if="[[!displayError]]">
+            <paper-tabs selected="{{splash}}" scrollable fit-container>
+                <template is="dom-repeat" items="[[match.setting.name]]">
+                    <paper-tab>[[item]]</paper-tab>
+                </template>
+            </paper-tabs>
+            <iron-pages selected="[[splash]]">
+                <template is="dom-if" if="[[_displayLocation(1)]]">
+                    <last-result-table data-splash=1 no-teams=[[match.error]]
+                                       teams=[[match.teams.splash1]]></last-result-table>
+                </template>
+                <template is="dom-if" if="[[_displayLocation(2)]]">
+                    <last-result-table data-splash=2 no-teams=[[match.error]]
+                                       teams=[[match.teams.splash2]]></last-result-table>
+                </template>
+                <template is="dom-if" if="[[_displayLocation(3)]]">
+                    <last-result-table data-splash=3 no-teams=[[match.error]]
+                                       teams=[[match.teams.splash3]]></last-result-table>
+                </template>
+                <template is="dom-if" if="[[_displayLocation(4)]]">
+                    <last-result-table data-splash=4 no-teams=[[match.error]]
+                                       teams=[[match.teams.splash4]]></last-result-table>
+                </template>
+                <last-result-table data-splash=5 no-teams=[[match.error]]
+                                   teams=[[match.teams.totaltime]]></last-result-table>
+            </iron-pages>
+        </template>
+        <template is="dom-if" if="[[displayError]]">
+            <div style="color:#FFF; text-align:center;">
+                Er is helaas op dit moment geen live resultaten beschikbaar.
+            </div>
+        </template>
     </template>
-    <template is="dom-if" if="[[!displayError]]">
-      <paper-tabs selected="{{splash}}" scrollable fit-container>
-        <template is="dom-repeat" items="[[match.setting.name]]">
-          <paper-tab>[[item]]</paper-tab>
-        </template>
-	     </paper-tabs>
-      <iron-pages selected="[[splash]]">
-        <template is="dom-if" if="[[_displayLocation(1)]]">
-          <last-result-table data-splash=1 no-teams=[[match.error]] teams=[[match.teams.splash1]]> </last-result-table>
-        </template>
-        <template is="dom-if" if="[[_displayLocation(2)]]">
-          <last-result-table data-splash=2 no-teams=[[match.error]] teams=[[match.teams.splash2]]> </last-result-table>
-        </template>
-        <template is="dom-if" if="[[_displayLocation(3)]]">
-          <last-result-table data-splash=3 no-teams=[[match.error]] teams=[[match.teams.splash3]]> </last-result-table>
-        </template>
-        <template is="dom-if" if="[[_displayLocation(4)]]">
-          <last-result-table data-splash=4 no-teams=[[match.error]] teams=[[match.teams.splash4]]> </last-result-table>
-        </template>
-        <last-result-table data-splash=5 no-teams=[[match.error]] teams=[[match.teams.totaltime]]> </last-result-table>
-      </iron-pages>
-    </template>
-    <template is="dom-if" if="[[displayError]]">
-      <div style="color:#FFF; text-align:center;">
-        Er is helaas op dit moment geen live resultaten beschikbaar.
-      </div>
-    </template>
-  </template>
 
 
-  <script>
-    class LastResult extends Polymer.Element {
-      static get is() {return 'last-result'}
+    <script>
+        class LastResult extends Polymer.Element {
+            static get is() {
+                return 'last-result';
+            }
 
-      /**
-       * Init the settings
-       */
-      connectedCallback() {
-        this.news = false;
-        super.connectedCallback();
-        requestData(this);
-        var self = this;
-        setInterval(function() {
-          requestData(self)
-        },5000);
-      }
+            /**
+             * Init the settings
+             */
+            connectedCallback() {
+                this.news = false;
+                super.connectedCallback();
+                requestData(this);
+                var self = this;
+                setInterval(function() {
+                    requestData(self);
+                }, 5000);
+            }
 
-      /**
-       * Update message or error
-       */
-      _matchUpdate(match) {
-        if (this.match) {
-          if (this.splash === undefined || this.splash === -1)
-            this.splash = this.match.setting.name.length - 1;
-          this.displayError = this.match.error;
-          this.news = this.match.message !== '';
+            /**
+             * Update message or error
+             */
+            _matchUpdate(match) {
+                if (this.match) {
+                    if (this.splash === undefined || this.splash === -1)
+                        this.splash = this.match.setting.name.length - 1;
+                    this.displayError = this.match.error;
+                    this.news = this.match.message !== '';
+                }
+            }
+
+            /**
+             * If a match has multiple splash location make it possible to view them
+             */
+            _displayLocation(splash) {
+                return splash < this.match.setting.name.length;
+            }
+
+            /**
+             * Goto the match which is live
+             */
+            _goToMatch(e) {
+                try {
+                    this.set('path', '/' + this.match.setting.match + '/' + this.match.setting.year);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + this.match.setting.match + '/' + this.match.setting.year);
+                }
+            }
+
+            static get properties() {
+                return {
+                    splash: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false,
+                        value: -1
+                    },
+                    match: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false
+                    },
+                    displayError: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false
+                    },
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
+            }
+
+            static get observers() {
+                return ['_matchUpdate(match.*)'];
+            }
         }
-      }
 
-      /**
-       * If a match has multiple splash location make it possible to view them
-       */
-      _displayLocation(splash) {
-        return splash < this.match.setting.name.length;
-      }
-
-      /**
-       * Goto the match which is live
-       */
-      _goToMatch(e) {
-        try {
-          this.set('path','/' + this.match.setting.match + '/' + this.match.setting.year);
-        } catch (a) {
-          document.querySelector("my-app").ieWindowloc('/' + this.match.setting.match + '/' + this.match.setting.year);
-        }
-      }
-
-      static get properties() {
-        return {
-          splash: {
-            type: Number,
-            notify: true,
-            readOnly: false,
-            value:-1,
-          },
-          match: {
-            type: Array,
-            notify: true,
-            readOnly: false,
-          },
-          displayError: {
-            type: Boolean,
-            notify:true,
-            readOnly:false,
-          },
-          path: {
-            type: String,
-            notify:true,
-            readOnly:false,
-          }
-        };
-      }
-
-      static get observers() {
-        return ['_matchUpdate(match.*)'];
-      }
-    }
-
-    customElements.define(LastResult.is,LastResult);
-  </script>
+        customElements.define(LastResult.is, LastResult);
+    </script>
 </dom-module>
