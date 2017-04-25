@@ -83,11 +83,11 @@
 
 		<app-route route="{{route}}" pattern="/iframe" data="{{routeData}}" tail="{{subRouteMatch}}"></app-route>
 
-		<app-drawer-layout responsiveWidth="1280px" fullbleed>
+		<app-drawer-layout responsive-width="1280px" fullbleed>
 			<!-- Drawer content -->
-			<app-drawer style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
+			<app-drawer slot="drawer" style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
 				<div style="height: 100%; overflow: auto;">
-					<!-- <app-toolbar class="menu-header">Wedstrijden</app-toolbar> -->
+					<app-toolbar class="menu-header">Wedstrijden</app-toolbar>
 					<match-list route="{{route}}"></match-list>
 				</div>
 			</app-drawer>
@@ -101,8 +101,7 @@
 						<img
 							class="img-header-bar"
 							src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
-							click="goHome()"></img>
-						<!-- homebutton? -->
+							on-click="goHome"></img>
 
 						<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
