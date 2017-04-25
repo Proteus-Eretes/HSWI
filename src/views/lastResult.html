@@ -33,11 +33,11 @@
       </div>
     </template>
     <template is="dom-if" if="[[!displayError]]">
-      <!-- <paper-tabs selected="{{splash}}" scrollable fit-container>
+      <paper-tabs selected="{{splash}}" scrollable fit-container>
         <template is="dom-repeat" items="[[match.setting.name]]">
           <paper-tab>[[item]]</paper-tab>
         </template>
-	</paper-tabs> --> <!-- not working? -->
+	     </paper-tabs>
       <iron-pages selected="[[splash]]">
         <template is="dom-if" if="[[_displayLocation(1)]]">
           <last-result-table data-splash=1 no-teams=[[match.error]] teams=[[match.teams.splash1]]> </last-result-table>
