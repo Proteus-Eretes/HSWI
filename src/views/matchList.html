@@ -123,7 +123,11 @@
        * Open a match
        */
       _openMatch(e) {
-        this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+        try {
+          this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+        } catch (a) {
+          document.querySelector("my-app").ieWindowloc('/'+e.model.year.shortname + '/' + e.model.year.jaar);
+        }
       }
 
       /**

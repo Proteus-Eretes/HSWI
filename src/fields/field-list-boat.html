@@ -49,7 +49,11 @@
 
       _openField(e) {
         let shortname = document.querySelector("my-app").getMatchShort();
-        this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        try {
+          this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        } catch (a) {
+          document.querySelector("my-app").ieWindowloc('/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target);
+        }
       }
 
       /**

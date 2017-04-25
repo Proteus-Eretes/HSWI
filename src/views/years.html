@@ -56,8 +56,12 @@
     }
 
     _openYear(e) {
-      this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar );
-      this.set('selected',false);
+      try {
+        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
+        this.set('selected',true);
+      } catch (a) {
+        document.querySelector("my-app").ieWindowloc('/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
+      }
       this._updateYear();
       document.querySelector("my-app").toTop();
     }

@@ -22,10 +22,13 @@
 
 <dom-module id="my-app">
 	<template>
+
+
 		<style include="shared-styles">
 			:host {
 				--app-primary-color: #000;
 				--app-secondary-color: #FFF;
+				--app-drawer-width: 320px;
 				display: block;
 			}
 
@@ -105,6 +108,7 @@
 					<!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
 					<!--<template is="dom-if" if="[[dropDownVar]]">-->
 						<i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
+						<search-match route="{{routeMatch}}"></search-match>
 					<!--</template>-->
 
 				</app-header>
@@ -146,7 +150,6 @@
 			/**
        * Are we in Ifram mode hide the menu
        */
-
 			_hide(iframe) {
 				if (!iframe)
 					return '';
@@ -156,6 +159,7 @@
 			_toggleYearDropdown() {
 				this.dropDownVar = !this.dropDownVar;
 			}
+
 			/**
        * If a route has happend the routeMatch strip iframe
        * Send google pageview
@@ -205,7 +209,18 @@
 				this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
 			}
 
-			/**
+      /**
+       * IE router
+       */
+      ieWindowloc(link) {
+        if (this.iframe) {
+          window.location.href = 'iframe/'+link;
+        } else {
+          window.location.href = link;
+        }
+      }
+
+      /**
        * If a route has happend update the route object make sure iframe mode is honnuerd
        */
 			_updateRouteMatch(newValue, oldValue) {
