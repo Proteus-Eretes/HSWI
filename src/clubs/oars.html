@@ -1,53 +1,55 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="oars-img">
-  <template>
-    <style>
-      .cluboars {
-        height: 20px;
-        width: 48px;
-        margin: 5px;
-      }
-    </style>
-    <div>
+    <template>
+        <style>
+            .cluboars {
+                height: 20px;
+                width: 48px;
+                margin: 5px;
+            }
+        </style>
+        <div>
       <span>
         <img class="cluboars" src$="[[_lowerCase(club)]]">
       </span>
-    </div>
-  </template>
+        </div>
+    </template>
 
-  <script>
-    // Extend Polymer.Element base class
-    class OarsImg extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class OarsImg extends Polymer.Element {
 
-      static get is() { return 'oars-img' }
+            static get is() {
+                return 'oars-img';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-      }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-      /**
-       * Clubname to lowercase return corect link
-       */
-      _lowerCase(name) {
-        if (name)
-          return "https://images.poweredbyiris.nl/0/30/cluboars/"+name.toLowerCase()+".png";
-        return '';
-      }
+            /**
+             * Clubname to lowercase return corect link
+             */
+            _lowerCase(name) {
+                if (name)
+                    return 'https://images.poweredbyiris.nl/0/30/cluboars/' + name.toLowerCase() + '.png';
+                return '';
+            }
 
-      static get properties() {
-        return {
-          club: {
-            type: String,
-            notify: false,
-            readOnly: false,
-          }
-        };
-      }
-    }
+            static get properties() {
+                return {
+                    club: {
+                        type: String,
+                        notify: false,
+                        readOnly: false,
+                    }
+                };
+            }
+        }
 
-    // Register custom element definition using standard platform API
-    customElements.define(OarsImg.is, OarsImg);
+        // Register custom element definition using standard platform API
+        customElements.define(OarsImg.is, OarsImg);
 
-  </script>
+    </script>
 </dom-module>

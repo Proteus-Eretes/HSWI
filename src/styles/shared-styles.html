@@ -2,41 +2,52 @@
 
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
-  <template>
-    <style>
-      .card {
-        display: grid;
-        margin: 0px 6px 6px 6px;
-        padding: 0;
-        color: #757575;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
+    <template>
+        <style>
+            .card {
+                display: grid;
+                margin: 0px 6px 6px 6px;
+                padding: 0;
+                color: #757575;
+                background-color: #fff;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
 
-      h1 {
-        margin: 16px 0;
-        color: #212121;
-        font-size: 22px;
-      }
+            h1 {
+                margin: 16px 0;
+                color: #212121;
+                font-size: 22px;
+            }
 
-      paper-tabs {
-        color: #FFF;
-        padding-bottom: 6px;
-      }
+            paper-tabs {
+                color: #FFF;
+                padding-bottom: 6px;
+            }
 
-      paper-button.hover:hover {
-        background-color: #ECECEC;
-      }
+            paper-button.hover:hover {
+                background-color: #ECECEC;
+            }
 
-      .teamname {
-          font-weight: 500;
-      }
-      .teamname:hover {
-          cursor: pointer;
-      }
-      @media screen and (max-width:800px) {  .show-gt-md {display: none;}}
-      @media screen and (max-width:480px) {  .show-gt-sm {display: none;}}
+            .teamname {
+                font-weight: 500;
+            }
 
-    </style>
-  </template>
+            .teamname:hover {
+                cursor: pointer;
+            }
+
+            @media screen and (max-width: 800px) {
+                .show-gt-md {
+                    display: none;
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                .show-gt-sm {
+                    display: none;
+                }
+            }
+
+        </style>
+    </template>
 </dom-module>

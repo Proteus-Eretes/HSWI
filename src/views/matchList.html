@@ -5,163 +5,167 @@
 <link rel="import" href="../my-icons.html">
 
 <dom-module id="match-list">
-  <template>
-    <style include="shared-styles">
-    .subitem[data-selected = "false"] {
-      display: none;
-    }
-    .subitem[data-selected = "true"] {
-      display:inherit;
-    }
-    ul {
+    <template>
+        <style include="shared-styles">
+            .subitem[data-selected = "false"] {
+                display: none;
+            }
 
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
+            .subitem[data-selected = "true"] {
+                display: inherit;
+            }
 
-    li.main {
-      line-height: 40px;
-      border-top: 1px solid rgba(0,0,0,.12);
-      padding: 0 16px;
-      margin: 0;
-    }
+            ul {
 
-    li.main:nth-child(even) {
-      background-color: #FFF;
-    }
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
 
-    li.subitem {
-      line-height: 40px;
-      padding: 0 16px;
-      margin: 0;
-    }
+            li.main {
+                line-height: 40px;
+                border-top: 1px solid rgba(0, 0, 0, .12);
+                padding: 0 16px;
+                margin: 0;
+            }
 
-    .img {
-      margin-top: 6px;
-      clear: right;
-      float: right;
-    }
+            li.main:nth-child(even) {
+                background-color: #FFF;
+            }
 
-    </style>
-    <ul>
-      <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
-        <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
-          <iron-icon class="img" icon$="[[_getImg(match)]]"></iron-icon>
-          <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
-            <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}" sort="_yearSort">
-              <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
+            li.subitem {
+                line-height: 40px;
+                padding: 0 16px;
+                margin: 0;
+                display: flex;
+            }
+
+            .img {
+                margin-top: 6px;
+            }
+
+        </style>
+        <ul>
+            <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
+                <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
+                    <iron-icon class="img" icon$="[[_getImg(match)]]"></iron-icon>
+                    <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
+                        <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}"
+                                  sort="_yearSort">
+                            <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
+                        </template>
+                    </ul>
+                </li>
             </template>
-          </ul>
-        </li>
-      </template>
-    </ul>
-  </template>
+        </ul>
+    </template>
 
 
-  <script>
-    // Extend Polymer.Element base class
-    class MatchList extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class MatchList extends Polymer.Element {
 
-      static get is() { return 'match-list' }
+            static get is() {
+                return 'match-list';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-        requestReggataList(this);
-      }
+            connectedCallback() {
+                super.connectedCallback();
+                requestReggataList(this);
+            }
 
-      /**
-       * Get the years of a match
-       */
-      _getYears(basematch) {
-        return function(match) {
-          return basematch.shortname === match.shortname;
+            /**
+             * Get the years of a match
+             */
+            _getYears(basematch) {
+                return function(match) {
+                    return basematch.shortname === match.shortname;
+                };
+            }
+
+            /**
+             * Is a match opened?
+             */
+            _selectedMatch(match, route) {
+                if (match.shortname === route.path.split('/')[1]) return 'true';
+                return 'false';
+            }
+
+            /**
+             * Create a list of regattas
+             */
+            _createList(newValue, oldValue) {
+                this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
+            }
+
+            /**
+             * Sort
+             */
+            _alhpabetSort(a, b) {
+                return a.regattaname.localeCompare(b.regattaname);
+            }
+
+            /**
+             * Negative sort
+             */
+            _yearSort(a, b) {
+                return -1 * a.jaar.localeCompare(b.jaar);
+            }
+
+            /**
+             * Toggle the view of the years of a match
+             */
+            _toggleMatch(e) {
+                if (e.target.querySelector('ul') === null) return;
+                let val = e.target.querySelector('ul').getAttribute('data-selected');
+                (val === 'false') ? val = 'true' : val = 'false';
+                e.target.querySelector('ul').setAttribute('data-selected', val);
+                e.target.querySelector('iron-icon').setAttribute('icon', (val === 'false') ? 'my-icons:expand' : 'my-icons:close-expanded');
+                if (val) e.target.scrollIntoView();
+            }
+
+            /**
+             * Open a match
+             */
+            _openMatch(e) {
+                try {
+                    this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + e.model.year.shortname + '/' + e.model.year.jaar);
+                }
+            }
+
+            /**
+             * Which image should be on display
+             */
+            _getImg(match) {
+                if (this._selectedMatch(match, this.route) === 'true') return 'my-icons:close-expanded';
+                return 'my-icons:expand';
+            }
+
+            static get properties() {
+                return {
+                    regattas: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_createList'
+                    },
+                    reggataList: {
+                        type: Array,
+                        notify: false,
+                        readOnly: false
+                    },
+                    route: {
+                        type: Object,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
+            }
         }
-      }
 
-      /**
-       * Is a match opened?
-       */
-      _selectedMatch(match,route) {
-        if (match.shortname === route.path.split('/')[1]) return 'true';
-        return 'false';
-      }
-
-      /**
-       * Create a list of regattas
-       */
-      _createList(newValue, oldValue) {
-        this.reggataList = fillFields(this.regattas.regattas, 'regattaname');
-      }
-
-      /**
-       * Sort
-       */
-      _alhpabetSort(a,b) {
-        return a.regattaname.localeCompare(b.regattaname);
-      }
-
-      /**
-       * Negative sort
-       */
-      _yearSort(a,b) {
-        return -1 * a.jaar.localeCompare(b.jaar);
-      }
-
-      /**
-       * Toggle the view of the years of a match
-       */
-      _toggleMatch(e) {
-        if (e.target.querySelector("ul") === null) return;
-        let val = e.target.querySelector("ul").getAttribute('data-selected');
-        (val === 'false') ? val = 'true' : val = 'false';
-        e.target.querySelector("ul").setAttribute('data-selected',val);
-        e.target.querySelector("iron-icon").setAttribute('icon',(val === 'false') ? 'my-icons:expand' : 'my-icons:close-expanded');
-        if(val) e.target.scrollIntoView();
-      }
-
-      /**
-       * Open a match
-       */
-      _openMatch(e) {
-        try {
-          this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
-        } catch (a) {
-          document.querySelector("my-app").ieWindowloc('/'+e.model.year.shortname + '/' + e.model.year.jaar);
-        }
-      }
-
-      /**
-       * Which image should be on display
-       */
-      _getImg(match) {
-        if (this._selectedMatch(match,this.route) === 'true') return 'my-icons:close-expanded';
-        return 'my-icons:expand';
-      }
-
-      static get properties() {
-        return {
-          regattas: {
-            type: Array,
-            notify:true,
-            readOnly:false,
-            observer: '_createList',
-          },
-          reggataList: {
-            type: Array,
-            notify:false,
-            readOnly:false,
-          },
-          route: {
-            type: Object,
-            notify:true,
-            readOnly:false,
-          }
-        };
-      }
-    }
-
-    // Register custom element definition using standard platform API
-    customElements.define(MatchList.is, MatchList);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(MatchList.is, MatchList);
+    </script>
 </dom-module>

@@ -15,391 +15,395 @@
 <link rel="import" href="../services/teams.html">
 
 <dom-module id="team-list">
-  <template>
-    <style include="shared-styles-tables shared-styles">
-    </style>
-    <template is="dom-if" if="[[!noTeams]]">
-      <paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
-        <paper-tab name="uitslagen">
-          <template is="dom-if" if="[[approved]]">
-            Uitslagen
-          </template>
-          <template is="dom-if" if="[[!approved]]">
-            Voorlopige uitslagen
-          </template>
-        </paper-tab>
-        <paper-tab name="loting">Loting</paper-tab>
-        <paper-tab name="vereniging">Vereniging</paper-tab>
-        <paper-tab name="inschrijving">Inschrijving</paper-tab>
-      </paper-tabs>
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <template is="dom-if" if=[[_displayValue(0,view)]]>
-              <th style="max-width: 50px">
-                Pos
-              </th>
-            </template>
-            <th class="show-gt-md">
-                Veld
-            </th>
-            <template is="dom-if" if=[[_displayValue(2,view)]]>
-              <th>
-                Rug#
-              </th>
-            </template>
-            <th>
-                Ploeg
-            </th>
-            <th class="show-gt-md">
-                Slag
-            </th>
-            <template is="dom-if" if=[[_displaySplash(1,view)]]>
-              <th class="show-gt-md">
-                Tussentijd 1
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(2,view)]]>
-              <th class="show-gt-md">
-                Tussentijd 2
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(3,view)]]>
-              <th class="show-gt-md">
-                Tussentijd 3
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(4,view)]]>
-              <th class="show-gt-md">
-                Tussentijd 4
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displayRound(0,view)]]>
-              <th class="show-gt-md">
-                Ronde 1
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displayRound(1,view)]]>
-              <th class="show-gt-md">
-                Ronde 2
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displayRound(2,view)]]>
-              <th class="show-gt-md">
-                Ronde 3
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displayRound(3,view)]]>
-              <th class="show-gt-md">
-                Ronde 4
-              </th>
-            </template>
-            <template is="dom-if" if=[[_displaySplash(5,view)]]>
-              <th>
-                Finishtijd
-              </th>
-            </template>
-          </tr>
-        </thead>
-        <tbody>
-          <template is="dom-repeat" items="[[teams.teams]]" as="team" filter="_isField">
-            <tr on-click="_openTeam" style="cursor: pointer;">
-              <td>
-                <oars-img club="[[team.clubnameshort]]"></oars-img>
-              </td>
-              <template is="dom-if" if=[[_displayValue(0,view)]]>
-                <td>
-                  [[_disp(team,'rank',-1)]]
-                </td>
-              </template>
-              <td class="show-gt-md">
-                <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
-                  [[team.fieldnameshortsub]]
+    <template>
+        <style include="shared-styles-tables shared-styles">
+        </style>
+        <template is="dom-if" if="[[!noTeams]]">
+            <paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
+                <paper-tab name="uitslagen">
+                    <template is="dom-if" if="[[approved]]">
+                        Uitslagen
+                    </template>
+                    <template is="dom-if" if="[[!approved]]">
+                        Voorlopige uitslagen
+                    </template>
+                </paper-tab>
+                <paper-tab name="loting">Loting</paper-tab>
+                <paper-tab name="vereniging">Vereniging</paper-tab>
+                <paper-tab name="inschrijving">Inschrijving</paper-tab>
+            </paper-tabs>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <template is="dom-if" if=[[_displayValue(0,view)]]>
+                        <th style="max-width: 50px">
+                            Pos
+                        </th>
+                    </template>
+                    <th class="show-gt-md">
+                        Veld
+                    </th>
+                    <template is="dom-if" if=[[_displayValue(2,view)]]>
+                        <th>
+                            Rug#
+                        </th>
+                    </template>
+                    <th>
+                        Ploeg
+                    </th>
+                    <th class="show-gt-md">
+                        Slag
+                    </th>
+                    <template is="dom-if" if=[[_displaySplash(1,view)]]>
+                        <th class="show-gt-md">
+                            Tussentijd 1
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displaySplash(2,view)]]>
+                        <th class="show-gt-md">
+                            Tussentijd 2
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displaySplash(3,view)]]>
+                        <th class="show-gt-md">
+                            Tussentijd 3
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displaySplash(4,view)]]>
+                        <th class="show-gt-md">
+                            Tussentijd 4
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displayRound(0,view)]]>
+                        <th class="show-gt-md">
+                            Ronde 1
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displayRound(1,view)]]>
+                        <th class="show-gt-md">
+                            Ronde 2
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displayRound(2,view)]]>
+                        <th class="show-gt-md">
+                            Ronde 3
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displayRound(3,view)]]>
+                        <th class="show-gt-md">
+                            Ronde 4
+                        </th>
+                    </template>
+                    <template is="dom-if" if=[[_displaySplash(5,view)]]>
+                        <th>
+                            Finishtijd
+                        </th>
+                    </template>
+                </tr>
+                </thead>
+                <tbody>
+                <template is="dom-repeat" items="[[teams.teams]]" as="team" filter="_isField">
+                    <tr on-click="_openTeam" style="cursor: pointer;">
+                        <td>
+                            <oars-img club="[[team.clubnameshort]]"></oars-img>
+                        </td>
+                        <template is="dom-if" if=[[_displayValue(0,view)]]>
+                            <td>
+                                [[_disp(team,'rank',-1)]]
+                            </td>
+                        </template>
+                        <td class="show-gt-md">
+                            <template is="dom-if" if="[[!_hasValue(team.fieldnameshortsub)]]">
+                                [[team.fieldnameshortsub]]
+                            </template>
+                            <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
+                                [[team.fieldnameshort]]
+                            </template>
+                        </td>
+                        <template is="dom-if" if=[[_displayValue(2,view)]]>
+                            <td>
+                                [[_disp(team,'backnumber',0)]]
+                            </td>
+                        </template>
+                        <td class="teamname">
+                            [[team.teamname]]
+                        </td>
+                        <td class="show-gt-md">
+                            [[team.rower8]]
+                        </td>
+                        <template is="dom-if" if=[[_displaySplash(1,view)]]>
+                            <td class="show-gt-md">
+                                [[_displayTime(team,'splash1',0,0)]]
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displaySplash(2,view)]]>
+                            <td class="show-gt-md">
+                                [[_displayTime(team,'splash2',0,0)]]
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displaySplash(3,view)]]>
+                            <td class="show-gt-md">
+                                [[_displayTime(team,'splash3',0,0)]]
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displaySplash(4,view)]]>
+                            <td class="show-gt-md">
+                                [[_displayTime(team,'splash4',0,0)]]
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displayRound(0,view)]]>
+                            <td class="show-gt-md">
+                                <final-time team="[[_final(team.times,view,0)]]"></final-time>
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displayRound(1,view)]]>
+                            <td class="show-gt-md">
+                                <final-time team="[[_final(team.times,view,1)]]"></final-time>
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displayRound(2,view)]]>
+                            <td class="show-gt-md">
+                                <final-time team="[[_final(team.times,view,2)]]"></final-time>
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displayRound(3,view)]]>
+                            <td class="show-gt-md">
+                                <final-time team="[[_final(team.times,view,3)]]"></final-time>
+                            </td>
+                        </template>
+                        <template is="dom-if" if=[[_displaySplash(5,view)]]>
+                            <td>
+                                <final-time team="[[_final(team.times,view,-1)]]"></final-time>
+                            </td>
+                        </template>
+                    </tr>
                 </template>
-                <template is="dom-if" if="[[_hasValue(team.fieldnameshortsub)]]">
-                  [[team.fieldnameshort]]
-                </template>
-              </td>
-              <template is="dom-if" if=[[_displayValue(2,view)]]>
-                <td>
-                  [[_disp(team,'backnumber',0)]]
-                </td>
-              </template>
-              <td class="teamname">
-                  [[team.teamname]]
-              </td>
-              <td class="show-gt-md">
-                  [[team.rower8]]
-              </td>
-              <template is="dom-if" if=[[_displaySplash(1,view)]]>
-                <td class="show-gt-md">
-                  [[_displayTime(team,'splash1',0,0)]]
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displaySplash(2,view)]]>
-                <td class="show-gt-md">
-                  [[_displayTime(team,'splash2',0,0)]]
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displaySplash(3,view)]]>
-                <td class="show-gt-md">
-                  [[_displayTime(team,'splash3',0,0)]]
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displaySplash(4,view)]]>
-                <td class="show-gt-md">
-                  [[_displayTime(team,'splash4',0,0)]]
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displayRound(0,view)]]>
-                <td class="show-gt-md">
-                  <final-time team="[[_final(team.times,view,0)]]"></final-time>
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displayRound(1,view)]]>
-                <td class="show-gt-md">
-                  <final-time team="[[_final(team.times,view,1)]]"></final-time>
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displayRound(2,view)]]>
-                <td class="show-gt-md">
-                  <final-time team="[[_final(team.times,view,2)]]"></final-time>
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displayRound(3,view)]]>
-                <td class="show-gt-md">
-                  <final-time team="[[_final(team.times,view,3)]]"></final-time>
-                </td>
-              </template>
-              <template is="dom-if" if=[[_displaySplash(5,view)]]>
-                <td>
-                  <final-time team="[[_final(team.times,view,-1)]]"></final-time>
-                </td>
-              </template>
-            </tr>
-          </template>
-        </tbody>
-      </table>
+                </tbody>
+            </table>
+        </template>
+        <template is="dom-if" if="[[teams.error]]">
+            <no-match>
+                <div>[[_errorMessage()]]</div>
+            </no-match>
+        </template>
     </template>
-    <template is="dom-if" if="[[teams.error]]">
-      <no-match><div>[[_errorMessage()]]</div></no-match>
-    </template>
-  </template>
 
-  <script>
-    // Extend Polymer.Element base class
-    class TeamList extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class TeamList extends Polymer.Element {
 
-      static get is() { return 'team-list' }
+            static get is() {
+                return 'team-list';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-      }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-      /**
-       * Route has changed request new teams
-       */
-      _updateRoute(newValue, oldValue) {
-        if(this.path.split('/').length < 5) return;
-        requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
-        this.name = this.path.split('/')[4];
-      }
+            /**
+             * Route has changed request new teams
+             */
+            _updateRoute(newValue, oldValue) {
+                if (this.path.split('/').length < 5) return;
+                requestTeams(this, this.path.split('/')[1], this.path.split('/')[2], this.path.split('/')[3], this.path.split('/')[4]);
+                this.name = this.path.split('/')[4];
+            }
 
-      /**
-       * Display error based on if search has no result or that field does not exist
-       */
-      _errorMessage() {
-        if (this.path.split('/')[4] === 'search')
-          return 'U zoek opdracht heeft geen resultaat op geleverd';
-        return 'Dit veld bestaat helaas niet';
-      }
+            /**
+             * Display error based on if search has no result or that field does not exist
+             */
+            _errorMessage() {
+                if (this.path.split('/')[4] === 'search')
+                    return 'U zoek opdracht heeft geen resultaat op geleverd';
+                return 'Dit veld bestaat helaas niet';
+            }
 
-      /**
-       * Filter to make sure we do not display double teams
-       */
-      _isField(team) {
-        switch (this.path.split('/')[4]) {
-          case 'uitslagen':
-            return team.fieldnameshort === this.path.split('/')[3];
-          case 'vereniging':
-            return team.clubnameshort === this.path.split('/')[3];
-          case 'search':
-            //TODO
-            return true;
-          case 'loting':
-            return team.slotid === this.path.split('/')[3];
-          case 'inschrijving':
-            return team.fieldnameshort === this.path.split('/')[3];
+            /**
+             * Filter to make sure we do not display double teams
+             */
+            _isField(team) {
+                switch (this.path.split('/')[4]) {
+                    case 'uitslagen':
+                        return team.fieldnameshort === this.path.split('/')[3];
+                    case 'vereniging':
+                        return team.clubnameshort === this.path.split('/')[3];
+                    case 'search':
+                        //TODO
+                        return true;
+                    case 'loting':
+                        return team.slotid === this.path.split('/')[3];
+                    case 'inschrijving':
+                        return team.fieldnameshort === this.path.split('/')[3];
+                }
+            }
+
+            /**
+             * Determine the view from url parameter
+             */
+            _setView() {
+                switch (this.path.split('/')[4]) {
+                    case 'uitslagen':
+                        this.view = 0;
+                        break;
+                    case 'vereniging':
+                        this.view = 1;
+                        break;
+                    case 'search':
+                        this.view = 1;
+                        break;
+                    case 'loting':
+                        this.view = 2;
+                        break;
+                    case 'inschrijving':
+                        this.view = 3;
+                        break;
+                }
+            }
+
+            /**
+             * Is the field approved?
+             */
+            _setApproved() {
+                if (this.view === 0) {
+                    this.approved = this.teams.teams[0].times[this.teams.setting.rounds].isapproved === '1';
+                } else {
+                    this.approved = true;
+                }
+            }
+
+            /**
+             * Return to the match change the route
+             */
+            _returnToMatch(newValue, oldValue) {
+                try {
+                    this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
+                }
+            }
+
+            /**
+             * After we have new teams which times ar avaible
+             */
+            _teamsChanged(newValue, oldValue) {
+                if (this.teams.error === false) {
+                    this.noTeams = false;
+                    this.splashCount = checkSplash(this.teams.teams);
+                    this._setView();
+                    this._setApproved();
+                } else {
+                    this.noTeams = true;
+                }
+            }
+
+            /**
+             * Return a element from a team
+             */
+            _disp(team, key, round) {
+                if (this.view >= 2) return team[key];
+                if (round === -1) round = this.teams.setting.rounds;
+                if (!team.times) return '';
+                return team.times[round][key];
+            }
+
+            /**
+             * Return the final time array of a round
+             */
+            _final(times, view, round) {
+                if (round === -1) round = this.teams.setting.rounds;
+                if (times) return times[round];
+            }
+
+            /**
+             * Display a splash time in HH:MM:SS.n
+             */
+            _displayTime(time, key, bonussecond, round) {
+                return formatTime(finalTime(this._disp(time, key, round), bonussecond));
+            }
+
+            /**
+             * Do we have a subfield?
+             */
+            _hasValue(field) {
+                return field == 0;
+            }
+
+            /**
+             * Do we display the splashes
+             */
+            _displaySplash(splash, view) {
+                return (splash < this.splashCount || splash === 5) && this.view < 2;
+            }
+
+            /**
+             * Do we display a round
+             */
+            _displayRound(round, view) {
+                return (round < this.teams.setting.rounds) && this.view < 2;
+            }
+
+            /**
+             * Do we display a field based on location
+             */
+            _displayValue(val, view) {
+                return val >= this.view;
+            }
+
+            /**
+             * Call the function to open a team overview window
+             */
+            _openTeam(e) {
+                document.querySelector('team-modal').toggle(e.model.team);
+            }
+
+            static get properties() {
+                return {
+                    teams: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_teamsChanged',
+                        value: [{error: true}]
+                    },
+                    splashCount: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false
+                    },
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateRoute'
+                    },
+                    view: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false
+                    },
+                    name: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
+                    },
+                    approved: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    },
+                    noTeams: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: true
+                    }
+                };
+            }
         }
-      }
 
-      /**
-       * Determine the view from url parameter
-       */
-      _setView() {
-        switch (this.path.split('/')[4]) {
-          case 'uitslagen':
-            this.view = 0;
-            break;
-          case 'vereniging':
-            this.view = 1;
-            break;
-          case 'search':
-            this.view = 1;
-            break;
-          case 'loting':
-            this.view = 2;
-            break;
-          case 'inschrijving':
-            this.view = 3;
-            break;
-        }
-      }
-
-      /**
-       * Is the field approved?
-       */
-      _setApproved () {
-        if (this.view === 0) {
-          this.approved = this.teams.teams[0].times[this.teams.setting.rounds].isapproved === '1';
-        } else {
-          this.approved = true;
-        }
-      }
-
-      /**
-       * Return to the match change the route
-       */
-      _returnToMatch(newValue, oldValue) {
-        try {
-          this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-        } catch (a) {
-          document.querySelector("my-app").ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-        }
-      }
-
-      /**
-       * After we have new teams which times ar avaible
-       */
-      _teamsChanged(newValue, oldValue) {
-        if (this.teams.error === false) {
-          this.noTeams = false;
-          this.splashCount = checkSplash(this.teams.teams);
-          this._setView();
-          this._setApproved();
-        } else {
-          this.noTeams = true;
-        }
-      }
-
-      /**
-       * Return a element from a team
-       */
-      _disp(team,key,round) {
-        if (this.view >= 2) return team[key];
-        if (round === -1) round = this.teams.setting.rounds;
-        if (!team.times) return '';
-        return team.times[round][key];
-      }
-
-      /**
-       * Return the final time array of a round
-       */
-      _final(times,view,round) {
-        if (round === -1) round = this.teams.setting.rounds;
-        if (times) return times[round];
-      }
-
-      /**
-       * Display a splash time in HH:MM:SS.n
-       */
-      _displayTime(time,key,bonussecond,round) {
-        return formatTime(finalTime(this._disp(time,key,round),bonussecond));
-      }
-
-      /**
-       * Do we have a subfield?
-       */
-      _hasValue(field) {
-        return field == 0;
-      }
-
-      /**
-       * Do we display the splashes
-       */
-      _displaySplash(splash,view) {
-        return (splash < this.splashCount || splash === 5) && this.view < 2;
-      }
-
-      /**
-       * Do we display a round
-       */
-      _displayRound(round,view) {
-        return (round < this.teams.setting.rounds) && this.view < 2;
-      }
-
-      /**
-       * Do we display a field based on location
-       */
-      _displayValue(val,view){
-        return val >= this.view;
-      }
-
-      /**
-       * Call the function to open a team overview window
-       */
-      _openTeam(e) {
-        document.querySelector("team-modal").toggle(e.model.team);
-      }
-
-      static get properties() {
-        return {
-          teams : {
-            type: Array,
-            notify:true,
-            readOnly:false,
-            observer: '_teamsChanged',
-            value: [{error: true}],
-          },
-          splashCount: {
-            type: Number,
-            notify: true,
-            readOnly: false,
-          },
-          path: {
-            type: String,
-            notify: true,
-            readOnly: false,
-            observer:'_updateRoute'
-          },
-          view: {
-            type: Number,
-            notify: true,
-            readOnly: false,
-          },
-          name: {
-            type: String,
-            notify: true,
-            readOnly: false,
-          },
-          approved: {
-            type: Boolean,
-            notify:true,
-            readOnly:false,
-            value: false,
-          },
-          noTeams: {
-            type: Boolean,
-            notify: true,
-            readOnly:false,
-            value: true,
-          }
-        };
-      }
-    }
-
-    // Register custom element definition using standard platform API
-    customElements.define(TeamList.is, TeamList);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(TeamList.is, TeamList);
+    </script>
 </dom-module>

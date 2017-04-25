@@ -3,59 +3,61 @@
 
 <!-- shared styles for fields overview -->
 <dom-module id="shared-styles-fields">
-  <template>
-    <style include="app-grid-style">
+    <template>
+        <style include="app-grid-style">
 
-      :host {
-        --app-grid-columns: 6;
-        --app-grid-item-height: 100px;
-        --app-grid-gutter: 2px
-      }
+            :host {
+                --app-grid-columns: 6;
+                --app-grid-item-height: 100px;
+                --app-grid-gutter: 2px
+            }
 
-      .app-grid {
-        margin: 5px;
-      }
-      .app-grid dom-repeat {
-        display: none;
-      }
-      .item {
-        line-height: 75px;
-        background-color: #EEEEEE;
-        text-align: center;
-        cursor: pointer;
-      }
+            .app-grid {
+                margin: 5px;
+            }
 
-      .item h4 {
-        margin: 12px 0;
-      }
+            .app-grid dom-repeat {
+                display: none;
+            }
 
-      .fieldHeader {
-        background-color: #ECECEC;
-        margin: 0;
-        height: auto;
-      }
+            .item {
+                line-height: 75px;
+                background-color: #EEEEEE;
+                text-align: center;
+                cursor: pointer;
+            }
 
-      .fieldHeader h1 {
-        text-align: center;
-      }
+            .item h4 {
+                margin: 12px 0;
+            }
 
-      @media screen and (max-width:800px){
-        :host {
-          --app-grid-columns: 3;
-        }
-      }
+            .fieldHeader {
+                background-color: #ECECEC;
+                margin: 0;
+                height: auto;
+            }
 
-      @media screen and (max-width:650px){
-        :host {
-          --app-grid-columns: 2;
-        }
-      }
+            .fieldHeader h1 {
+                text-align: center;
+            }
 
-      @media screen and (max-width:450px){
-        :host {
-          --app-grid-columns: 1;
-        }
-      }
-    </style>
-  </template>
+            @media screen and (max-width: 800px) {
+                :host {
+                    --app-grid-columns: 3;
+                }
+            }
+
+            @media screen and (max-width: 650px) {
+                :host {
+                    --app-grid-columns: 2;
+                }
+            }
+
+            @media screen and (max-width: 450px) {
+                :host {
+                    --app-grid-columns: 1;
+                }
+            }
+        </style>
+    </template>
 </dom-module>

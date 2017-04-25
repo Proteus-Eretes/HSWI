@@ -1,33 +1,35 @@
 <script>
 
-  /**
-   * request Teams of a mathc
-   * @param  {object} self   
-   * @param  {string} match
-   * @param  {string} year
-   * @param  {string} field
-   * @param  {string} choice
-   */
-  var requestTeams = function(self,match,year,field,choice) {
-    field = field.replace(/\+/g, '%2B');
-    if (!year) {
-      year = 0;
-    }
-    fetch('https://beta.hoesnelwasik.nl/api/wd/'+match+'/'+year+'/'+field+'/' + choice)
-      .then(
-        function(res) {
-          if (res.status !== 200) {
-            console.log('Looks like something did a crash');
-            return;
-          }
-
-          res.json().then(function(data) {
-            self.teams = data;
-          });
+    /**
+     * request Teams of a mathc
+     * @param  {object} self
+     * @param  {string} match
+     * @param  {string} year
+     * @param  {string} field
+     * @param  {string} choice
+     */
+    const requestTeams = function (self, match, year, field, choice) {
+        field = field.replace(/\+/g, '%2B');
+        if (!year) {
+            year = 0;
         }
-      )
-      .catch(function(err) {
-        console.log('Something went badly wrong: -S' ,err);
-      });
-  }
+        if (!match) {
+            match = 0;
+        }
+        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/' + field + '/' + choice)
+            .then(
+                function (res) {
+                    if (res.status !== 200) {
+                        return;
+                    }
+
+                    res.json().then(function (data) {
+                        self.teams = data;
+                    });
+                }
+            )
+            .catch(function (err) {
+                console.log('Something went badly wrong: -S', err);
+            });
+    }
 </script>

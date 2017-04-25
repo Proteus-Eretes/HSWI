@@ -7,112 +7,121 @@
 
 
 <dom-module id="i-year-list">
-  <template>
-    <style include="shared-styles shared-styles-fields app-grid-style">
-    </style>
-      <div class="card">
-        <template is="dom-if" if="[[!selected]]">
-          <div class="app-grid">
-          <template is="dom-repeat" items="[[reggataList]]" as="year">
-              <div on-click="_openYear" class="item">
-                <h4>[[year.jaar]]</h4>
-              </div>
+    <template>
+        <style include="shared-styles shared-styles-fields">
+            .card {
+                width: 50px;
+                height: inherit;
+            }
+
+            .dropDownItem {
+                height: 20px;
+                width: 100%;
+            }
+
+
+        </style>
+        <div class="card">
+            <template is="dom-if" if="[[selected]]">
+                <div class="app-grid">
+                    <template is="dom-repeat" items="[[reggataList]]" as="year">
+                        <div on-click="_openYear" class="dropDownItem">
+                            <h4>[[year.jaar]]</h4>
+                        </div>
+                    </template>
+                </div>
             </template>
-          </div>
+            <template is="dom-if" if="[[!selected]]">
+                <div class="app-grid">
+                    <div on-click="_toggleList" class="dropDownItem">
+                        [[match]]
+                    </div>
+                </div>
+            </template>
+        </div>
+        <template is="dom-if" if="[[fields.error]]">
+            <no-match>
+                <div>Wedstrijd bestaat niet</div>
+            </no-match>
         </template>
-        <template is="dom-if" if="[[selected]]">
-          <div class="app-grid">
-            <div on-click="_toggleList" class="item">
-              <h4>[[currentYear]] - selecteer een ander jaar</h4>
-            </div>
-          </div>
-        </template>
-      </div>
-    <template is="dom-if" if="[[fields.error]]">
-      <no-match><div>Wedstrijd bestaat niet</div></no-match>
     </template>
-  </template>
 
 
-  <script>
-  class IYearList extends Polymer.Element {
+    <script>
+        class IYearList extends Polymer.Element {
 
-    static get is() { return 'i-year-list' }
+            static get is() {
+                return 'i-year-list';
+            }
 
-    connectedCallback() {
-      super.connectedCallback();
-      requestReggataList(this);
-    }
+            connectedCallback() {
+                super.connectedCallback();
+                requestReggataList(this);
+            }
 
-    _openYear(e) {
-      try {
-        this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
-        this.set('selected',true);
-      } catch (a) {
-        document.querySelector("my-app").ieWindowloc('/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
-      }
-      this._updateYear();
-      document.querySelector("my-app").toTop();
-    }
+            _openYear(e) {
+                try {
+                    this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
+                    this.set('selected', true);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
+                }
+                document.querySelector('my-app').toTop();
+            }
 
-    _toggleList(e) {
-      this.set('selected',false);
-    }
+            _toggleList(e) {
+                this.set('selected', true);
+            }
 
-    /**
-     * Create the list of years of the current match
-     */
-    _createList(newValue, oldValue) {
-      var path = this.path.split('/')[1];
-      this.reggataList = this.regattas.regattas.filter(
-        function(match) {
-          return match.shortname === path;
+            /**
+             * Create the list of years of the current match
+             */
+            _createList(newValue, oldValue) {
+                var shortname = document.querySelector('my-app').getMatchShortName();
+                if (!this.regattas) return;
+                this.reggataList = this.regattas.regattas.filter(
+                    function(match) {
+                        return match.shortname === shortname;
+                    }
+                );
+                this.reggataList.sort(function(a, b) {
+                    return (+b.jaar) - (+a.jaar);
+                });
+            }
+
+            static get properties() {
+                return {
+                    regattas: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_createList',
+                    },
+                    reggataList: {
+                        type: Array,
+                        notify: false,
+                        readOnly: false,
+                    },
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_createList'
+                    },
+                    selected: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false,
+                    },
+                    match: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
+            }
         }
-      );
-      this.reggataList.sort(function(a,b) {
-        return (+b.jaar) - (+a.jaar) ;
-      });
-      this._updateYear();
-    }
-
-    /**
-     * Select the current viewing year
-     */
-    _updateYear() {
-      if (this.path.split('/').length > 2 && this.path.split('/')[2] !== '') {
-        this.set('currentYear',this.path.split('/')[2]);
-      } else {
-        this.set('currentYear',this.reggataList[0].jaar);
-      }
-    }
-
-    static get properties() {
-      return {
-        regattas: {
-          type: Array,
-          notify:true,
-          readOnly:false,
-          observer: '_createList',
-        },
-        reggataList: {
-          type: Array,
-          notify:false,
-          readOnly:false,
-        },
-        path: {
-          type: Object,
-          notify:true,
-          readOnly:false,
-        },
-        selected: {
-          type: Boolean,
-          notify:true,
-          readOnly:false,
-          value:true,
-        }
-      };
-    }
-  }
-  customElements.define(IYearList.is, IYearList);
-  </script>
+        customElements.define(IYearList.is, IYearList);
+    </script>
 </dom-module>

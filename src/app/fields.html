@@ -2,7 +2,7 @@
   /**
    * Check fields on approved make sure we check for multiple blocks with the same field
    */
-  var checkFields = function(array){
+  const checkFields = function(array){
     array[array.length - 1].isapproved = array[array.length - 1].isapproved === '1';
     for (let i = array.length - 2; i >= 0; i++) {
       if (array[i + 1].fieldnameshort !== array[i].fieldnameshort) {
@@ -22,13 +22,13 @@
     return a.filter(function(item) {
         let k = item[key];
         return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-    })
-  };
+    });
+  }
 
   /**
    * Is there a field with amount of n rowers
    */
-  var hasFields = function(fieldlist,n) {
+  const hasFields = function(fieldlist,n) {
       for(let i = 0; i < fieldlist.length; i++)
       {
           if(parseInt(fieldlist[i].numberofrowers,10) === n){
@@ -38,10 +38,14 @@
       return false;
   };
 
+
   /**
-   * Fill the fields based on a parameter
+   * Get a subset of data of a array
+   * @param {array||object} array the base data
+   * @param {string} field
+   * @returns {Array}
    */
-  var fillFields = function (array, field) {
+  const fillFields = function(array, field) {
       if (array != null) {
           let object = {}, i, length = array.length, res = [];
           for (i = 0; i < length; i += 1) {

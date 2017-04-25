@@ -1,34 +1,33 @@
 <script>
-  /**
-   * _calculateSplash how many splashes are passed in a race
-   */
-  var _calculateSplash = function(row) {
-    if (row.splash4 !== '0.00' && row.splash4 !== '0') return 5;
-    if (row.splash3 !== '0.00' && row.splash3 !== '0') return 4;
-    if (row.splash2 !== '0.00' && row.splash2 !== '0') return 3;
-    if (row.splash1 !== '0.00' && row.splash1 !== '0') return 2;
-    return 1;
-  };
+    /**
+     * _calculateSplash how many splashes are passed in a race
+     */
+    const _calculateSplash = function (row) {
+        if (row.splash4 !== '0.00' && row.splash4 !== '0') return 5;
+        if (row.splash3 !== '0.00' && row.splash3 !== '0') return 4;
+        if (row.splash2 !== '0.00' && row.splash2 !== '0') return 3;
+        if (row.splash1 !== '0.00' && row.splash1 !== '0') return 2;
+        return 1;
+    };
 
-  /**
-   * checkSplash get amount of splashes in a set of teams
-   */
-  var checkSplash = function (data) {
-    if (!data || data.length === 0) return 0;
-    let length = data.length;
-    let splashes = 0;
-    for(let i = 0; i < 5; i++)
-    {
-      let index = Math.floor(Math.random()*10000) % length;
-      let row = data[index];
-      if(row.times !== undefined) {
-        if(row.times.length === 1) {
-          splashes = Math.max(splashes, _calculateSplash(row.times[0]))
+    /**
+     * checkSplash get amount of splashes in a set of teams
+     */
+    const checkSplash = function (data) {
+        if (!data || data.length === 0) return 0;
+        let length = data.length;
+        let splashes = 0;
+        for (let i = 0; i < 5; i++) {
+            let index = Math.floor(Math.random() * 10000) % length;
+            let row = data[index];
+            if (row.times !== undefined) {
+                if (row.times.length === 1) {
+                    splashes = Math.max(splashes, _calculateSplash(row.times[0]));
+                }
+            } else {
+                splashes = Math.max(splashes, _calculateSplash(row));
+            }
         }
-      } else {
-        splashes = Math.max(splashes, _calculateSplash(row));
-      }
-    }
-    return splashes;
-  };
+        return splashes;
+    };
 </script>

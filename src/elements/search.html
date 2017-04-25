@@ -3,56 +3,59 @@
 
 
 <dom-module id="search-match">
-  <template>
-    <style>
-      :root{
-        --paper-input-container-input-color: #ECECEC
-      }
-    </style>
-    <paper-input id="search" label="Zoek op naam, ploeg of vereniging" type=search on-keydown="_search"></paper-input>
-  </template>
+    <template>
+        <style>
+            :root {
+                --paper-input-container-input-color: #ECECEC
+            }
+        </style>
+        <paper-input id="search" label="Zoek op naam, ploeg of vereniging" type=search
+                     on-keydown="_search"></paper-input>
+    </template>
 
-  <script>
-    // Extend Polymer.Element base class
-    class SearchMatch extends Polymer.Element {
+    <script>
+        // Extend Polymer.Element base class
+        class SearchMatch extends Polymer.Element {
 
-      static get is() { return 'search-match' }
+            static get is() {
+                return 'search-match';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-      }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-      /**
-       * Only on enter request data from server
-       */
-      _search(e) {
-        if (e.keyCode === 13 || e.which === 13 || e.key === 'Enter') {
-          try {
-            this.set('route', '/' + this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);
-          } catch (a) {
-            document.querySelector("my-app").ieWindowloc('/' + this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);
-          }
+            /**
+             * Only on enter request data from server
+             */
+            _search(e) {
+                if (e.keyCode === 13 || e.which === 13 || e.key === 'Enter') {
+                    try {
+                        this.set('route', '/' + this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);
+                    } catch (a) {
+                        document.querySelector('my-app').ieWindowloc('/' + this.route.split('/')[1] + '/' + this.route.split('/')[2] + '/' + this.$.search.value + '/' + this.target);
+                    }
+                }
+            }
+
+            static get properties() {
+                return {
+                    route: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                    },
+                    target: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false,
+                        value: 'search'
+                    }
+                };
+            }
         }
-      }
 
-      static get properties() {
-        return {
-          route: {
-            type: String,
-            notify: true,
-            readOnly: false,
-          },
-          target: {
-            type: Number,
-            notify: true,
-            readOnly: false,
-            value: 'search'
-          }
-        };
-      }
-    }
-
-    // Register custom element definition using standard platform API
-    customElements.define(SearchMatch.is, SearchMatch);
-  </script>
+        // Register custom element definition using standard platform API
+        customElements.define(SearchMatch.is, SearchMatch);
+    </script>
 </dom-module>

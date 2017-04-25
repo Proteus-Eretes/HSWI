@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -50,31 +50,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="msapplication-tap-highlight" content="no">
 
     <script>
-      // Setup Polymer options
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true,
-      };
-
-      // Load webcomponentsjs polyfill if browser does not support native
-      // Web Components
-      if (!self.fetch) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/fetch/fetch.js';
-          document.head.appendChild(script);
-          script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/es6-promise/es6-promise.auto.min.js';
-          document.head.appendChild(script);
+        // Setup Polymer options
+        window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true,
         };
 
-      // Load pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      };
+        // Load webcomponentsjs polyfill if browser does not support native
+        // Web Components
+        if (!self.fetch) {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '/bower_components/fetch/fetch.js';
+            document.head.appendChild(script);
+            script = document.createElement('script');
+            script.async = true;
+            script.src = '/bower_components/es6-promise/es6-promise.auto.min.js';
+            document.head.appendChild(script);
+        }
+
+        // Load pre-caching Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
     </script>
 
 
@@ -82,23 +82,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="/src/views/team.html">
 
     <style>
-      html, body {
-        margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        line-height: 1.5;
-        min-height: 100vh;
-        background-color: #000;
-      }
+        html, body {
+            margin: 0;
+            font-family: 'Roboto', 'Noto', sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: #000;
+        }
     </style>
     <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-92572628-1', 'auto');
-      //ga('send', 'pageview');
+        window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push(arguments);
+            };
+        ga.l = +new Date;
+        ga('create', 'UA-92572628-1', 'auto');
     </script>
     <script async src='https://www.google-analytics.com/analytics.js'></script>
-  </head>
-  <body>
-    <my-app></my-app>
-    <team-modal></team-modal>
-  </body>
+</head>
+<body>
+<my-app></my-app>
+<team-modal></team-modal>
+</body>
 </html>

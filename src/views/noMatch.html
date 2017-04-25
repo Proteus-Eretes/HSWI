@@ -1,24 +1,27 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="no-match">
-  <template>
-    <style>
-    ::slotted(div) {
-      color: #FFF !important;
-    }
-    </style>
-    <slot select="div"></slot>
-  </template>
-  <script>
-  // Extend Polymer.Element base class
-  class NoMatch extends Polymer.Element {
-    static get is() { return 'no-match' }
-    connectedCallback() {
-      super.connectedCallback();
-    }
-  }
+    <template>
+        <style>
+            ::slotted(div) {
+                color: #FFF !important;
+            }
+        </style>
+        <slot select="div"></slot>
+    </template>
+    <script>
+        // Extend Polymer.Element base class
+        class NoMatch extends Polymer.Element {
+            static get is() {
+                return 'no-match';
+            }
 
-  // Register custom element definition using standard platform API
-  customElements.define(NoMatch.is, NoMatch);
-  </script>
+            connectedCallback() {
+                super.connectedCallback();
+            }
+        }
+
+        // Register custom element definition using standard platform API
+        customElements.define(NoMatch.is, NoMatch);
+    </script>
 </dom-module>

@@ -8,317 +8,320 @@
 
 
 <dom-module id="team-modal">
-  <template>
+    <template>
 
-    <style include="shared-styles-tables shared-styles">
-      h2 {
-        color: #FFF;
-        background-color: #000;
-        margin:0 !important;
-        padding:10px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 25px;
-        min-width: 200px;
-      }
-      .hover-table {
-        position: relative;
-        text-align: left;
-        width: auto;
-        margin: auto;
-      }
-      </style>
-    <paper-dialog id="modal" modal>
-      <h2> [[team.teamname]]</h2>
-      <paper-dialog-scrollable>
-        <template is="dom-if" if="[[active]]">
-          <table class="table hover-table">
-          <tbody>
-            <template is="dom-if" if=[[_show(team.clubname)]]>
-              <tr>
-                <td><b>Vereniging</b></td>
-                <td>[[team.clubname]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_hasBacknumber(team)]]>
-              <tr>
-                <td><b>Rugnummer</b></td>
-                <td>[[_showBacknumber(team)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.fieldnameshort)]]>
-              <tr>
-                <td><b>Veld</b></td>
-                <td>[[team.fieldnameshort]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_showSubField(team.fieldnameshortsub,team.fieldnameshort)]]>
-              <tr>
-                <td><b>Subveld</b></td>
-                <td>[[team.fieldnameshortsub]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_showTime(team.splash1)]]>
-              <tr>
-                <td>Tussentijd 1</td>
-                <td>[[_displayTime(team.splash1,0)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_showTime(team.splash2)]]>
-              <tr>
-                <td>Tussentijd 2</td>
-                <td>[[_displayTime(team.splash2,0)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_showTime(team.splash3)]]>
-              <tr>
-                <td>Tussentijd 3</td>
-                <td>[[_displayTime(team.splash3,0)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_showTime(team.splash4)]]>
-              <tr>
-                <td>Tussentijd 4</td>
-                <td>[[_displayTime(team.splash4,0)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.totaltime)]]>
-              <tr>
-                <td><b>Finishtijd</b></td>
-                <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.times)]]>
-              <template is="dom-repeat" items="[[team.times]]" as="time">
-                <template is="dom-if" if=[[_showTime(time.splash1)]]>
-                  <tr>
-                    <td>[[_elementSplashName(rounds,"Tussentijd 1",index)]]</td>
-                    <td>[[_displayTime(time.splash1,0)]]</td>
-                  </tr>
+        <style include="shared-styles-tables shared-styles">
+            h2 {
+                color: #FFF;
+                background-color: #000;
+                margin: 0 !important;
+                padding: 10px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 25px;
+                min-width: 200px;
+            }
+
+            .hover-table {
+                position: relative;
+                text-align: left;
+                width: auto;
+                margin: auto;
+            }
+        </style>
+        <paper-dialog id="modal" modal>
+            <h2> [[team.teamname]]</h2>
+            <paper-dialog-scrollable>
+                <template is="dom-if" if="[[active]]">
+                    <table class="table hover-table">
+                        <tbody>
+                        <template is="dom-if" if=[[_show(team.clubname)]]>
+                            <tr>
+                                <td><b>Vereniging</b></td>
+                                <td>[[team.clubname]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_hasBacknumber(team)]]>
+                            <tr>
+                                <td><b>Rugnummer</b></td>
+                                <td>[[_showBacknumber(team)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.fieldnameshort)]]>
+                            <tr>
+                                <td><b>Veld</b></td>
+                                <td>[[team.fieldnameshort]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_showSubField(team.fieldnameshortsub,team.fieldnameshort)]]>
+                            <tr>
+                                <td><b>Subveld</b></td>
+                                <td>[[team.fieldnameshortsub]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_showTime(team.splash1)]]>
+                            <tr>
+                                <td>Tussentijd 1</td>
+                                <td>[[_displayTime(team.splash1,0)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_showTime(team.splash2)]]>
+                            <tr>
+                                <td>Tussentijd 2</td>
+                                <td>[[_displayTime(team.splash2,0)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_showTime(team.splash3)]]>
+                            <tr>
+                                <td>Tussentijd 3</td>
+                                <td>[[_displayTime(team.splash3,0)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_showTime(team.splash4)]]>
+                            <tr>
+                                <td>Tussentijd 4</td>
+                                <td>[[_displayTime(team.splash4,0)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.totaltime)]]>
+                            <tr>
+                                <td><b>Finishtijd</b></td>
+                                <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.times)]]>
+                            <template is="dom-repeat" items="[[team.times]]" as="time">
+                                <template is="dom-if" if=[[_showTime(time.splash1)]]>
+                                    <tr>
+                                        <td>[[_elementSplashName(rounds,"Tussentijd 1",index)]]</td>
+                                        <td>[[_displayTime(time.splash1,0)]]</td>
+                                    </tr>
+                                </template>
+                                <template is="dom-if" if=[[_showTime(time.splash2)]]>
+                                    <tr>
+                                        <td>[[_elementSplashName(rounds,"Tussentijd 2",index)]]</td>
+                                        <td>[[_displayTime(time.splash2,0)]]</td>
+                                    </tr>
+                                </template>
+                                <template is="dom-if" if=[[_showTime(time.splash3)]]>
+                                    <tr>
+                                        <td>[[_elementSplashName(rounds,"Tussentijd 3",index)]]</td>
+                                        <td>[[_displayTime(time.splash3,0)]]</td>
+                                    </tr>
+                                </template>
+                                <template is="dom-if" if=[[_showTime(time.splash4)]]>
+                                    <tr>
+                                        <td>[[_elementSplashName(rounds,"Tussentijd 4",index)]]</td>
+                                        <td>[[_displayTime(time.splash4,0)]]</td>
+                                    </tr>
+                                </template>
+                                <template is="dom-if" if=[[_show(time.totaltime)]]>
+                                    <tr>
+                                        <td><b>[[_elementSplashName(rounds,"Finishtijd",index)]]</b></td>
+                                        <td>[[_displayTime(time.totaltime,time.bonussecond)]]</td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower1)]]>
+                            <tr>
+                                <td><b>Boeg</b></td>
+                                <td>[[team.rower1]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower2)]]>
+                            <tr>
+                                <td><b>2</b></td>
+                                <td>[[team.rower2]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower3)]]>
+                            <tr>
+                                <td><b>3</b></td>
+                                <td>[[team.rower3]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower4)]]>
+                            <tr>
+                                <td><b>4</b></td>
+                                <td>[[team.rower4]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower5)]]>
+                            <tr>
+                                <td><b>5</b></td>
+                                <td>[[team.rower5]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower6)]]>
+                            <tr>
+                                <td><b>6</b></td>
+                                <td>[[team.rower6]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower7)]]>
+                            <tr>
+                                <td><b>7</b></td>
+                                <td>[[team.rower7]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.rower8)]]>
+                            <tr>
+                                <td><b>Slag</b></td>
+                                <td>[[team.rower8]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.steername)]]>
+                            <tr>
+                                <td><b>Stuur</b></td>
+                                <td>[[team.steername]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.coachnames)]]>
+                            <tr>
+                                <td><b>Coach</b></td>
+                                <td>[[team.coachnames]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if=[[_show(team.comments)]]>
+                            <tr>
+                                <td><b>Commentaar</b></td>
+                                <td>[[team.comments]]</td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if="[[_showComment()]]">
+                            <tr>
+                                <td><b>Commentaar</b></td>
+                                <td>[[_comment()]]</td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
                 </template>
-                <template is="dom-if" if=[[_showTime(time.splash2)]]>
-                  <tr>
-                    <td>[[_elementSplashName(rounds,"Tussentijd 2",index)]]</td>
-                    <td>[[_displayTime(time.splash2,0)]]</td>
-                  </tr>
-                </template>
-                <template is="dom-if" if=[[_showTime(time.splash3)]]>
-                  <tr>
-                    <td>[[_elementSplashName(rounds,"Tussentijd 3",index)]]</td>
-                    <td>[[_displayTime(time.splash3,0)]]</td>
-                  </tr>
-                </template>
-                <template is="dom-if" if=[[_showTime(time.splash4)]]>
-                  <tr>
-                    <td>[[_elementSplashName(rounds,"Tussentijd 4",index)]]</td>
-                    <td>[[_displayTime(time.splash4,0)]]</td>
-                  </tr>
-                </template>
-                <template is="dom-if" if=[[_show(time.totaltime)]]>
-                  <tr>
-                    <td><b>[[_elementSplashName(rounds,"Finishtijd",index)]]</b></td>
-                    <td>[[_displayTime(time.totaltime,time.bonussecond)]]</td>
-                  </tr>
-                </template>
-              </template>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower1)]]>
-              <tr>
-                <td><b>Boeg</b></td>
-                <td>[[team.rower1]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower2)]]>
-              <tr>
-                <td><b>2</b></td>
-                <td>[[team.rower2]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower3)]]>
-              <tr>
-                <td><b>3</b></td>
-                <td>[[team.rower3]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower4)]]>
-              <tr>
-                <td><b>4</b></td>
-                <td>[[team.rower4]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower5)]]>
-              <tr>
-                <td><b>5</b></td>
-                <td>[[team.rower5]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower6)]]>
-              <tr>
-                <td><b>6</b></td>
-                <td>[[team.rower6]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower7)]]>
-              <tr>
-                <td><b>7</b></td>
-                <td>[[team.rower7]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.rower8)]]>
-              <tr>
-                <td><b>Slag</b></td>
-                <td>[[team.rower8]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.steername)]]>
-              <tr>
-                <td><b>Stuur</b></td>
-                <td>[[team.steername]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.coachnames)]]>
-              <tr>
-                <td><b>Coach</b></td>
-                <td>[[team.coachnames]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if=[[_show(team.comments)]]>
-              <tr>
-                <td><b>Commentaar</b></td>
-                <td>[[team.comments]]</td>
-              </tr>
-            </template>
-            <template is="dom-if" if="[[_showComment()]]">
-              <tr>
-                <td><b>Commentaar</b></td>
-                <td>[[_comment()]]</td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </template>
-    </paper-dialog-scrollable>
-    <div class="buttons">
-      <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
-      <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
-    </div>
-    </paper-dialog>
-  </template>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
+                <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
 
 
-  <script>
-    class TeamModal extends Polymer.Element {
-      static get is() {return 'team-modal'}
+    <script>
+        class TeamModal extends Polymer.Element {
+            static get is() {
+                return 'team-modal';
+            }
 
-      connectedCallback() {
-        super.connectedCallback();
-      }
+            connectedCallback() {
+                super.connectedCallback();
+            }
 
-      /**
-       * If val some we want to show?
-       */
-      _show(val) {
-        return val !== null && val !== '' && val !== undefined && val != 0;
-      }
+            /**
+             * If val some we want to show?
+             */
+            _show(val) {
+                return val !== null && val !== '' && val !== undefined && val != 0;
+            }
 
-      /**
-       * Is their a comment to show?
-       */
-      _showComment() {
-        if(this.team.times)
-          return this._show(this.team.times[0].comments);
-        return false;
-      }
+            /**
+             * Is their a comment to show?
+             */
+            _showComment() {
+                if (this.team.times)
+                    return TeamModal._show(this.team.times[0].comments);
+                return false;
+            }
 
-      /**
-       * Get the backnumber
-       */
-      _showBacknumber(team) {
-        if (team.backnumber) return team.backnumber;
-        return team.times[0].backnumber;
-      }
+            /**
+             * Get the backnumber
+             */
+            _showBacknumber(team) {
+                if (team.backnumber) return team.backnumber;
+                return team.times[0].backnumber;
+            }
 
-      /**
-       * Does a team have a backnumber?
-       */
-      _hasBacknumber(team) {
-        if (team.backnumber || (team.times && team.times[0].backnumber)) return true;
-      }
+            /**
+             * Does a team have a backnumber?
+             */
+            _hasBacknumber(team) {
+                if (team.backnumber || (team.times && team.times[0].backnumber)) return true;
+            }
 
-      /**
-       * Show the comment from the time array
-       */
-      _comment() {
-        return this.team.times[0].comments;
-      }
+            /**
+             * Show the comment from the time array
+             */
+            _comment() {
+                return this.team.times[0].comments;
+            }
 
-      /**
-       * name of the splash
-       */
-      _elementSplashName(round,name,index) {
-        if (!round) return name;
-        return name + " ronde" + (index+1);
-      }
+            /**
+             * name of the splash
+             */
+            _elementSplashName(round, name, index) {
+                if (!round) return name;
+                return name + ' ronde' + (index + 1);
+            }
 
-      /**
-       * Do we have a subfield and is this new information
-       */
-      _showSubField(sub,field) {
-        if (this._show(sub)) {
-          return sub !== field;
+            /**
+             * Do we have a subfield and is this new information
+             */
+            _showSubField(sub, field) {
+                if (TeamModal._show(sub)) {
+                    return sub !== field;
+                }
+                return false;
+            }
+
+            /**
+             * Only show time if something usefull is their
+             */
+            _showTime(seconds) {
+                if (TeamModal._show(seconds)) {
+                    return seconds !== '0.00';
+                }
+                return false;
+            }
+
+            /**
+             * Format the time
+             */
+            _displayTime(time, bonussecond) {
+                return formatTime(finalTime(time, bonussecond));
+            }
+
+            /**
+             * Toggle the modal window
+             */
+            toggle(team) {
+                this.team = team;
+                this.active = true;
+                this.$.modal.toggle();
+            }
+
+            static get properties() {
+                return {
+                    team: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false
+                    },
+                    rounds: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    },
+                    active: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    }
+                };
+            }
+
         }
-        return false;
-      }
 
-      /**
-       * Only show time if something usefull is their
-       */
-      _showTime(seconds) {
-        if (this._show(seconds)) {
-          return seconds !== '0.00';
-        }
-        return false;
-      }
-
-      /**
-       * Format the time
-       */
-      _displayTime(time,bonussecond) {
-        return formatTime(finalTime(time,bonussecond));
-      }
-
-      /**
-       * Toggle the modal window
-       */
-      toggle(team) {
-        this.team = team;
-        this.active = true;
-        this.$.modal.toggle();
-      }
-
-      static get properties() {
-        return {
-          team: {
-            type: Array,
-            notify: true,
-            readOnly: false,
-          },
-          rounds: {
-            type: Boolean,
-            notify: true,
-            readOnly: false,
-            value: false,
-          },
-          active: {
-            type: Boolean,
-            notify: true,
-            readOnly: false,
-            value: false,
-          }
-        };
-      }
-
-    }
-
-    customElements.define(TeamModal.is,TeamModal);
-  </script>
+        customElements.define(TeamModal.is, TeamModal);
+    </script>
 </dom-module>
