@@ -97,20 +97,23 @@
 
 				<!-- header, shell -->
 				<app-header class="header-bar" reveals effects="waterfall">
-					<img
-						class="img-header-bar"
-						src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
-						click="goHome()"></img>
-					<!-- homebutton? -->
+					<app-toolbar id="top">
+						<img
+							class="img-header-bar"
+							src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
+							click="goHome()"></img>
+						<!-- homebutton? -->
 
-					<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
+						<!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
 
-					<!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
-					<!--<template is="dom-if" if="[[dropDownVar]]">-->
-						<i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
+						<!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
+						<!--<template is="dom-if" if="[[dropDownVar]]">-->
+							<i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
+						<!--</template>-->
+						<!--Filler-->
+						<div main-title></div>
 						<search-match route="{{routeMatch}}"></search-match>
-					<!--</template>-->
-
+					</app-toolbar>
 				</app-header>
 
 				<template is="dom-if" if="[[matchPage]]">

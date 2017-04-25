@@ -202,7 +202,7 @@
        */
       _updateRoute(newValue, oldValue) {
         if(this.path.split('/').length < 5) return;
-        requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4])
+        requestTeams(this,this.path.split('/')[1],this.path.split('/')[2],this.path.split('/')[3],this.path.split('/')[4]);
         this.name = this.path.split('/')[4];
       }
 
@@ -219,6 +219,9 @@
        * Filter to make sure we do not display double teams
        */
       _isField(team) {
+        console.log(team);
+        if (!team) return false;
+        console.log(this.teams);
         switch (this.path.split('/')[4]) {
           case 'uitslagen':
             return team.fieldnameshort === this.path.split('/')[3];
