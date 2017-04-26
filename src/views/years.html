@@ -17,8 +17,13 @@
             .dropDownItem {
                 height: 20px;
                 width: 100%;
+                z-index: 1;
             }
 
+            .match {
+                height: 30px;
+                width: 100%;
+            }
 
         </style>
         <div class="card">
@@ -33,7 +38,7 @@
             </template>
             <template is="dom-if" if="[[!selected]]">
                 <div class="app-grid">
-                    <div on-click="_toggleList" class="dropDownItem">
+                    <div on-click="_toggleList" class="match">
                         [[match]]
                     </div>
                 </div>
@@ -62,7 +67,7 @@
             _openYear(e) {
                 try {
                     this.set('path', '/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
-                    this.set('selected', true);
+                    this.set('selected', false);
                 } catch (a) {
                     document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + e.model.year.jaar);
                 }
@@ -77,7 +82,7 @@
              * Create the list of years of the current match
              */
             _createList(newValue, oldValue) {
-                var shortname = document.querySelector('my-app').getMatchShortName();
+                const shortname = document.querySelector('my-app').getMatchShortName();
                 if (!this.regattas) return;
                 this.reggataList = this.regattas.regattas.filter(
                     function(match) {
@@ -95,7 +100,7 @@
                         type: Array,
                         notify: true,
                         readOnly: false,
-                        observer: '_createList',
+                        observer: '_createList'
                     },
                     reggataList: {
                         type: Array,
@@ -117,7 +122,8 @@
                     match: {
                         type: String,
                         notify: true,
-                        readOnly: false
+                        readOnly: false,
+                        observer: '_createList'
                     }
                 };
             }
