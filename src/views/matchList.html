@@ -2,7 +2,6 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/reggata.html">
-<link rel="import" href="../my-icons.html">
 
 <dom-module id="match-list">
     <template>
@@ -47,12 +46,11 @@
         </style>
         <ul>
             <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
-                <li style="cursor: pointer;" class="main" on-click="_toggleMatch">[[match.regattaname]]
-                    <iron-icon class="img" icon$="[[_getImg(match)]]"></iron-icon>
+                <li style="cursor: pointer;" class="main" on-click="_openMatch">[[match.regattaname]]
                     <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
                         <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}"
                                   sort="_yearSort">
-                            <li style="cursor: pointer;" class="subitem" on-click="_openMatch">[[year.jaar]]</li>
+                            <li style="cursor: pointer;" class="subitem">[[year.jaar]]</li>
                         </template>
                     </ul>
                 </li>
@@ -129,18 +127,10 @@
              */
             _openMatch(e) {
                 try {
-                    this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+                    this.set('route.path', e.model.match.shortname + '/' + e.model.match.jaar);
                 } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + e.model.year.shortname + '/' + e.model.year.jaar);
+                    document.querySelector('my-app').ieWindowloc('/' + e.model.match.shortname + '/' + e.model.match.jaar);
                 }
-            }
-
-            /**
-             * Which image should be on display
-             */
-            _getImg(match) {
-                if (this._selectedMatch(match, this.route) === 'true') return 'my-icons:close-expanded';
-                return 'my-icons:expand';
             }
 
             static get properties() {
