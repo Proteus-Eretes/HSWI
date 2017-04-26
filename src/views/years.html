@@ -1,23 +1,29 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
-<link rel="import" href="../styles/shared-styles-fields.html">
-<link rel="import" href="../app/fields.html">
-<link rel="import" href="../views/noMatch.html">
 <link rel="import" href="../services/reggata.html">
 
 
 <dom-module id="i-year-list">
     <template>
-        <style include="shared-styles shared-styles-fields">
-            .card {
-                width: 50px;
-                height: inherit;
+        <style include="shared-styles">
+
+            .dropDownMenu {
+                opacity: 0.9;
+                position: relative;
+                top: 60px;
+                background-color: #050505;
+                width: 100%;
+                max-width: 75px;
+                max-height: 150px;
+                z-index: 1;
+                padding: 15px;
+                box-shadow: 1px 2px 4px grey;
+                overflow: scroll;
             }
 
             .dropDownItem {
+                opacity: 1;
                 height: 20px;
-                width: 100%;
-                z-index: 1;
             }
 
             .match {
@@ -26,9 +32,9 @@
             }
 
         </style>
-        <div class="card">
+        <div>
             <template is="dom-if" if="[[selected]]">
-                <div class="app-grid">
+                <div class="dropDownMenu">
                     <template is="dom-repeat" items="[[reggataList]]" as="year">
                         <div on-click="_openYear" class="dropDownItem">
                             <h4>[[year.jaar]]</h4>
@@ -37,18 +43,13 @@
                 </div>
             </template>
             <template is="dom-if" if="[[!selected]]">
-                <div class="app-grid">
+                <div>
                     <div on-click="_toggleList" class="match">
                         [[match]]
                     </div>
                 </div>
             </template>
         </div>
-        <template is="dom-if" if="[[fields.error]]">
-            <no-match>
-                <div>Wedstrijd bestaat niet</div>
-            </no-match>
-        </template>
     </template>
 
 
