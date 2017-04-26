@@ -50,7 +50,7 @@
                     <ul class="subitem" data-selected$="[[_selectedMatch(match,route)]]">
                         <template is="dom-repeat" items="[[regattas.regattas]]" as="year" filter="{{_getYears(match)}}"
                                   sort="_yearSort">
-                            <li style="cursor: pointer;" class="subitem">[[year.jaar]]</li>
+                            <li style="cursor: pointer;" class="subitem" on-click="_openMatchYear">[[year.jaar]]</li>
                         </template>
                     </ul>
                 </li>
@@ -126,10 +126,22 @@
              * Open a match
              */
             _openMatch(e) {
+                if (e.target.textContent.charAt(0) === '2') return;
                 try {
                     this.set('route.path', e.model.match.shortname + '/' + e.model.match.jaar);
                 } catch (a) {
                     document.querySelector('my-app').ieWindowloc('/' + e.model.match.shortname + '/' + e.model.match.jaar);
+                }
+            }
+
+            /**
+             * Open a match
+             */
+            _openMatchYear(e) {
+                try {
+                    this.set('route.path', e.model.year.shortname + '/' + e.model.year.jaar);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + e.model.year.shortname + '/' + e.model.year.jaar);
                 }
             }
 
