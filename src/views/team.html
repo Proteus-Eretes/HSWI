@@ -228,7 +228,7 @@
              */
             _showComment() {
                 if (this.team.times)
-                    return TeamModal._show(this.team.times[0].comments);
+                    return this._show(this.team.times[0].comments);
                 return false;
             }
 
