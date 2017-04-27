@@ -1,0 +1,142 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-button.html">
+<link rel="import" href="../services/reggata.html">
+
+
+<dom-module id="change-view">
+    <template>
+        <style include="shared-styles shared-styles-button">
+
+            :host {
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .yearButton {
+                background-color: #0F0F0F;
+                width: 100%;
+                height: 30px;
+                border-bottom: 1px solid #F8F8F8;
+                color: #F8F8F8;
+                position: relative;
+                display: block;
+            }
+
+            .headerButton {
+                background-color: rgb(56, 56, 56);
+            }
+
+            .yearButton:hover {
+                background-color: rgb(53, 53, 53);
+            }
+
+            .shellTitleWrapper {
+                width: 100%;
+                max-width: 150px;
+                height: 44px;
+            }
+
+            .yearDropdown {
+                height: 100vh;
+                position: relative;
+                border-top: 1px solid #F8F8F8;
+            }
+        </style>
+        <template is="dom-if" if="[[selected]]">
+            <div class="shellTitleWrapper">
+                <button on-click="_toggleList" class="headerButton">
+                    [[view]] ▴
+                </button>
+                <div class="yearDropdown">
+                    <button id="uitslagen" on-click="_openView" class="yearButton">
+                        Uitslagen
+                    </button>
+                    <button id="loting" on-click="_openView" class="yearButton">
+                        Loting
+                    </button>
+                    <button id="vereniging" on-click="_openView" class="yearButton">
+                        Vereniging
+                    </button>
+                    <button id="inschrijvingen" on-click="_openView" class="yearButton">
+                        Inschrijving
+                    </button>
+                </div>
+            </div>
+        </template>
+        <template is="dom-if" if="[[!selected]]">
+            <div class="shellTitleWrapper">
+                <button on-click="_toggleList" class="headerButton">
+                    [[view]] ▾
+                </button>
+            </div>
+        </template>
+    </template>
+
+
+    <script>
+        class ChangeView extends Polymer.Element {
+
+            static get is() {
+                return 'change-view';
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+            }
+
+            _openView(e) {
+                const shortname = document.querySelector('my-app').getMatchShortName();
+                try {
+                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id);
+                    this.set('selected', false);
+                } catch (a) {
+                    document.querySelector('my-app').ieWindowloc('/' + this.shortname.split(' ')[0] + '/' + this.shortname.split(' ')[1] + '/' + e.target.id);
+                }
+                document.querySelector('my-app').toTop();
+            }
+
+            _toggleList(e) {
+                this.set('selected', !this.selected);
+            }
+
+            _updateView(oldValue,NewValue) {
+                let view = this.path.split('/')[this.path.split('/').length - 1];
+                switch (view) {
+                    case 'uitslagen':
+                    case 'loting':
+                    case 'inschrijvingen':
+                    case 'vereniging':
+                        this.set('view', view);
+                        break;
+                    default:
+                        this.set('view', 'Uitslagen');
+                        break;
+                }
+            }
+
+            static get properties() {
+                return {
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        observer: '_updateView'
+                    },
+                    view: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
+                    },
+                    selected: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false,
+                    },
+                };
+            }
+        }
+        customElements.define(ChangeView.is, ChangeView);
+    </script>
+</dom-module>

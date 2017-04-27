@@ -20,6 +20,7 @@
 <link rel="import" href="views/years.html">
 <link rel="import" href="teams/teamlist.html">
 <link rel="import" href="elements/search.html">
+<link rel="import" href="elements/change-view.html">
 
 <dom-module id="my-app">
     <template>
@@ -97,7 +98,7 @@
                         <i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
                         <!--Filler-->
                         <div main-title></div>
-                        <button class="headerButton">Uitslagen</button>
+                        <change-view path="{{routeMatch}}"></change-view>
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>

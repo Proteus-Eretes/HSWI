@@ -1,28 +1,53 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
+<link rel="import" href="../styles/shared-styles-button.html">
 <link rel="import" href="../app/fields.html">
 <link rel="import" href="../views/noMatch.html">
 
-<dom-module id="field-list-block">
+<dom-module id="field-list-tab-block">
     <template>
-        <style include="shared-styles shared-styles-fields">
+        <style include="shared-styles shared-styles-fields shared-styles-button">
         </style>
         <template is="dom-if" if="[[!fields.error]]">
-            <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
-                <div class="card">
-                    <app-toolbar class="fieldHeader">
-                        <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
-                    </app-toolbar>
-                    <div class="app-grid">
-                        <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
-                            <div on-click="_openField" class="item">
-                                <h4>[[field.fieldnameshort]]</h4>
-                            </div>
+            <paper-tabs selected="{{blok}}" scrollable fit-container>
+                <template is="dom-repeat" items="[[blocks]]" as="block" sort="_timeSort">
+                    <paper-tab><div class="fieldText">Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</div></paper-tab>
+                </template>
+            </paper-tabs>
+            <div class="fields">
+                <div class="menFieldsWrapper">
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Zware Heren</div>
+                        <template is="dom-repeat" items="[[_getFieldListBlok(blok,fields.fields,1,0)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
+                        </template>
+                    </div>
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Lichte Heren</div>
+                        <template is="dom-repeat" items="[[_getFieldListBlok(blok,fields.fields,1,1)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
                 </div>
-            </template>
+                <div class="womenFieldsWrapper">
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Dames</div>
+                        <template is="dom-repeat" items="[[_getFieldListBlok(blok,fields.fields,0,0)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
+                        </template>
+                    </div>
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Lichte Dames</div>
+                        <template is="dom-repeat" items="[[_getFieldListBlok(blok,fields.fields,0,1)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
+                        </template>
+                    </div>
+                </div>
+            </div>
         </template>
         <template is="dom-if" if="[[fields.error]]">
             <no-match>
@@ -33,10 +58,10 @@
 
 
     <script>
-        class FieldListBlock extends Polymer.Element {
+        class FieldListTabBlock extends Polymer.Element {
 
             static get is() {
-                return 'field-list-block';
+                return 'field-list-tab-block';
             }
 
             connectedCallback() {
@@ -67,6 +92,17 @@
                     function(field) {
                         return field.blockid === block.blockid;
                     });
+            }
+
+
+            _getFieldListBlok(block, fieldlist, isman, isLight) {
+                if(block === undefined) return;
+                block = this.blocks[block];
+                return this._getFields(block, fieldlist).filter(
+                    function(field) {
+                        return +field.isman === isman && +field.islight === isLight;
+                    }
+                );
             }
 
             /**
@@ -110,6 +146,6 @@
         }
 
         // Register custom element definition using standard platform API
-        customElements.define(FieldListBlock.is, FieldListBlock);
+        customElements.define(FieldListTabBlock.is, FieldListTabBlock);
     </script>
 </dom-module>
