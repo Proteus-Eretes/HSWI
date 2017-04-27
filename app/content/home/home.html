@@ -51,22 +51,22 @@
 		<div class="menFieldsWrapper">
 			<div class="fieldsWrapper">
 				<div class="fieldTitle">Zware Heren</div>
-				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, '', 'D', 'L', 'M')">{{field.fieldnameshort}}</button>
+				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, '', 'D', 'L', 'M')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 			</div>
 			<div class="fieldsWrapper">
 				<div class="fieldTitle">Lichte Heren</div>
-				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'L', 'LD', 'XXXX', 'XXXX')">{{field.fieldnameshort}}</button>
+				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'L', 'LD', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 			</div>
 		</div>
 		<div class="womenFieldsWrapper">
 			<div class="fieldsWrapper">
 				<div class="fieldTitle">Dames</div>
-				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'D', 'XXXX', 'XXXX', 'XXXX')">{{field.fieldnameshort}}</button>
-				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'M', 'XXXX', 'XXXX', 'XXXX')">{{field.fieldnameshort}}</button>
+				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'D', 'XXXX', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
+				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'M', 'XXXX', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 			</div>
 			<div class="fieldsWrapper">
 				<div class="fieldTitle">Lichte Dames</div>
-				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'LD', 'XXXX', 'XXXX', 'XXXX')">{{field.fieldnameshort}}</button>
+				<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'LD', 'XXXX', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 			</div>
 		</div>
 	</div>

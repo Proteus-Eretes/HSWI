@@ -20,6 +20,10 @@
 			localStorage.setItem("activeFieldFilter", buttonNumber);
 		}
 
+		$scope.goToField = function(field) {
+			console.log(field.fieldnameshort);
+		}
+
 		$scope.getFields = function (people, filter, antifilter1, antifilter2, antifilter3) {
 			if (people == 0) {
 				var persons = 1;
