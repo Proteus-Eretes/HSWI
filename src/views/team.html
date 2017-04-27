@@ -266,7 +266,7 @@
              * Do we have a subfield and is this new information
              */
             _showSubField(sub, field) {
-                if (TeamModal._show(sub)) {
+                if (this._show(sub)) {
                     return sub !== field;
                 }
                 return false;
@@ -276,7 +276,7 @@
              * Only show time if something usefull is their
              */
             _showTime(seconds) {
-                if (TeamModal._show(seconds)) {
+                if (this._show(seconds)) {
                     return seconds !== '0.00';
                 }
                 return false;
