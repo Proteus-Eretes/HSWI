@@ -34,7 +34,7 @@
             </div>
         </template>
         <template is="dom-if" if="[[!displayError]]">
-            <paper-tabs selected="{{splash}}" scrollable fit-container>
+            <paper-tabs autoselect-delay="0" selected="{{splash}}" scrollable fit-container>
                 <template is="dom-repeat" items="[[match.setting.name]]">
                     <paper-tab>[[item]]</paper-tab>
                 </template>

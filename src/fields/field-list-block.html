@@ -6,7 +6,7 @@
 
 <dom-module id="field-list-block">
     <template>
-        <style include="shared-styles shared-styles-fields app-grid-style">
+        <style include="shared-styles shared-styles-fields">
         </style>
         <template is="dom-if" if="[[!fields.error]]">
             <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">

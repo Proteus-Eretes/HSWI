@@ -17,9 +17,13 @@
 <dom-module id="team-list">
     <template>
         <style include="shared-styles-tables shared-styles">
+            .voorlopig {
+                width: 100%;
+                text-align: center;
+            }
         </style>
         <template is="dom-if" if="[[!noTeams]]">
-            <paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
+            <!--<paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
                 <paper-tab name="uitslagen">
                     <template is="dom-if" if="[[approved]]">
                         Uitslagen
@@ -31,7 +35,12 @@
                 <paper-tab name="loting">Loting</paper-tab>
                 <paper-tab name="vereniging">Vereniging</paper-tab>
                 <paper-tab name="inschrijving">Inschrijving</paper-tab>
-            </paper-tabs>
+            </paper-tabs>-->
+            <template is="dom-if" if="[[!approved]]">
+                <div class="voorlopig">
+                    Voorlopige uitslagen
+                </div>
+            </template>
             <table class="table">
                 <thead>
                 <tr>

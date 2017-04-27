@@ -4,7 +4,7 @@
 <link rel="import" href="../services/reggata.html">
 
 
-<dom-module id="i-year-list">
+<dom-module id="change-view">
     <template>
         <style include="shared-styles shared-styles-button">
 
@@ -34,7 +34,7 @@
             .shellTitleWrapper {
                 width: 100%;
                 max-width: 150px;
-                height:44px;
+                height: 44px;
             }
 
             .yearDropdown {
@@ -46,21 +46,28 @@
         <template is="dom-if" if="[[selected]]">
             <div class="shellTitleWrapper">
                 <button on-click="_toggleList" class="headerButton">
-                    [[match]] ▴
+                    [[_view(view)]] ▴
                 </button>
                 <div class="yearDropdown">
-                    <template is="dom-repeat" items="[[reggataList]]" as="year">
-                        <button on-click="_openYear" class="yearButton">
-                            [[year.jaar]]
-                        </button>
-                    </template>
+                    <button id="uitslagen" on-click="_openView" class="yearButton">
+                        Uitslagen
+                    </button>
+                    <button id="loting" on-click="_openView" class="yearButton">
+                        Loting
+                    </button>
+                    <button id="vereniging" on-click="_openView" class="yearButton">
+                        Vereniging
+                    </button>
+                    <button id="inschrijvingen" on-click="_openView" class="yearButton">
+                        Inschrijving
+                    </button>
                 </div>
             </div>
         </template>
         <template is="dom-if" if="[[!selected]]">
             <div class="shellTitleWrapper">
                 <button on-click="_toggleList" class="headerButton">
-                    [[match]] ▾
+                    [[_view(view)]] ▾
                 </button>
             </div>
         </template>
@@ -68,23 +75,23 @@
 
 
     <script>
-        class IYearList extends Polymer.Element {
+        class ChangeView extends Polymer.Element {
 
             static get is() {
-                return 'i-year-list';
+                return 'change-view';
             }
 
             connectedCallback() {
                 super.connectedCallback();
-                requestReggataList(this);
             }
 
-            _openYear(e) {
+            _openView(e) {
+                const shortname = document.querySelector('my-app').getMatchShortName();
                 try {
-                    this.set('path', '/' + this.match.split(' ')[0] + '/' + e.model.year.jaar);
+                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id);
                     this.set('selected', false);
                 } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.match.split(' ')[0] + '/' + e.model.year.jaar);
+                    document.querySelector('my-app').ieWindowloc('/' + this.shortname.split(' ')[0] + '/' + this.shortname.split(' ')[1] + '/' + e.target.id);
                 }
                 document.querySelector('my-app').toTop();
             }
@@ -93,40 +100,37 @@
                 this.set('selected', !this.selected);
             }
 
-            /**
-             * Create the list of years of the current match
-             */
-            _createList(newValue, oldValue) {
-                const shortname = document.querySelector('my-app').getMatchShortName();
-                if (!this.regattas) return;
-                this.reggataList = this.regattas.regattas.filter(
-                    function (match) {
-                        return match.shortname === shortname;
-                    }
-                );
-                this.reggataList.sort(function (a, b) {
-                    return (+b.jaar) - (+a.jaar);
-                });
+            _updateView(newValue,oldValue) {
+                let view = this.path.split('/')[this.path.split('/').length - 1];
+                switch (view) {
+                    case 'uitslagen':
+                    case 'loting':
+                    case 'inschrijvingen':
+                    case 'vereniging':
+                        this.set('view', view);
+                        break;
+                    default:
+                        this.set('view', 'Uitslagen');
+                        break;
+                }
+            }
+
+            _view(view) {
+                return view.charAt(0).toUpperCase() + view.slice(1);
             }
 
             static get properties() {
                 return {
-                    regattas: {
-                        type: Array,
-                        notify: true,
-                        readOnly: false,
-                        observer: '_createList'
-                    },
-                    reggataList: {
-                        type: Array,
-                        notify: false,
-                        readOnly: false,
-                    },
                     path: {
                         type: String,
                         notify: true,
                         readOnly: false,
-                        observer: '_createList'
+                        observer: '_updateView'
+                    },
+                    view: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
                     },
                     selected: {
                         type: Boolean,
@@ -134,15 +138,9 @@
                         readOnly: false,
                         value: false,
                     },
-                    match: {
-                        type: String,
-                        notify: true,
-                        readOnly: false,
-                        observer: '_createList'
-                    }
                 };
             }
         }
-        customElements.define(IYearList.is, IYearList);
+        customElements.define(ChangeView.is, ChangeView);
     </script>
 </dom-module>
