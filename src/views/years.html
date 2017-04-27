@@ -1,55 +1,69 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-button.html">
 <link rel="import" href="../services/reggata.html">
 
 
 <dom-module id="i-year-list">
     <template>
-        <style include="shared-styles">
+        <style include="shared-styles shared-styles-button">
 
-            .dropDownMenu {
-                opacity: 0.9;
-                position: relative;
-                top: 60px;
-                background-color: #050505;
+            :host {
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .yearButton {
+                background-color: #0F0F0F;
                 width: 100%;
-                max-width: 75px;
-                max-height: 150px;
-                z-index: 1;
-                padding: 15px;
-                box-shadow: 1px 2px 4px grey;
-                overflow: scroll;
-            }
-
-            .dropDownItem {
-                opacity: 1;
-                height: 20px;
-            }
-
-            .match {
                 height: 30px;
-                width: 100%;
+                border-bottom: 1px solid #F8F8F8;
+                color: #F8F8F8;
+                position: relative;
+                display: block;
             }
 
+            .headerButton {
+                background-color: rgb(56, 56, 56);
+            }
+
+            .yearButton:hover {
+                background-color: rgb(53, 53, 53);
+            }
+
+            .shellTitleWrapper {
+                width: 100%;
+                max-width: 150px;
+                height:44px;
+            }
+
+            .yearDropdown {
+                height: 100vh;
+                position: relative;
+                border-top: 1px solid #F8F8F8;
+            }
         </style>
-        <div>
-            <template is="dom-if" if="[[selected]]">
-                <div class="dropDownMenu">
+        <template is="dom-if" if="[[selected]]">
+            <div class="shellTitleWrapper">
+                <button on-click="_toggleList" class="headerButton">
+                    [[match]] ▴
+                </button>
+                <div class="yearDropdown">
                     <template is="dom-repeat" items="[[reggataList]]" as="year">
-                        <div on-click="_openYear" class="dropDownItem">
-                            <h4>[[year.jaar]]</h4>
-                        </div>
+                        <button on-click="_openYear" class="yearButton">
+                            [[year.jaar]]
+                        </button>
                     </template>
                 </div>
-            </template>
-            <template is="dom-if" if="[[!selected]]">
-                <div>
-                    <div on-click="_toggleList" class="match">
-                        [[match]]
-                    </div>
-                </div>
-            </template>
-        </div>
+            </div>
+        </template>
+        <template is="dom-if" if="[[!selected]]">
+            <div class="shellTitleWrapper">
+                <button on-click="_toggleList" class="headerButton">
+                    [[match]] ▾
+                </button>
+            </div>
+        </template>
     </template>
 
 
@@ -76,7 +90,7 @@
             }
 
             _toggleList(e) {
-                this.set('selected', true);
+                this.set('selected', !this.selected);
             }
 
             /**
@@ -86,11 +100,11 @@
                 const shortname = document.querySelector('my-app').getMatchShortName();
                 if (!this.regattas) return;
                 this.reggataList = this.regattas.regattas.filter(
-                    function(match) {
+                    function (match) {
                         return match.shortname === shortname;
                     }
                 );
-                this.reggataList.sort(function(a, b) {
+                this.reggataList.sort(function (a, b) {
                     return (+b.jaar) - (+a.jaar);
                 });
             }

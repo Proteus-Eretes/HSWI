@@ -13,6 +13,7 @@
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="styles/shared-styles-button.html">
 <link rel="import" href="views/match.html">
 <link rel="import" href="views/matchList.html">
 <link rel="import" href="views/lastResult.html">
@@ -24,7 +25,7 @@
     <template>
 
 
-        <style include="shared-styles">
+        <style include="shared-styles shared-styles-button">
             :host {
                 --app-primary-color: #000;
                 --app-secondary-color: #FFF;
@@ -38,14 +39,19 @@
             }
 
             .header-bar {
-                /*height: 48px;*/
+                height: 44px;
                 display: flex;
             }
 
             .img-header-bar {
-                height: calc(100% - 8px);
+                height: calc(44px - 8px);
                 padding: 8px 4px 4px;
                 float: left;
+            }
+
+            .hamburger {
+                padding  : 6px 8px 10px;
+                font-size: 20px;
             }
 
             .menu-header {
@@ -54,23 +60,6 @@
 
             app-header paper-icon-button {
                 --paper-icon-button-ink-color: white;
-            }
-
-            .drawer-list {
-                margin: 0 20px;
-            }
-
-            .drawer-list a {
-                display: block;
-                padding: 0 16px;
-                text-decoration: none;
-                color: var(--app-secondary-color);
-                line-height: 40px;
-            }
-
-            .drawer-list a.iron-selected {
-                color: black;
-                font-weight: bold;
             }
 
             .menu {
@@ -97,24 +86,21 @@
 
                 <!-- header, shell -->
                 <app-header class="header-bar" slot="header" reveals effects="waterfall">
-                    <app-toolbar id="top">
+                    <app-toolbar class="header-bar" id="top">
+                        <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>&#9776;</button>
                         <img
                                 class="img-header-bar"
                                 src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
                                 on-click="goHome"/>
 
-                        <!-- TODO: build dropdown for the regattas, and show the shortname + year in the top -->
-
-                        <!--<button class="dropDownMatch" on-click="_toggleYearDropdown">[[match]]</button>-->
-                        <!--<template is="dom-if" if="[[dropDownVar]]">-->
                         <i-year-list match="[[match]]" path="{{routeMatch}}"></i-year-list>
-                        <!--</template>-->
                         <!--Filler-->
                         <div main-title></div>
-                        <search-match route="{{routeMatch}}"></search-match>
+                        <button class="headerButton">Uitslagen</button>
+                        <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
-
+                <search-match route="{{routeMatch}}"></search-match>
                 <template is="dom-if" if="[[matchPage]]">
                     <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
                 </template>
@@ -146,7 +132,7 @@
             }
 
             /**
-             * Are we in Ifram mode hide the menu
+             * Are we in Iframe mode hide the menu
              */
             _hide(iframe) {
                 if (!iframe)
