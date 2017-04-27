@@ -1,16 +1,53 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../styles/shared-styles-button.html">
+
 
 
 <dom-module id="search-match">
     <template>
-        <style>
+        <style include="shared-styles-button">
             :root {
-                --paper-input-container-input-color: #ECECEC
+                --paper-input-container-input-color: #0F0F0F;
+                --paper-input-container: #FFFFFF;
             }
+
+            .magnifyGlass {
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                color: #F8F8F8;
+                font-size: x-large
+            }
+
+            .searchBar {
+                display: flex;
+                height : 54px;
+                width  : 100%;
+                /*padding: 4px;*/
+            }
+
+            .submitSearch {
+                width: 60px;
+                height:100%;
+                background-color: #0F0F0F;
+            }
+
+            paper-input {
+                width: 100%;
+            }
+
         </style>
-        <paper-input id="search" label="Zoek op naam, ploeg of vereniging" type=search
-                     on-keydown="_search"></paper-input>
+        <div class="searchBar">
+            <paper-input id="search" label="Zoek op naam, ploeg of vereniging" type=search
+                         on-keydown="_search">
+
+            </paper-input>
+            <button class="submitSearch" on-click="_submit">
+                <div class="magnifyGlass">&#9906;</div>
+            </button>
+        </div>
     </template>
 
     <script>
@@ -37,6 +74,14 @@
                         document.querySelector('my-app').ieWindowloc('/' + shortname.split('/')[0] + '/' + shortname.split('/')[1] + '/' + this.$.search.value + '/' + this.target);
                     }
                 }
+            }
+
+            /**
+             *
+             * @private
+             */
+            _submit() {
+                this._search({'keyCode': 13});
             }
 
             static get properties() {

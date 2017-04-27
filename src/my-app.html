@@ -36,6 +36,7 @@
             app-header {
                 color: #FFF;
                 background-color: var(--app-primary-color);
+                margin-bottom: 4px;
             }
 
             .header-bar {
@@ -243,6 +244,9 @@
             }
 
             setMatch(match) {
+                if(!match) {
+                    this.match = this.subRouteMatch.split('/')[1] + ' ' + this.subRouteMatch.split('/')[2];
+                }
                 this.match = match;
             }
 
