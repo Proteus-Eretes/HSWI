@@ -13,7 +13,7 @@
         <style include="shared-styles shared-styles-fields shared-styles-button">
         </style>
         <template is="dom-if" if="[[!fields.error]]">
-            <paper-tabs selected="{{rowers}}" scrollable fit-container>
+            <paper-tabs autoselect-delay="0" selected="{{rowers}}" scrollable fit-container no-slide>
                 <template is="dom-repeat" items="[[n]]">
                     <paper-tab><div class="fieldText">[[item]]x</div><img class="rowing" src="https://images.poweredbyiris.nl/boats/rower.png"></paper-tab>
                 </template>
@@ -43,6 +43,14 @@
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Dames</div>
                         <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,1)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
+                        </template>
+                    </div>
+                </div>
+                <div class="leftOversFieldWrapper">
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Mix</div>
+                        <template is="dom-repeat" items="[[_getFieldListMix(rowers,fieldlist)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -93,6 +101,15 @@
                 return this._getFieldList(n, fieldlist).filter(
                     function(field) {
                         return +field.isman === isman && +field.islight === isLight;
+                    }
+                );
+            }
+
+            _getFieldListMix(n, fieldlist) {
+                n = this.n[n];
+                return this._getFieldList(n, fieldlist).filter(
+                    function(field) {
+                        return +field.isman === 2;
                     }
                 );
             }

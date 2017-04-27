@@ -13,7 +13,7 @@
         <style include="shared-styles shared-styles-fields shared-styles-button">
         </style>
         <template is="dom-if" if="[[!fields.error]]">
-            <paper-tabs selected="{{blok}}" scrollable fit-container>
+            <paper-tabs autoselect-delay="0" selected="{{blok}}" scrollable fit-container no-slide>
                 <template is="dom-repeat" items="[[blocks]]" as="block" sort="_timeSort">
                     <paper-tab><div class="fieldText">Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</div></paper-tab>
                 </template>
@@ -43,6 +43,14 @@
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Dames</div>
                         <template is="dom-repeat" items="[[_getFieldListBlok(blok,fields.fields,0,1)]]" as="field">
+                            <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
+                        </template>
+                    </div>
+                </div>
+                <div class="leftOversFieldWrapper">
+                    <div class="fieldsWrapper">
+                        <div class="fieldTitle">Mix</div>
+                        <template is="dom-repeat" items="[[_getFieldListMix(blok,fields.fields)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -105,6 +113,16 @@
                 );
             }
 
+            _getFieldListMix(block, fieldlist) {
+                if(block === undefined) return;
+                block = this.blocks[block];
+                return this._getFields(block, fieldlist).filter(
+                    function(field) {
+                        return +field.isman === 2;
+                    }
+                );
+            }
+
             /**
              * Return the starttime of a field
              */
@@ -140,6 +158,12 @@
                         notify: false,
                         readOnly: false,
                         value: 'loting'
+                    },
+                    blok: {
+                        type: Number,
+                        notify: true,
+                        readOnly: false,
+                        value: 0
                     }
                 };
             }

@@ -37,7 +37,6 @@
             app-header {
                 color: #FFF;
                 background-color: var(--app-primary-color);
-                margin-bottom: 4px;
             }
 
             .header-bar {
@@ -52,7 +51,7 @@
             }
 
             .hamburger {
-                padding  : 6px 8px 10px;
+                padding: 6px 6px 6px 0;
                 font-size: 20px;
             }
 
@@ -64,8 +63,19 @@
                 --paper-icon-button-ink-color: white;
             }
 
+            app-toolbar {
+                padding: 0 6px;
+            }
+
             .menu {
                 z-index: 1;
+            }
+
+            .searchWrapper {
+                /*padding: 5px;*/
+                border: 1px solid #0F0F0F;
+                margin: 2px;
+                background-color: #FFF;
             }
 
         </style>
@@ -89,7 +99,9 @@
                 <!-- header, shell -->
                 <app-header class="header-bar" slot="header" reveals effects="waterfall">
                     <app-toolbar class="header-bar" id="top">
-                        <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>&#9776;</button>
+                        <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>
+                            &#9776;
+                        </button>
                         <img
                                 class="img-header-bar"
                                 src="https://beta.hoesnelwasik.nl/images/manifest/icon-192x192.png"
@@ -102,16 +114,16 @@
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
-                <search-match route="{{routeMatch}}"></search-match>
+                <div class="searchWrapper"><search-match route="{{routeMatch}}"></search-match></div>
                 <template is="dom-if" if="[[matchPage]]">
                     <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
                 </template>
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
                 </template>
-                <footer style="color: #FFF">
+                <footer>
                     Copyright
-                    <a style="color: #ECECEC" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
+                    <a style="color: #080808" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
                 </footer>
             </app-header-layout>
         </app-drawer-layout>
@@ -147,6 +159,7 @@
              * Send google pageview
              */
             _updateRoute(newValue, oldValue) {
+                if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
                     this.iframe = true;
                     this.routeMatch = this.subRouteMatch.path;
@@ -156,6 +169,7 @@
                 }
                 ga('send', 'pageview', this.route.path);
                 this._location();
+                this.setMatch(false);
             }
 
             _year(route) {
@@ -206,6 +220,7 @@
              * If a route has happend update the route object make sure iframe mode is honnuerd
              */
             _updateRouteMatch(newValue, oldValue) {
+                if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
                     this.set('route.path', '/iframe' + this.routeMatch);
                 } else {
@@ -234,6 +249,7 @@
              * Rerturn the match name
              */
             getMatchShortName() {
+                if (this.match === false || this.match === '') return '';
                 return this.match.split(' ')[0];
             }
 
@@ -245,10 +261,11 @@
             }
 
             setMatch(match) {
-                if(!match) {
-                    this.match = this.subRouteMatch.split('/')[1] + ' ' + this.subRouteMatch.split('/')[2];
+                if (!match) {
+                    this.match = this.routeMatch.split('/')[1] + ' ' + this.routeMatch.split('/')[2];
+                } else {
+                    this.match = match;
                 }
-                this.match = match;
             }
 
             //TODO make this into arrow functions for flexiblity

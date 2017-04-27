@@ -46,7 +46,7 @@
         <template is="dom-if" if="[[selected]]">
             <div class="shellTitleWrapper">
                 <button on-click="_toggleList" class="headerButton">
-                    [[view]] ▴
+                    [[_view(view)]] ▴
                 </button>
                 <div class="yearDropdown">
                     <button id="uitslagen" on-click="_openView" class="yearButton">
@@ -67,7 +67,7 @@
         <template is="dom-if" if="[[!selected]]">
             <div class="shellTitleWrapper">
                 <button on-click="_toggleList" class="headerButton">
-                    [[view]] ▾
+                    [[_view(view)]] ▾
                 </button>
             </div>
         </template>
@@ -100,7 +100,7 @@
                 this.set('selected', !this.selected);
             }
 
-            _updateView(oldValue,NewValue) {
+            _updateView(newValue,oldValue) {
                 let view = this.path.split('/')[this.path.split('/').length - 1];
                 switch (view) {
                     case 'uitslagen':
@@ -113,6 +113,10 @@
                         this.set('view', 'Uitslagen');
                         break;
                 }
+            }
+
+            _view(view) {
+                return view.charAt(0).toUpperCase() + view.slice(1);
             }
 
             static get properties() {
