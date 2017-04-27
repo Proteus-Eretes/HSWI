@@ -4,12 +4,6 @@
 	var app = angular.module("home", []);
 
 	app.controller("homeController", function ($state, $rootScope, $scope, functionService, httpService) {
-		if (localStorage.getItem("activeFieldFilter")) {
-			$scope.activeFieldFilter = localStorage.getItem("activeFieldFilter");
-		} else {
-			$scope.setActiveButton(0);
-		}
-
 		$scope.search = function () {
 			var val = document.getElementById("searchValue").value;
 			console.log(val);
@@ -35,18 +29,27 @@
 				var persons = 8;
 			}
 			var returnFields = [];
-			for (var i = 0; i < $rootScope.currentRegatta.fields.length; i++) {
-				var field = $rootScope.currentRegatta.fields[i].fieldnameshort;
-				if (field[field.length - 2] == persons) {
-					if (field.toLowerCase().startsWith(filter.toLowerCase()) &&
-					!field.toLowerCase().startsWith(antifilter1.toLowerCase()) &&
-					!field.toLowerCase().startsWith(antifilter2.toLowerCase()) &&
-					!field.toLowerCase().startsWith(antifilter3.toLowerCase())) {
-						returnFields[returnFields.length] = $rootScope.currentRegatta.fields[i];
+			//only sort fields if fields are actually loaded
+			if ($rootScope.currentRegatta && $rootScope.currentRegatta.fields) {
+				for (var i = 0; i < $rootScope.currentRegatta.fields.length; i++) {
+					var field = $rootScope.currentRegatta.fields[i].fieldnameshort;
+					if (field[field.length - 2] == persons) {
+						if (field.toLowerCase().startsWith(filter.toLowerCase()) &&
+						!field.toLowerCase().startsWith(antifilter1.toLowerCase()) &&
+						!field.toLowerCase().startsWith(antifilter2.toLowerCase()) &&
+						!field.toLowerCase().startsWith(antifilter3.toLowerCase())) {
+							returnFields[returnFields.length] = $rootScope.currentRegatta.fields[i];
+						}
 					}
 				}
 			}
 			return returnFields;
+		}
+
+		if (localStorage.getItem("activeFieldFilter")) {
+			$scope.activeFieldFilter = localStorage.getItem("activeFieldFilter");
+		} else {
+			$scope.setActiveButton(0);
 		}
 	})
 })();
