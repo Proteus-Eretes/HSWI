@@ -1,7 +1,7 @@
 (function () {
 	"use strict";
 
-	var app = angular.module("shell", []);
+	var app = angular.module("shell", ["home"]);
 
 	app.controller("shellController", function ($state, $rootScope, $scope, functionService, httpService, $location) {
 		//setup shell

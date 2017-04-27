@@ -111,13 +111,21 @@
 	color            : #F8F8F8;
 }
 
-.searchFieldSeperator {
+.searchSeperator {
 	border-bottom-style: solid;
 	border-bottom-color: rgba(50, 50, 50, 1);
 	border-bottom-width: 0;
 	margin-bottom      : 4px;
 }
 
+/*end home style*/
+
+
+/*start field style*/
+.totalFieldsWrapper {
+	width: 100vw;
+	height: 100%;
+}
 .fieldFilterWrapper {
 	display     : flex;
 	height      : 40px;
@@ -170,6 +178,7 @@
 
 .womenFieldsWrapper {
 	display: flex;
+	margin-top: 30px;
 }
 
 .fieldsWrapper {
@@ -184,9 +193,14 @@
 	height          : 20px;
 	margin-left     : auto;
 	margin-right    : auto;
-	width           : 60px;
+	width           : 80px;
 	background-color: transparent;
 	color           : #0089d2;
 	text-align: right;
+	/*looks good for some reason*/
+	padding-right: 23px;
 }
-/* end home*/
+/* end field style*/
+
+
+/*start blok style*/
