@@ -1,0 +1,16 @@
+<div ng-controller="shellController" class="shell">
+	<div class="headerWrapper">
+		<button class="headerButton hamburger" ng-click="chooseMatch()">&#9776;</button>
+		<button class="homeButton" ng-click="goHome()">
+			<img src="assets/images/manifest/icon-36x36.png" class="headerImg"></img>
+		</button>
+		<div class="shellTitleWrapper" ng-class="{yearDropdown:activeYearDropdown}">
+			<button class="headerButton shellTitle" ng-click="chooseYear()" ng-class="{shellTitleActive:activeYearDropdown}">{{getHeaderTitle()}}</button>
+			<button class="yearButton" ng-repeat="year in getYears()" ng-click="goToYear(year)">{{year.jaar}}</button>
+		</div>
+		<button class="headerButton shellGoToResults" ng-click="goToResults()">Uitslagen</button>
+		<button class="headerButton shellGoToLive" ng-click="goToLive()">Live</button>
+
+	</div>
+	<div ui-view="" class="mainWrapper" ng-show="regattas"></div>
+</div>

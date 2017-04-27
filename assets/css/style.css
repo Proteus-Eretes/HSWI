@@ -1,0 +1,187 @@
+/*shell*/
+.shell {
+	height    : 100vh;
+	overflow-y: hidden;
+}
+
+.topButtonWrapper {
+	display: flex;
+}
+
+.headerImg {
+	padding         : 4px;
+	background-color: #0F0F0F;
+}
+
+.headerWrapper {
+	background-color: #0F0F0F;
+	display         : flex;
+	height          : 44px;
+}
+
+.headerButton {
+	display         : inline;
+	color           : #F8F8F8;
+	background-color: inherit;
+	align-items     : stretch;
+	padding-left    : 12px;
+	padding-right   : 12px;
+}
+
+.headerButton:hover {
+	background-color: rgb(53, 53, 53);
+}
+
+.shellTitleWrapper {
+	width    : 100%;
+	max-width: 150px;
+	overflow : hidden;
+}
+
+.yearDropdown {
+	height: 100vh;
+}
+
+.shellTitle {
+	height       : 44px;
+	width        : 100%;
+	margin-bottom: 1px;
+}
+
+.shellTitleActive {
+	background-color: #000000;
+}
+
+.shellGoToResults {
+	margin-left: auto;
+}
+
+.shellGoToLive {}
+
+.hamburger {
+	padding  : 6px 8px 10px;
+	font-size: 20px;
+}
+
+.yearButton {
+	width              : 100%;
+	height             : 30px;
+	border-bottom-style: solid;
+	border-bottom-color: #F8F8F8;
+	border-bottom-width: 1px;
+	background-color   : #0F0F0F;
+	color              : #F8F8F8;
+	position           : relative;
+}
+
+.yearButton:hover {
+	background-color: rgb(53, 53, 53);
+}
+/*end shell*/
+/* start home*/
+.homeWrapper {
+	background-color: #F8F8F8;
+	height          : 100vh;
+}
+
+.searchBar {
+	display: flex;
+	height : 40px;
+	width  : calc(100% - 8px);
+	padding: 4px;
+}
+
+.searchInput {
+	width       : 100%;
+	overflow    : hidden;
+	padding-left: 12px;
+}
+
+.submitSearch {
+	width           : 60px;
+	background-color: #0F0F0F;
+}
+
+.magnifyGlass {
+	-webkit-transform: rotate(-45deg);
+	-moz-transform   : rotate(-45deg);
+	-o-transform     : rotate(-45deg);
+	transform        : rotate(-45deg);
+	font-size        : x-large;
+	color            : #F8F8F8;
+}
+
+.searchFieldSeperator {
+	border-bottom-style: solid;
+	border-bottom-color: rgba(50, 50, 50, 1);
+	border-bottom-width: 0;
+	margin-bottom      : 4px;
+}
+
+.fieldFilterWrapper {
+	display     : flex;
+	height      : 40px;
+	width       : calc(100% - 8px);
+	margin-left : auto;
+	margin-right: auto;
+}
+
+.fieldFilter {
+	height             : 100%;
+	width              : 25%;
+	background-color   : inherit;
+	border-style       : solid;
+	border-color       : rgba(80, 80, 80, 0.9);
+	border-width       : 0;
+	border-bottom-width: 1px;
+}
+
+.activeFieldFilterButton {
+	border-width       : 1px;
+	border-bottom-width: 0;
+}
+
+.fieldTextImageWrapper {
+	display     : inline-flex;
+	align-items : center;
+	margin-left : auto;
+	margin-right: auto;
+	opacity: 0.3;
+	padding-bottom: 0;
+}
+
+.activeFieldTextImageWrapper {
+	opacity: 1;
+	padding-bottom: 1px;
+}
+
+.fieldImg {
+	max-height : 18px;
+	margin-left: 5px;
+}
+
+.fieldText {
+	font-size: medium;
+}
+
+.menFieldsWrapper {
+	display: flex;
+}
+
+.womenFieldsWrapper {
+	display: flex;
+}
+
+.fieldsWrapper {
+	display: inline-grid;
+}
+
+.fieldTitle {
+	width: 50vw;
+}
+
+.singleField {
+	height: 20px;
+	width: 100px;	
+}
+/* end home*/

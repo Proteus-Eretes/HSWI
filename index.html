@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<head>
+		<link rel="manifest" href="manifest.json">
+		<link rel="icon" type="image/png" href="assets/images/favicon.png">
+		<title>Learn Words</title>
+		<!-- style -->
+		<link rel="stylesheet" type="text/css" href="assets/css/grid.css"></link>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css"></link>
+		<!-- libs -->
+		<script type="application/javascript" src="assets/libs/angular/angular.min.js"></script>
+		<script type="application/javascript" src="assets/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<!-- services -->
+		<script type="text/javascript" src="app/app.module.js"></script>
+		<script type="text/javascript" src="app/httpService.js"></script>
+		<script type="text/javascript" src="app/idbService.js"></script>
+		<script type="text/javascript" src="app/functionService.js"></script>
+
+		<!-- scripts -->
+		<script type="text/javascript" src="app/content/shell/shell.js"></script>
+		<script type="text/javascript" src="app/content/home/home.js"></script>
+
+	</head>
+
+	<body ui-view>
+		<a ui-sref="/"></a>
+	</body>
+
+</html>
