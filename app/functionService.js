@@ -44,6 +44,21 @@
 
 			})
 		}
+		function blockCompare(a, b) {
+			if (parseInt(a.blockNumber) < parseInt(b.blockNumber))
+				return -1;
+			if (parseInt(a.blockNumber) > parseInt(b.blockNumber))
+				return 1;
+			return 0;
+		}
+
+		function fieldStartOrderCompare(a, b) {
+			if (parseInt(a.startorder) < parseInt(b.startorder))
+				return -1;
+			if (parseInt(a.startorder) > parseInt(b.startorder))
+				return 1;
+			return 0;
+		}
 
 		this.getFields = function() {
 			return new Promise(resolve => {
@@ -55,6 +70,36 @@
 				var reg = $rootScope.currentRegatta;
 				httpService.httpRequest("GET", reg.shortname, reg.jaar, "velden").then(function (response) {
 					$rootScope.currentRegatta.fields = response.fields;
+					var fields = $rootScope.currentRegatta.fields;
+					var blocks = [];
+					for (var i = 0; i < fields.length; i++) {
+						var field = fields[i]
+						var blockExists = false;
+						for (var j = 0; j < blocks.length; j++) {
+							if (blocks[j].blockNumber === field.blocknumber) {
+								blockExists = true;
+								break;
+							}
+						}
+						if (!blockExists) {
+							blocks[blocks.length] = {
+								blockNumber: field.blocknumber,
+								starttime: field.starttime,
+								daydate: field.daydate,
+								fields: [field]
+							}
+						} else {
+							blocks[j].fields[blocks[j].fields.length] = field;
+						}
+					}
+					blocks.sort(blockCompare);
+
+					for (var i = 0; i < blocks.length; i++) {
+						blocks[i].fields.sort(fieldStartOrderCompare);
+					}
+
+					$rootScope.blocks = blocks;
+
 					resolve();
 					return;
 				})

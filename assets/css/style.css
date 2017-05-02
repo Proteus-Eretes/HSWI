@@ -1,7 +1,8 @@
 /*shell*/
 .shell {
-	height    : 100vh;
-	overflow-y: hidden;
+	height  : 100vh;
+	width   : 100vw;
+	overflow: hidden;
 }
 
 .topButtonWrapper {
@@ -72,6 +73,7 @@
 	background-color   : #0F0F0F;
 	color              : #F8F8F8;
 	position           : relative;
+	z-index            : 2;
 }
 
 .yearButton:hover {
@@ -117,15 +119,17 @@
 	border-bottom-width: 0;
 	margin-bottom      : 4px;
 }
-
 /*end home style*/
-
-
 /*start field style*/
+.fields {
+	margin-top: 10px;
+}
+
 .totalFieldsWrapper {
-	width: 100vw;
+	width : 100vw;
 	height: 100%;
 }
+
 .fieldFilterWrapper {
 	display     : flex;
 	height      : 40px;
@@ -177,7 +181,7 @@
 }
 
 .womenFieldsWrapper {
-	display: flex;
+	display   : flex;
 	margin-top: 30px;
 }
 
@@ -196,11 +200,79 @@
 	width           : 80px;
 	background-color: transparent;
 	color           : #0089d2;
-	text-align: right;
+	text-align      : right;
 	/*looks good for some reason*/
-	padding-right: 23px;
+	padding-right   : 23px;
 }
 /* end field style*/
-
-
 /*start blok style*/
+.blockTitleWrapper {
+	display      : flex;
+	margin-top   : 10px;
+}
+
+.blockTitle {
+	color    : black;
+	font-size: x-large;
+}
+
+.blockStartTime {
+	font-size  : x-large;
+	margin-left: 8px;
+}
+
+.blocksWrapper {
+	height    : calc(100vh - 92px);
+	width     :100%;
+	overflow-y: scroll;
+}
+
+.blockFieldWrapper {
+	display: flex;
+	background-color: lavender;
+}
+
+.darkFieldBG {
+	background-color: lightgray;
+}
+
+.singleBlockWrapper {
+	display: grid;
+	border-bottom: 1px solid;
+}
+
+.blockFieldName {
+	width           : 100px;
+	text-align      : right;
+	padding-right   : 30px;
+	height          : 20px;
+	background-color: transparent;
+	color           : #0089d2;
+}
+
+.blockFieldStartTime {
+	margin-left: auto;
+	margin-right: 34px;
+}
+
+.blockDescriptionWrapper {
+	display: flex;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.blockDescriptionField {
+	font-size: small;
+	font-style: italic;
+	align-self: flex-end;
+	margin-left: 34px;
+}
+
+.blockDescriptionTime {
+	font-size: small;
+	width: 60px;
+	font-style: italic;
+	margin-left: auto;
+	align-self: flex-end;
+	margin-right: 18px;
+}
