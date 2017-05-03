@@ -1,4 +1,9 @@
 <div ng-controller="homeController" class="homeWrapper">
+	<div class=viewSwitchWrapper>
+		<button class="col-4 viewSwitch" ng-class="{activeSwitch: fieldsActive()}" ng-click="goToFields()">Per Veld</button>
+		<button class="col-4 viewSwitch middleSwitch" ng-class="{activeSwitch: blocksActive()}" ng-click="goToBlocks()">Per Blok</button>
+		<button class="col-4 viewSwitch" ng-class="{activeSwitch: clubsActive()}" ng-click="goToClubs()">Per Vereniging</button>
+	</div>
 	<div class="searchBar">
 		<input class="searchInput" id="searchValue" placeholder="Zoek op vereniging of naam"></input>
 		<button class="submitSearch" ng-click="search()">

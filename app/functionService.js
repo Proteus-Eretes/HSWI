@@ -86,7 +86,8 @@
 								blockNumber: field.blocknumber,
 								starttime: field.starttime,
 								daydate: field.daydate,
-								fields: [field]
+								fields: [field],
+								retract: false
 							}
 						} else {
 							blocks[j].fields[blocks[j].fields.length] = field;

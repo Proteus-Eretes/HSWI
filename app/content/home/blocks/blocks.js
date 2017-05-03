@@ -64,6 +64,19 @@
 
 			return day.substring(0, 2) + " " + startHours + ":" + mins;
 		}
+
+		$scope.toggleBlock = function(block) {
+			block.retract = !block.retract;
+		}
+
+		$scope.getRetractIndicator = function(block) {
+			if (!block.retract) {
+				return "˅"
+			}
+			else {
+				return "˂"
+			}
+		}
 	})
 
 

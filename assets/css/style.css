@@ -82,8 +82,30 @@
 /*end shell*/
 /* start home*/
 .homeWrapper {
-	background-color: #F8F8F8;
+	background-color: transparent;
 	height          : 100vh;
+}
+
+.viewSwitchWrapper {
+	display: flex;
+	width  : 100%;
+	margin-top: 1px;
+}
+
+.viewSwitch {
+	color           : #F8F8F8;
+	background-color: #1d3650;
+	height          : 30px;
+
+}
+
+.middleSwitch {
+	border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.activeSwitch {
+	background-color: #3b648f;
 }
 
 .searchBar {
@@ -207,38 +229,64 @@
 /* end field style*/
 /*start blok style*/
 .blockTitleWrapper {
-	display      : flex;
-	margin-top   : 10px;
+	display         : flex;
+	background-color: transparent;
+	align-self      : flex-start;
+	height: 40px;
+}
+
+.retractIndicator {
+	margin-left  : auto;
+	align-self   : center;
+	padding-right: 18px;
+	padding-top  : 11px;
+	font-size    : 26px;
+	font-family  : monospace;
+}
+
+.retractedIndicator {
+	padding-top: 0;
+	padding-bottom: 2px
 }
 
 .blockTitle {
-	color    : black;
-	font-size: x-large;
+	color      : black;
+	font-size  : x-large;
+	margin-left: 10px;
+	align-self: center;
 }
 
 .blockStartTime {
 	font-size  : x-large;
 	margin-left: 8px;
+	align-self: center;
 }
 
 .blocksWrapper {
-	height    : calc(100vh - 92px);
-	width     :100%;
+	height    : calc(100vh - 122px);
+	width     : 100%;
 	overflow-y: scroll;
 }
 
 .blockFieldWrapper {
-	display: flex;
-	background-color: lavender;
+	display         : flex;
+	background-color: #e6e6e6;
 }
 
 .darkFieldBG {
-	background-color: lightgray;
+	background-color: transparent;
 }
 
 .singleBlockWrapper {
-	display: grid;
+	display      : grid;
 	border-bottom: 1px solid;
+	margin-bottom: 10px;
+	height       : initial;
+	overflow-y   : hidden;
+}
+
+.retractBlock {
+	height: 40px;
 }
 
 .blockFieldName {
@@ -251,28 +299,29 @@
 }
 
 .blockFieldStartTime {
-	margin-left: auto;
+	margin-left : auto;
 	margin-right: 34px;
 }
 
 .blockDescriptionWrapper {
-	display: flex;
+	display            : flex;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
 
 .blockDescriptionField {
-	font-size: small;
-	font-style: italic;
-	align-self: flex-end;
+	font-size  : small;
+	font-style : italic;
+	align-self : flex-end;
 	margin-left: 34px;
 }
 
 .blockDescriptionTime {
-	font-size: small;
-	width: 60px;
-	font-style: italic;
-	margin-left: auto;
-	align-self: flex-end;
-	margin-right: 18px;
+	font-size   : small;
+	width       : 60px;
+	font-style  : italic;
+	margin-left : auto;
+	align-self  : flex-end;
+	margin-right: 24px;
+	text-align  : center;
 }

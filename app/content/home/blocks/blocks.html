@@ -1,15 +1,16 @@
 <div ng-controller="blocksController" class="blocksWrapper">
 	<div class="full-height"></div>
-	<div ng-repeat="block in blocks" class="singleBlockWrapper">
-		<div class="blockTitleWrapper">
-			<div class="blockTitle" ng-click="printBlock(block)">{{"blok " + block.blockNumber + " -"}}</div>
+	<div ng-repeat="block in blocks" class="singleBlockWrapper" ng-class="{retractBlock: block.retract}">
+		<button class="blockTitleWrapper"  ng-click="toggleBlock(block)">
+			<div class="blockTitle">{{"blok " + block.blockNumber + " -"}}</div>
 			<div class="blockStartTime">{{getTimeTitle(block)}}</div>
-		</div>
-		<div class="blockDescriptionWrapper">
+			<div class="retractIndicator" ng-class="{retractedIndicator: block.retract}">{{getRetractIndicator(block)}}</div>
+		</button>
+		<div class="blockDescriptionWrapper" ng-hide="block.retract">
 			<div class="blockDescriptionField">Veld</div>
-			<div class="blockDescriptionTime">Geschatte Start Tijd</div>
+			<div class="blockDescriptionTime">Geschatte Starttijd</div>
 		</div>
-		<div ng-repeat="field in block.fields" class="blockFieldWrapper" ng-class="{darkFieldBG: $index%2 === 1}">
+		<div ng-repeat="field in block.fields" class="blockFieldWrapper" ng-class="{darkFieldBG: $index%2 === 1}" ng-hide="block.retract">
 			<button class="blockFieldName" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 			<div class="blockFieldStartTime">{{getApproxStartTime(field, $index)}}</div>
 		</button>
