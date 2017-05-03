@@ -6,13 +6,9 @@ cas:
 
 rens:
 - (ie11 'afmaken')
-- zoekresultaten sorteren
 - feedback knopje
 - bij uitslagen: is het veld live? (live updates)
 - geen lege pagina's
-- tijden met straf rood maken (o.i.d.)
-
-
 
 algemeen:
 - (vereniging?)
@@ -20,7 +16,8 @@ algemeen:
 - (pagina specifieke searchbar)
 - (homepage?)
 
-push notificaties:
+Fancy dingen
+- ((push notificaties))
 - ((indexed db toevoegen))
 - 
 
