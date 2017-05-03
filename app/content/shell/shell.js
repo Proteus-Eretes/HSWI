@@ -6,6 +6,7 @@
 	app.controller("shellController", function ($state, $rootScope, $scope, functionService, httpService, $location) {
 		//setup shell
 		$scope.activeYearDropdown = false;
+		$scope.activeReferrals = false;
 
 		if (localStorage.getItem("currentRegatta")) {
 			$rootScope.currentRegatta = JSON.parse(localStorage.getItem("currentRegatta"));
@@ -13,6 +14,14 @@
 		else if ($rootScope.regattas) {
 			$rootScope.currentRegatta = $scope.findRegatta("ww", "2017");
 			localStorage.setItem("currentRegatta", JSON.stringify($rootScope.currentRegatta));
+		}
+
+		if (localStorage.getItem("activeReferral")) {
+			$rootScope.activeReferral = JSON.parse(localStorage.getItem("activeReferral"));
+		}
+		else {
+			$rootScope.activeReferral = 0;
+			localStorage.setItem("activeReferral", JSON.stringify($rootScope.activeReferral));
 		}
 
 		$scope.getHeaderTitle = function () {
@@ -64,12 +73,43 @@
 			console.log("open drawer")
 		}
 
-		$scope.goHome = function () {
-			console.log("thuis");
+		$scope.toggleReferrals = function() {
+			$scope.activeReferrals = !$scope.activeReferrals;
 		}
 
-		$scope.goToResults = function () {
-			console.log("uitslagen");
+		$scope.getReferralTitle = function() {
+			if ($rootScope.regattas && $rootScope.currentRegatta) {
+				if ($scope.activeReferrals) {
+					var titleArrow = "\u25B4"
+				} else {
+					var titleArrow = "\u25BE"
+				}
+				var referralName = "Uitslagen";
+
+				if ($rootScope.activeReferral === 1) {
+					referralName = "Loting";
+				}
+				else if ($rootScope.activeReferral === 2) {
+					referralName = "Inschrijvingen"
+				}
+
+				return referralName + " " + titleArrow;
+			}
+			return "";
+		}
+
+		$scope.goHome = function () {
+			$state.go("shell.home.velden");
+		}
+
+		$scope.setReferral = function(number) {
+			$rootScope.activeReferral = number;
+			localStorage.setItem("activeReferral", JSON.stringify($rootScope.activeReferral));
+
+			if (!$state.$current.name.startsWith("shell.home")) {
+				$state.go("shell.home.velden");
+			}
+			$scope.toggleReferrals();
 		}
 
 		$scope.goToLive = function () {

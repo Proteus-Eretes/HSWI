@@ -25,18 +25,19 @@
 	color           : #F8F8F8;
 	background-color: inherit;
 	align-items     : stretch;
-	padding-left    : 12px;
-	padding-right   : 12px;
+	padding-left    : 8px;
+	padding-right   : 8px;
 }
 
 .headerButton:hover {
-	background-color: rgb(53, 53, 53);
+	background-color: #1d3650;
 }
 
 .shellTitleWrapper {
 	width    : 100%;
 	max-width: 150px;
 	overflow : hidden;
+	margin-right: 1px;
 }
 
 .yearDropdown {
@@ -50,11 +51,24 @@
 }
 
 .shellTitleActive {
-	background-color: #000000;
+	background-color: #3b648f;
 }
 
-.shellGoToResults {
+.shellTitleActive:hover {
+	background-color: #3b648f;
+}
+
+.totalReferralWrapper {
 	margin-left: auto;
+	width: 100px;
+}
+
+.referralTitle {
+	height     : 44px;
+	white-space: nowrap;
+	padding    : 2px;
+	width: inherit;
+	margin-bottom: 1px;
 }
 
 .shellGoToLive {}
@@ -77,8 +91,30 @@
 }
 
 .yearButton:hover {
-	background-color: rgb(53, 53, 53);
+	background-color: #1d3650;
 }
+
+.yearWrapper {
+	height    : calc(100vh - 44px);
+	overflow-y: auto;
+}
+
+.currentYearButton {
+	background-color: #3b648f;
+}
+
+.currentYearButton:hover {
+	background-color: #3b648f;
+}
+
+.activeReferralButton {
+	background-color: #3b648f;
+}
+.activeReferralButton:hover {
+	background-color: #3b648f;
+}
+
+
 /*end shell*/
 /* start home*/
 .homeWrapper {
@@ -87,8 +123,8 @@
 }
 
 .viewSwitchWrapper {
-	display: flex;
-	width  : 100%;
+	display   : flex;
+	width     : 100%;
 	margin-top: 1px;
 }
 
@@ -96,12 +132,11 @@
 	color           : #F8F8F8;
 	background-color: #1d3650;
 	height          : 30px;
-
 }
 
 .middleSwitch {
-	border-left: 1px solid black;
-    border-right: 1px solid black;
+	border-left : 1px solid black;
+	border-right: 1px solid black;
 }
 
 .activeSwitch {
@@ -232,34 +267,34 @@
 	display         : flex;
 	background-color: transparent;
 	align-self      : flex-start;
-	height: 40px;
+	height          : 40px;
 }
 
 .retractIndicator {
 	margin-left  : auto;
 	align-self   : center;
 	padding-right: 18px;
-	padding-top  : 11px;
+	padding-top  : 10px;
 	font-size    : 26px;
 	font-family  : monospace;
 }
 
 .retractedIndicator {
-	padding-top: 0;
-	padding-bottom: 2px
+	padding-top   : 0;
+	padding-bottom: 2px;
 }
 
 .blockTitle {
 	color      : black;
 	font-size  : x-large;
 	margin-left: 10px;
-	align-self: center;
+	align-self : center;
 }
 
 .blockStartTime {
 	font-size  : x-large;
 	margin-left: 8px;
-	align-self: center;
+	align-self : center;
 }
 
 .blocksWrapper {
