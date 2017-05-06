@@ -1,7 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../styles/shared-styles-button.html">
@@ -13,22 +10,22 @@
         <style include="shared-styles shared-styles-fields shared-styles-button">
         </style>
         <template is="dom-if" if="[[!fields.error]]">
-            <paper-tabs autoselect-delay="0" selected="{{rowers}}" scrollable fit-container no-slide>
+            <div class="fieldFilterWrapper">
                 <template is="dom-repeat" items="[[n]]">
-                    <paper-tab><div class="fieldText">[[item]]x</div><img class="rowing" src="https://images.poweredbyiris.nl/boats/rower.png"></paper-tab>
+                    <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,n,rowers)]]" on-click="_setActive"><div class="fieldText">[[item]]x</div><img class="rowing" src="https://images.poweredbyiris.nl/boats/rower.png"></button>
                 </template>
-            </paper-tabs>
+            </div>
             <div class="fields">
                 <div class="menFieldsWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Zware Heren</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,0)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,0,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Heren</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,1)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,1,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -36,13 +33,13 @@
                 <div class="womenFieldsWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Dames</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,0)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,0,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Dames</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,1)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,1,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -50,7 +47,7 @@
                 <div class="leftOversFieldWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Mix</div>
-                        <template is="dom-repeat" items="[[_getFieldListMix(rowers,fieldlist)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMix(rowers,fieldlist,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -97,8 +94,8 @@
                     });
             }
 
-            _getFieldListMen(n, fieldlist, isman, isLight) {
-                n = this.n[n];
+            _getFieldListMen(n, fieldlist, isman, isLight,r) {
+                n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
                     function(field) {
                         return +field.isman === isman && +field.islight === isLight;
@@ -106,8 +103,8 @@
                 );
             }
 
-            _getFieldListMix(n, fieldlist) {
-                n = this.n[n];
+            _getFieldListMix(n, fieldlist,r) {
+                n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
                     function(field) {
                         return +field.isman === 2;
@@ -130,6 +127,24 @@
                     }
                     this.set('n', n);
                 }
+            }
+
+            _setActive(e) {
+                let rowers = e.model.item;
+                let i = 0;
+                for(; i < this.n.length; i++) {
+                    if(this.n[i] === rowers) break;
+                }
+                this.set('rowers', i);
+            }
+
+            _fieldClassActive(item,n,rowers) {
+                if (item === n[rowers]) return 'activeFieldFilterButton fieldFilter';
+                return 'fieldFilter';
+            }
+
+            _calcWidth(n) {
+                return 'width: ' + (100/n.length) + '%;';
             }
 
             static get properties() {

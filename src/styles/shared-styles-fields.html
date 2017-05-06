@@ -6,6 +6,7 @@
     <template>
         <style include="app-grid-style">
 
+            /*Grid view*/
             :host {
                 --app-grid-columns: 6;
                 --app-grid-item-height: 100px;
@@ -48,6 +49,8 @@
                 margin-left: 5px;
             }
 
+            /*Finish old view*/
+
             .menFieldsWrapper {
                 display: flex;
             }
@@ -82,6 +85,28 @@
                 background-color: transparent;
                 color: #0089d2;
                 text-align: right;
+            }
+
+            .fieldFilterWrapper {
+                display     : flex;
+                height      : 40px;
+                width       : calc(100% - 8px);
+                margin-left : auto;
+                margin-right: auto;
+            }
+
+            .fieldFilter {
+                height             : 100%;
+                background-color   : inherit;
+                border-style       : solid;
+                border-color       : rgba(80, 80, 80, 0.9);
+                border-width       : 0;
+                border-bottom-width: 1px;
+            }
+
+            .activeFieldFilterButton {
+                border-width       : 1px;
+                border-bottom-width: 0;
             }
 
             @media screen and (max-width: 800px) {

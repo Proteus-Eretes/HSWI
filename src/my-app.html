@@ -51,6 +51,7 @@
             }
 
             .hamburger {
+                width: 44px;
                 padding: 6px 6px 6px 0;
                 font-size: 20px;
             }
@@ -64,7 +65,7 @@
             }
 
             app-toolbar {
-                padding: 0 6px;
+                padding: 0;
             }
 
             .menu {
@@ -76,6 +77,12 @@
                 border: 1px solid #0F0F0F;
                 margin: 2px;
                 background-color: #FFF;
+            }
+
+            @media screen and (min-width: 1280px) {
+                .hamburger {
+                    display: none;
+                }
             }
 
         </style>
@@ -141,8 +148,6 @@
             connectedCallback() {
                 this.match = '';
                 super.connectedCallback();
-                // this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
-                // self.shadowRoot.querySelector('#drawer').toggle(); });
             }
 
             /**
