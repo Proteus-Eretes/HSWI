@@ -236,8 +236,9 @@
                     case 'search':
                         //TODO
                         return true;
-                    case 'uitslagen':
                     case 'vereniging':
+                        return team.clubnameshort === this.path.split('/')[3];
+                    case 'uitslagen':
                     case 'inschrijving':
                     case 'loting':
                         return team.slotid === this.path.split('/')[3] || team.fieldnameshort === this.path.split('/')[3];

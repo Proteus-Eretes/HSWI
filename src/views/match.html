@@ -47,6 +47,7 @@
                 requestClubs(this, this.route.split('/')[1], this.route.split('/')[2]);
                 this.target = this.route.split('/')[3];
                 if (this.target === undefined) this.target = 'uitslagen';
+                if (this.view === 2) this.target = 'vereniging';
             }
 
             _updateMatch(newValue, oldValue) {
