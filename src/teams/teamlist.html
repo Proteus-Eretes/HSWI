@@ -233,17 +233,14 @@
              */
             _isField(team) {
                 switch (this.path.split('/')[4]) {
-                    case 'uitslagen':
-                        return team.fieldnameshort === this.path.split('/')[3];
-                    case 'vereniging':
-                        return team.clubnameshort === this.path.split('/')[3];
                     case 'search':
                         //TODO
                         return true;
-                    case 'loting':
-                        return team.slotid === this.path.split('/')[3];
+                    case 'uitslagen':
+                    case 'vereniging':
                     case 'inschrijving':
-                        return team.fieldnameshort === this.path.split('/')[3];
+                    case 'loting':
+                        return team.slotid === this.path.split('/')[3] || team.fieldnameshort === this.path.split('/')[3];
                 }
             }
 

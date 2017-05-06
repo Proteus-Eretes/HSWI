@@ -10,7 +10,7 @@
         </style>
         <template is="dom-if" if="[[!fields.error]]">
             <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
-                <div class="">
+                <div class="card">
                     <button class="">
                         <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
                     </button>
@@ -58,10 +58,12 @@
 
             _openField(e) {
                 let shortname = document.querySelector('my-app').getMatchShort();
+                let field = e.model.field.fieldnameshort;
+                if(this.target === 'loting') field = e.model.field.slotid;
                 try {
-                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.slotid + '/' + this.target);
+                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + field + '/' + this.target);
                 } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.slotid + '/' + this.target);
+                    document.querySelector('my-app').ieWindowloc('/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + field + '/' + this.target);
                 }
             }
 

@@ -21,6 +21,8 @@
 <link rel="import" href="teams/teamlist.html">
 <link rel="import" href="elements/search.html">
 <link rel="import" href="elements/change-view.html">
+<link rel="import" href="elements/change-match-view.html">
+
 
 <dom-module id="my-app">
     <template>
@@ -101,7 +103,7 @@
             </app-drawer>
 
             <!-- Main content -->
-            <app-header-layout has-scrolling-region>
+            <div has-scrolling-region>
 
                 <!-- header, shell -->
                 <app-header class="header-bar" slot="header" reveals effects="waterfall">
@@ -121,9 +123,10 @@
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
+                <div class="viewBar"><change-match-view view="{{view}}"></change-match-view> </div>
                 <div class="searchWrapper"><search-match route="{{routeMatch}}"></search-match></div>
                 <template is="dom-if" if="[[matchPage]]">
-                    <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
+                    <main-match view="[[_getViewNumber(view)]]" id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
                 </template>
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
@@ -273,8 +276,8 @@
                 }
             }
 
-            //TODO make this into arrow functions for flexiblity
             /**
+             * TODO make this into arrow functions for flexiblity
              * Which page should be open
              */
             _location() {
@@ -291,6 +294,25 @@
                     default:
                         this.resultPage = true;
                         break;
+                }
+            }
+
+            /**
+             * TODO get rid of this
+             * @param view
+             * @returns {number}
+             * @private
+             */
+            _getViewNumber(view){
+                switch (view) {
+                    case 'field':
+                        return 0;
+                    case 'block':
+                        return 1;
+                    case 'club':
+                        return 2;
+                    default:
+                        return 0;
                 }
             }
 
@@ -336,6 +358,12 @@
                     dropDownVar: {
                         type: Boolean,
                         value: false,
+                        notify: true,
+                        readOnly: false
+                    },
+                    view: {
+                        type: Number,
+                        value: 0,
                         notify: true,
                         readOnly: false
                     }

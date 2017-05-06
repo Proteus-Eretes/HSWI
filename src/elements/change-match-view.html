@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-button.html">
+<link rel="import" href="../services/reggata.html">
+
+
+<dom-module id="change-match-view">
+    <template>
+        <style include="shared-styles shared-styles-button">
+            :host {
+                width: 100%;
+            }
+
+            .viewSwitch {
+                color: #F8F8F8;
+                background-color: #1d3650;
+                height: 30px;
+                width: 33.33%;
+            }
+
+            .middleSwitch {
+                border-left: 1px solid black;
+                border-right: 1px solid black;
+            }
+
+            .activeSwitch {
+                background-color: #3b648f;
+            }
+        </style>
+        <div class="viewBar">
+            <button id="field" on-click="_openView" class$="[[_isActive('field',view,0)]]">
+                Veld
+            </button>
+            <button id="block" on-click="_openView" class$="[[_isActive('block',view,1)]]">
+                Blok
+            </button>
+            <button id="club" on-click="_openView" class$="[[_isActive('club',view,0)]]">
+                Vereniging
+            </button>
+        </div>
+    </template>
+
+
+    <script>
+        class ChangeMatchView extends Polymer.Element {
+
+            static get is() {
+                return 'change-match-view';
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+            }
+
+            _openView(e) {
+                this.set('view', e.target.id);
+            }
+
+            _isActive(view, currentView, mid) {
+                let classes = '';
+                if (mid === 1) classes = 'middleSwitch ';
+                if (view === currentView) return classes + 'viewSwitch activeSwitch';
+                return classes + 'viewSwitch';
+            }
+
+            static get properties() {
+                return {
+                    view: {
+                        type: String,
+                        notify: true,
+                        readOnly: false,
+                        value: 'field'
+                    }
+                };
+            }
+        }
+        customElements.define(ChangeMatchView.is, ChangeMatchView);
+    </script>
+</dom-module>
