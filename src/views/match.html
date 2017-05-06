@@ -2,31 +2,22 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../services/reggata.html">
 <link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-tab-boat.html">
-<link rel="import" href="../fields/field-list-block.html">
+<link rel="import" href="../fields/field-list-block-list.html">
 <link rel="import" href="../fields/field-list-tab-block.html">
 <link rel="import" href="clubs.html">
 
 <dom-module id="main-match">
     <template>
-        <style include="shared-styles">
-        </style>
-
-        <!--<paper-tabs selected="{{target}}" scrollable fit-container>
-            <paper-tab>Uitslagen</paper-tab>
-            <paper-tab>Loting</paper-tab>
-            <paper-tab>Vereniging</paper-tab>
-            <paper-tab>Inschrijving</paper-tab>
-        </paper-tabs>-->
 
         <iron-pages selected="[[target]]">
             <!--<field-list-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-boat>-->
             <field-list-tab-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-tab-boat>
             <!--<field-list-block path="{{route}}" target="loting" fields=[[fields]]></field-list-block>-->
-            <field-list-tab-block path="{{route}}" target="loting" fields=[[fields]]></field-list-tab-block>
+            <!--<field-list-tab-block path="{{route}}" target="loting" fields=[[fields]]></field-list-tab-block>-->
+            <field-list-block-list path="{{route}}" target="loting" fields=[[fields]]></field-list-block-list>
             <club-list path="{{route}}" target="vereniging" clubs=[[clubs]]></club-list>
             <!--<field-list-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-boat>-->
             <field-list-tab-boat path="{{route}}" target="inschrijving" fields=[[fields]]></field-list-tab-boat>
