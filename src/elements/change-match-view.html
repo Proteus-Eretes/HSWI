@@ -85,6 +85,8 @@
             }
 
             _isActive(view, currentView, mid) {
+                console.log(this.view);
+                if (currentView === 0) currentView = 'field';
                 let classes = '';
                 if (mid === 1) classes = 'middleSwitch ';
                 if (view === currentView) return classes + 'viewSwitch activeSwitch';

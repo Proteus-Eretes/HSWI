@@ -23,19 +23,6 @@
             }
         </style>
         <template is="dom-if" if="[[!noTeams]]">
-            <!--<paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
-                <paper-tab name="uitslagen">
-                    <template is="dom-if" if="[[approved]]">
-                        Uitslagen
-                    </template>
-                    <template is="dom-if" if="[[!approved]]">
-                        Voorlopige uitslagen
-                    </template>
-                </paper-tab>
-                <paper-tab name="loting">Loting</paper-tab>
-                <paper-tab name="vereniging">Vereniging</paper-tab>
-                <paper-tab name="inschrijving">Inschrijving</paper-tab>
-            </paper-tabs>-->
             <template is="dom-if" if="[[!approved]]">
                 <div class="voorlopig">
                     Voorlopige uitslagen

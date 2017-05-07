@@ -8,11 +8,21 @@
 <dom-module id="field-list-tab-boat">
     <template>
         <style include="shared-styles shared-styles-fields shared-styles-button">
+            .inactive {
+                /*color: #2F2F2F;*/
+                opacity: 0.7;
+            }
+            .fuller {
+                margin-right: auto;
+            }
         </style>
         <template is="dom-if" if="[[!fields.error]]">
             <div class="fieldFilterWrapper">
                 <template is="dom-repeat" items="[[n]]">
-                    <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,n,rowers)]]" on-click="_setActive"><div class="fieldText">[[item]]x</div><img class="rowing" src="https://images.poweredbyiris.nl/boats/rower.png"></button>
+                    <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,n,rowers)]]"
+                            on-click="_setActive">
+                        <div class="fieldText">[[item]]x</div>
+                        <img class="rowing fuller" src="https://images.poweredbyiris.nl/boats/rower.png"></button>
                 </template>
             </div>
             <div class="fields">
@@ -85,24 +95,24 @@
              */
             _getFieldList(n, fieldlist) {
                 return fieldlist.filter(
-                    function(field) {
+                    function (field) {
                         return +field.numberofrowers === n;
                     });
             }
 
-            _getFieldListMen(n, fieldlist, isman, isLight,r) {
+            _getFieldListMen(n, fieldlist, isman, isLight, r) {
                 n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
-                    function(field) {
+                    function (field) {
                         return +field.isman === isman && +field.islight === isLight;
                     }
                 );
             }
 
-            _getFieldListMix(n, fieldlist,r) {
+            _getFieldListMix(n, fieldlist, r) {
                 n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
-                    function(field) {
+                    function (field) {
                         return +field.isman === 2;
                     }
                 );
@@ -128,19 +138,32 @@
             _setActive(e) {
                 let rowers = e.model.item;
                 let i = 0;
-                for(; i < this.n.length; i++) {
-                    if(this.n[i] === rowers) break;
+                for (; i < this.n.length; i++) {
+                    if (this.n[i] === rowers) break;
                 }
                 this.rowers = i;
             }
 
-            _fieldClassActive(item,n,rowers) {
+            _updateRowers(newValue, oldValue) {
+                if(oldValue !== undefined) {
+                    const oldBoot = oldValue[this.rowers];
+                    for(let i = 0;i < newValue.length; i++) {
+                        if(oldBoot === newValue[i]) {
+                            this.rowers = i;
+                            return;
+                        }
+                    }
+                    this.rowers = 0;
+                }
+            }
+
+            _fieldClassActive(item, n, rowers) {
                 if (item === n[rowers]) return 'activeFieldFilterButton fieldFilter';
-                return 'fieldFilter';
+                return 'fieldFilter inactive';
             }
 
             _calcWidth(n) {
-                return 'width: ' + (100/n.length) + '%;';
+                return 'width: ' + (100 / n.length) + '%;';
             }
 
             static get properties() {
@@ -148,7 +171,7 @@
                     path: {
                         type: String,
                         notify: true,
-                        readOnly: false
+                        readOnly: false,
                     },
                     target: {
                         type: String,
@@ -172,12 +195,13 @@
                         type: Array,
                         notify: true,
                         readOnly: false,
-                        value: [1, 2, 4, 8]
+                        value: [1, 2, 4, 8],
+                        observer: '_updateRowers'
                     },
                     rowers: {
                         type: Number,
-                        notify:true,
-                        readOnly:false,
+                        notify: true,
+                        readOnly: false,
                         value: 0
                     }
                 };

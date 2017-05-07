@@ -1,39 +1,125 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
+<link rel="import" href="../styles/shared-styles-button.html">
 <link rel="import" href="../app/fields.html">
 <link rel="import" href="../views/noMatch.html">
 
 <dom-module id="field-list-block-list">
     <template>
-        <style include="shared-styles shared-styles-fields">
+        <style include="shared-styles shared-styles-fields shared-styles-button">
+            .blockTitleWrapper {
+                display: flex;
+                background-color: transparent;
+                align-self: flex-start;
+                height: 40px;
+            }
+
+            .retractIndicator {
+                margin-left: auto;
+                align-self: center;
+                padding-right: 18px;
+                padding-top: 10px;
+                font-size: 26px;
+                font-family: monospace;
+            }
+
+            .retractedIndicator {
+                padding-top: 0;
+                padding-bottom: 2px;
+            }
+
+            .blockTitle {
+                color: black;
+                font-size: x-large;
+                margin-left: 10px;
+                align-self: center;
+            }
+
+            :host {
+                height: calc(100vh - 122px);
+                width: 100%;
+                overflow-y: scroll;
+            }
+
+            .blockFieldWrapper {
+                display: flex;
+                background-color: #e6e6e6;
+            }
+
+            .blockFieldWrapper:nth-child(even) {
+                background-color: inherit;
+            }
+
+            .singleBlockWrapper {
+                display: table;
+                width: 100%;
+                border-bottom: 1px solid;
+                margin-bottom: 10px;
+                height: initial;
+                overflow-y: hidden;
+            }
+
+            .blockFieldName {
+                width: 100px;
+                text-align: right;
+                padding-right: 30px;
+                height: 20px;
+                background-color: transparent;
+                color: #0089d2;
+            }
+
+            .blockFieldStartTime {
+                margin-left: auto;
+                margin-right: 34px;
+            }
+
+            .blockDescriptionWrapper {
+                display: flex;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+            }
+
+            .blockDescriptionField {
+                font-size: small;
+                font-style: italic;
+                align-self: flex-end;
+                margin-left: 34px;
+            }
+
+            .blockDescriptionTime {
+                font-size: small;
+                width: 60px;
+                font-style: italic;
+                margin-left: auto;
+                align-self: flex-end;
+                margin-right: 24px;
+                text-align: center;
+            }
+
         </style>
         <template is="dom-if" if="[[!fields.error]]">
             <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
-                <div class="card">
-                    <button class="">
-                        <h1>Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</h1>
+                <div class="singleBlockWrapper">
+                    <button class="blockTitleWrapper">
+                        <div class="blockTitle">Blok [[block.blocknumber]] starttijd: [[_start(block.starttime)]]</div>
                     </button>
-                    <table>
-                        <thead>
-                            <th>
-                                Veld
-                            </th>
-                            <th>
-                                Verwachte starttijde
-                            </th>
-                        </thead>
-                        <tbody>
-                            <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
-                                <tr on-click="_openField">
-                                    <td>
-                                        [[field.fieldnameshort]]
-                                    </td>
-                                    <td>[[_fieldStart(field,block)]]</td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
+                    <div class="blockDescriptionWrapper">
+                        <div class="blockDescriptionField">
+                            Veld
+                        </div>
+                        <div class="blockDescriptionTime">
+                            Verwachte starttijd
+                        </div>
+                    </div>
+                    <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
+                        <div class="blockFieldWrapper">
+                            <button class="blockFieldName">
+                                [[field.fieldnameshort]]
+                            </button>
+                            <div class="blockFieldStartTime">[[_fieldStart(field,block)]]</div>
+                        </div>
+                    </template>
                 </div>
             </template>
         </template>
@@ -59,7 +145,7 @@
             _openField(e) {
                 let shortname = document.querySelector('my-app').getMatchShort();
                 let field = e.model.field.fieldnameshort;
-                if(this.target === 'loting') field = e.model.field.slotid;
+                if (this.target === 'loting') field = e.model.field.slotid;
                 this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + field + '/' + this.target;
             }
 
@@ -75,7 +161,7 @@
              */
             _getFields(block, fields) {
                 return fields.filter(
-                    function(field) {
+                    function (field) {
                         return field.blockid === block.blockid;
                     });
             }
@@ -96,7 +182,7 @@
                 return parseInt(a.starttime, 10) - parseInt(b.starttime, 10);
             }
 
-            _fieldStart(field,block){
+            _fieldStart(field, block) {
                 return this._start(block.starttime);
             }
 

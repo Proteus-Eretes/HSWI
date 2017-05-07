@@ -43,7 +43,6 @@
 
             .header-bar {
                 height: 44px;
-                display: flex;
             }
 
             .img-header-bar {
@@ -75,10 +74,13 @@
             }
 
             .searchWrapper {
-                /*padding: 5px;*/
-                border: 1px solid #0F0F0F;
+                width: calc(100% - 4px);
                 margin: 2px;
                 background-color: #FFF;
+            }
+
+            .searchBar {
+                height: 34px;
             }
 
             @media screen and (min-width: 1280px) {
@@ -101,12 +103,11 @@
                     <match-list route="{{route}}"></match-list>
                 </div>
             </app-drawer>
-
             <!-- Main content -->
             <app-header-layout has-scrolling-region>
 
                 <!-- header, shell -->
-                <app-header class="header-bar" slot="header" reveals effects="waterfall">
+                <app-header class="" slot="header" reveals effects="waterfall">
                     <app-toolbar class="header-bar" id="top">
                         <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>
                             &#9776;
@@ -123,10 +124,17 @@
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
-                <div class="viewBar"><change-match-view path="{{routeMatch}}" view="{{view}}"></change-match-view> </div>
-                <div class="searchWrapper"><search-match route="{{routeMatch}}"></search-match></div>
+                <div class="viewBar">
+                    <change-match-view path="{{routeMatch}}" view="{{view}}"></change-match-view>
+                </div>
+                <div class="searchWrapper">
+                    <search-match route="{{routeMatch}}"></search-match>
+                </div>
+
+
                 <template is="dom-if" if="[[matchPage]]">
-                    <main-match view="[[_getViewNumber(view)]]" id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
+                    <main-match view="[[_getViewNumber(view)]]" id="match" route="{{routeMatch}}"
+                                iframe="[[iframe]]"></main-match>
                 </template>
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
@@ -137,6 +145,7 @@
                 </footer>
             </app-header-layout>
         </app-drawer-layout>
+
 
     </template>
 
@@ -219,10 +228,10 @@
             _updateRouteMatch(newValue, oldValue) {
                 if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
-                    this.set('route.path','/iframe' + this.routeMatch);
+                    this.set('route.path', '/iframe' + this.routeMatch);
                     //this.route.path = '/iframe' + this.routeMatch;
                 } else {
-                    this.set('route.path',this.routeMatch);
+                    this.set('route.path', this.routeMatch);
                     //this.route.path = this.routeMatch;
                 }
                 this._location();
