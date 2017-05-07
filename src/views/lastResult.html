@@ -110,11 +110,7 @@
              * Goto the match which is live
              */
             _goToMatch(e) {
-                try {
-                    this.set('path', '/' + this.match.setting.match + '/' + this.match.setting.year);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.match.setting.match + '/' + this.match.setting.year);
-                }
+                this.path = '/' + this.match.setting.match + '/' + this.match.setting.year;
             }
 
             static get properties() {

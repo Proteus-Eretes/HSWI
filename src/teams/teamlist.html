@@ -283,11 +283,7 @@
              * Return to the match change the route
              */
             _returnToMatch(newValue, oldValue) {
-                try {
-                    this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-                }
+                this.path = '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name;
             }
 
             /**

@@ -7,7 +7,7 @@
     const requestReggataList = function(self) {
         fetch('https://beta.hoesnelwasik.nl/api/')
             .then(
-                function (res) {
+                function(res) {
                     if (res.status !== 200) {
                         return;
                     }
@@ -37,7 +37,7 @@
         }
         fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/velden/')
             .then(
-                function (res) {
+                function(res) {
                     if (res.status !== 200) {
                         return;
                     }
@@ -67,7 +67,7 @@
         }
         fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/clublist/')
             .then(
-                function (res) {
+                function(res) {
                     if (res.status !== 200) {
                         return;
                     }

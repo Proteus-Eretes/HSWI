@@ -61,11 +61,7 @@
             _search(e) {
                 if (e.keyCode === 13 || e.which === 13 || e.key === 'Enter') {
                     let shortname = document.querySelector('my-app').getMatchShort();
-                    try {
-                        this.set('route', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + this.$.search.value + '/' + this.target);
-                    } catch (a) {
-                        document.querySelector('my-app').ieWindowloc('/' + shortname.split('/')[0] + '/' + shortname.split('/')[1] + '/' + this.$.search.value + '/' + this.target);
-                    }
+                    this.route = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + this.$.search.value + '/' + this.target;
                 }
             }
 

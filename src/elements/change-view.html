@@ -83,18 +83,13 @@
             }
 
             _openView(e) {
-                const shortname = document.querySelector('my-app').getMatchShortName();
-                try {
-                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id);
-                    this.set('selected', false);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.shortname.split(' ')[0] + '/' + this.shortname.split(' ')[1] + '/' + e.target.id);
-                }
-                document.querySelector('my-app').toTop();
+                const shortname = document.querySelector('my-app').getMatchShort();
+                this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                this.selected = false;
             }
 
             _toggleList(e) {
-                this.set('selected', !this.selected);
+                this.selected = !this.selected;
             }
 
             _updateView(newValue,oldValue) {

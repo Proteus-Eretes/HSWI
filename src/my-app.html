@@ -103,7 +103,7 @@
             </app-drawer>
 
             <!-- Main content -->
-            <div has-scrolling-region>
+            <app-header-layout has-scrolling-region>
 
                 <!-- header, shell -->
                 <app-header class="header-bar" slot="header" reveals effects="waterfall">
@@ -123,7 +123,7 @@
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
-                <div class="viewBar"><change-match-view view="{{view}}"></change-match-view> </div>
+                <div class="viewBar"><change-match-view path="{{routeMatch}}" view="{{view}}"></change-match-view> </div>
                 <div class="searchWrapper"><search-match route="{{routeMatch}}"></search-match></div>
                 <template is="dom-if" if="[[matchPage]]">
                     <main-match view="[[_getViewNumber(view)]]" id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
@@ -197,12 +197,12 @@
             goHome(e) {
                 if (this.iframe) {
                     if (this.routeMatch.split('/').length > 2) {
-                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+                        this.routeMatch = '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2];
                     } else {
-                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1]);
+                        this.routeMatch = '/' + this.routeMatch.split('/')[1];
                     }
                 } else {
-                    this.set('routeMatch', '/');
+                    this.routeMatch = '/';
                 }
             }
 
@@ -210,18 +210,7 @@
              * return to the match
              */
             goToMatch(e) {
-                this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-            }
-
-            /**
-             * IE router
-             */
-            ieWindowloc(link) {
-                if (this.iframe) {
-                    window.location.href = 'iframe/' + link;
-                } else {
-                    window.location.href = link;
-                }
+                this.routeMatch = '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2];
             }
 
             /**
@@ -230,9 +219,11 @@
             _updateRouteMatch(newValue, oldValue) {
                 if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
-                    this.set('route.path', '/iframe' + this.routeMatch);
+                    this.set('route.path','/iframe' + this.routeMatch);
+                    //this.route.path = '/iframe' + this.routeMatch;
                 } else {
-                    this.set('route.path', this.routeMatch);
+                    this.set('route.path',this.routeMatch);
+                    //this.route.path = this.routeMatch;
                 }
                 this._location();
             }
@@ -303,7 +294,7 @@
              * @returns {number}
              * @private
              */
-            _getViewNumber(view){
+            _getViewNumber(view) {
                 switch (view) {
                     case 'field':
                         return 0;
