@@ -27,9 +27,10 @@
                 <option value=2>Bugs</option>
                 <option value=3>Anders</option>
             </select>
+            Email <input type="email" id="email">
             <textarea class="form-control" rows="5" id="description"
                       placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!">
-                </textarea>
+            </textarea>
             <div class="buttons">
                 <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
                 <paper-button class="hover" dialog-confirm on-click="_sendFeedback">Feedback verzenden</paper-button>
@@ -52,14 +53,12 @@
                 const type = this.$.type.value;
                 const message = this.$.description.value;
                 const link = window.location;
-                const header = new Headers({
-                    'Content-Type': 'application/json'
-                })
+                const email = this.$.email.value;
 
                 fetch('https://beta.hoesnelwasik.nl/api/feedback', {
                     headers: {'Content-Type': 'application/json'},
                     method: 'POST',
-                    body: JSON.stringify({'type': type, 'message': message, 'link': link.href}),
+                    body: JSON.stringify({'type': type, 'message': message, 'link': link.href,'email':email}),
                     mode: 'no-cors'
                 }).then(
                     function(res) {
