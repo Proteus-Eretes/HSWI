@@ -6,13 +6,12 @@ cas:
 
 rens:
 - (ie11 'afmaken')
-- feedback knopje
+- feedback knopje bijna klaar
 - bij uitslagen: is het veld live? (live updates)
-- geen lege pagina's
 
 algemeen:
 - (vereniging?)
-- (starttijd)
+- (starttijd) bijna klaar
 - (pagina specifieke searchbar)
 - (homepage?)
 
