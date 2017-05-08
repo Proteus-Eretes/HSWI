@@ -1,0 +1,86 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+
+<dom-module id="feedback-modal">
+    <template>
+
+        <style include="shared-styles">
+            .header {
+                width: calc(100% - 48px);
+                border-bottom: 1px solid #0F0F0F;
+            }
+
+
+        </style>
+        <paper-dialog id="modal" modal>
+            <div class="header">
+                <h4> Feedback leveren</h4>
+                <p>Help ons de uitslagen pagina te verbeteren!</p>
+            </div>
+            Soort feeback
+            <select class="" id="type">
+                <option value=1>Ideeën</option>
+                <option value=2>Bugs</option>
+                <option value=3>Anders</option>
+            </select>
+            <textarea class="form-control" rows="5" id="description"
+                      placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!">
+                </textarea>
+            <div class="buttons">
+                <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
+                <paper-button class="hover" dialog-confirm on-click="_sendFeedback">Feedback verzenden</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+
+
+    <script>
+        class FeedbackModal extends Polymer.Element {
+            static get is() {
+                return 'feedback-modal';
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+            }
+
+            _sendFeedback(e) {
+                const type = this.$.type.value;
+                const message = this.$.description.value;
+                const link = window.location;
+                const header = new Headers({
+                    'Content-Type': 'application/json'
+                })
+
+                fetch('https://beta.hoesnelwasik.nl/api/feedback', {
+                    headers: {'Content-Type': 'application/json'},
+                    method: 'POST',
+                    body: JSON.stringify({'type': type, 'message': message, 'link': link.href}),
+                    mode: 'no-cors'
+                }).then(
+                    function(res) {
+                    }
+                );
+            }
+
+            /**
+             * Toggle the modal window
+             */
+            toggle() {
+                this.active = true;
+                this.$.modal.toggle();
+            }
+
+            static get properties() {
+                return {};
+            }
+
+        }
+
+        customElements.define(FeedbackModal.is, FeedbackModal);
+    </script>
+</dom-module>

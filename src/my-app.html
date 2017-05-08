@@ -79,14 +79,16 @@
                 background-color: #FFF;
             }
 
-            .searchBar {
-                height: 34px;
-            }
-
             @media screen and (min-width: 1280px) {
                 .hamburger {
                     display: none;
                 }
+            }
+
+            .feedbackButton {
+                height: 25px;
+                text-align: center;
+                width:100%;
             }
 
         </style>
@@ -139,6 +141,7 @@
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
                 </template>
+                <button class="feedbackButton" on-click="_openFeedback">Geef nu feedback!</button>
                 <footer>
                     Copyright
                     <a style="color: #080808" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
@@ -314,6 +317,10 @@
                     default:
                         return 0;
                 }
+            }
+
+            _openFeedback(e) {
+                document.querySelector('feedback-modal').toggle();
             }
 
             static get observers() {

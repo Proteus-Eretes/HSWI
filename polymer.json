@@ -2,7 +2,8 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/views/team.html"
+    "src/views/team.html",
+    "src/views/feedback.html"
   ],
   "sources": [
     "src/**/*",
