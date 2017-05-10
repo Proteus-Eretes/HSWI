@@ -33,6 +33,10 @@
                 margin-left: auto;
             }
 
+            .form {
+                width: 90%;
+            }
+
             .dropdown {
                 background-color: #FFFFFF;
             }
@@ -58,11 +62,11 @@
 
             <div class="headerItem">Beschrijving</div>
             <div class="form-control">
-                <textarea rows="5" id="description" placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!"></textarea>
+                <textarea class="form" rows="5" id="description" maxlength=1000 required="required" placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!"></textarea>
             </div>
             <div class="buttons">
                 <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
-                <paper-button class="hover" dialog-confirm on-click="_sendFeedback">Feedback verzenden</paper-button>
+                <paper-button class="hover" on-click="_sendFeedback">Feedback verzenden</paper-button>
             </div>
         </paper-dialog>
     </template>
@@ -83,7 +87,10 @@
                 const message = this.$.description.value;
                 const link = window.location;
                 const email = this.$.email.value;
-
+                if (message.length < 20 || message.length < 1000) {
+                    this.error = true;
+                    return;
+                }
                 fetch('https://beta.hoesnelwasik.nl/api/feedback', {
                     headers: {'Content-Type': 'application/json'},
                     method: 'POST',
@@ -93,6 +100,7 @@
                     function(res) {
                     }
                 );
+                this.toggle();
             }
 
             /**
@@ -104,7 +112,13 @@
             }
 
             static get properties() {
-                return {};
+                return {
+                    error: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false
+                    }
+                };
             }
 
         }
