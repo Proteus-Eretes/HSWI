@@ -7,10 +7,7 @@
     <template>
         <style include="shared-styles-button">
             .magnifyGlass {
-                -webkit-transform: rotate(-45deg);
-                -moz-transform: rotate(-45deg);
-                -o-transform: rotate(-45deg);
-                transform: rotate(-45deg);
+                height: 32px;
                 color: #F8F8F8;
                 font-size: x-large
             }
@@ -37,7 +34,7 @@
                          on-keydown="_search">
             </input>
             <button class="submitSearch" on-click="_submit">
-                <div class="magnifyGlass">&#9906;</div>
+                <img  class="magnifyGlass" src="https://images.poweredbyiris.nl/icons/magnifyglass.png">
             </button>
         </div>
     </template>
