@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
-                        <div class="blockFieldWrapper">
+                        <div class="blockFieldWrapper" on-click="_openField">
                             <button class="blockFieldName">
                                 [[field.fieldnameshort]]
                             </button>
