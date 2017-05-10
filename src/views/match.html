@@ -1,21 +1,16 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../services/reggata.html">
 <link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-tab-boat.html">
 <link rel="import" href="../fields/field-list-block-list.html">
-<link rel="import" href="../fields/field-list-tab-block.html">
 <link rel="import" href="clubs.html">
 
 <dom-module id="main-match">
     <template>
         <iron-pages selected="[[view]]">
-            <!--<field-list-boat path="{{route}}" target="uitslagen" fields=[[fields]]></field-list-boat>-->
             <field-list-tab-boat path="{{route}}" target="[[target]]" fields=[[fields]]></field-list-tab-boat>
-            <!--<field-list-block path="{{route}}" target="loting" fields=[[fields]]></field-list-block>-->
-            <!--<field-list-tab-block path="{{route}}" target="loting" fields=[[fields]]></field-list-tab-block>-->
             <field-list-block-list path="{{route}}" target="[[target]]" fields=[[fields]]></field-list-block-list>
             <club-list path="{{route}}" target="[[target]]" clubs=[[clubs]]></club-list>
         </iron-pages>

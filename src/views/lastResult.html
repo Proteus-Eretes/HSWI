@@ -1,16 +1,18 @@
+<!--Needs to be update to new style-->
+
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../teams/lastResultTeams.html">
 <!--<link rel="import" href="../teams/lastResultTeamsIE.html">-->
 <link rel="import" href="../services/lastResults.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles-button.html">
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="last-result">
     <template>
-        <style include="shared-styles-tables shared-styles">
+        <style include="shared-styles-tables shared-styles shared-styles-buttons">
             .breakingnews {
                 color: #FFF;
                 padding: 5px;
@@ -34,11 +36,10 @@
             </div>
         </template>
         <template is="dom-if" if="[[!displayError]]">
-            <paper-tabs autoselect-delay="0" selected="{{splash}}" scrollable fit-container>
-                <template is="dom-repeat" items="[[match.setting.name]]">
-                    <paper-tab>[[item]]</paper-tab>
-                </template>
-            </paper-tabs>
+            <template is="dom-repeat" items="[[match.setting.name]]">
+                <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,splash)]]"
+                on-click="_setActive">[[item]]</button>
+            </template>
             <iron-pages selected="[[splash]]">
                 <template is="dom-if" if="[[_displayLocation(1)]]">
                     <last-result-table data-splash=1 no-teams=[[match.error]]

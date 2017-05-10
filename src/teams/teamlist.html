@@ -5,7 +5,6 @@
     view:3 do not display backnumber  -> competitors view
 -->
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../app/team.html">
@@ -222,7 +221,6 @@
             _isField(team) {
                 switch (this.path.split('/')[4]) {
                     case 'search':
-                        //TODO
                         return true;
                     case 'vereniging':
                         return team.clubnameshort === this.path.split('/')[3];
