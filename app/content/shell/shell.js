@@ -79,11 +79,6 @@
 
 		$scope.getReferralTitle = function() {
 			if ($rootScope.regattas && $rootScope.currentRegatta) {
-				if ($scope.activeReferrals) {
-					var titleArrow = "\u25B4"
-				} else {
-					var titleArrow = "\u25BE"
-				}
 				var referralName = "Uitslagen";
 
 				if ($rootScope.activeReferral === 1) {
@@ -93,13 +88,33 @@
 					referralName = "Inschrijvingen"
 				}
 
-				return referralName + " " + titleArrow;
+				return referralName;
 			}
 			return "";
 		}
 
+		$scope.getReferralArrow = function() {
+			if ($scope.activeReferrals) {
+				return "\u25B4";
+			} else {
+				return "\u25BE";
+			}
+		}
+
+		$scope.goToReferral =function() {
+			var referralName = "Uitslagen";
+
+			if ($rootScope.activeReferral === 1) {
+				referralName = "Loting";
+			}
+			else if ($rootScope.activeReferral === 2) {
+				referralName = "Inschrijvingen"
+			}
+			console.log(referralName);
+		}
+
 		$scope.goHome = function () {
-			$state.go("shell.home.velden");
+			$state.go("shell.home.fields");
 		}
 
 		$scope.setReferral = function(number) {

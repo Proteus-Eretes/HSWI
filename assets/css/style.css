@@ -34,9 +34,9 @@
 }
 
 .shellTitleWrapper {
-	width    : 100%;
-	max-width: 150px;
-	overflow : hidden;
+	width       : 100%;
+	max-width   : 150px;
+	overflow    : hidden;
 	margin-right: 1px;
 }
 
@@ -60,23 +60,46 @@
 
 .totalReferralWrapper {
 	margin-left: auto;
-	width: 100px;
+	width      : 100px;
 }
 
 .referralTitle {
-	height     : 44px;
-	white-space: nowrap;
-	padding    : 2px;
-	width: inherit;
+	display      : flex;
+	height       : calc(100% - 4px);
+	white-space  : nowrap;
+	padding      : 2px;
+	width        : inherit;
 	margin-bottom: 1px;
+}
+
+.titleText {
+	padding-left : 0;
+	padding-right: 0;
+	font-size    : 13px;
+	line-height  : 40px;
+	text-align   : center;
+	margin-left  : auto;
+	height       : calc(100% - 4px);
+}
+
+.referralToggler {
+	padding     : 0;
+	margin-right: auto;
+	width       : inherit;
+	max-width   : 30px;
+}
+
+.referralToggler:hover {
+	background-color: initial;
 }
 
 .shellGoToLive {}
 
 .hamburger {
-	padding  : 6px 8px 10px;
-	font-size: 20px;
+	padding: 6px 8px 10px;
 }
+
+.hamburgerImg {}
 
 .yearButton {
 	width              : 100%;
@@ -110,11 +133,10 @@
 .activeReferralButton {
 	background-color: #3b648f;
 }
+
 .activeReferralButton:hover {
 	background-color: #3b648f;
 }
-
-
 /*end shell*/
 /* start home*/
 .homeWrapper {
@@ -161,13 +183,8 @@
 	background-color: #0F0F0F;
 }
 
-.magnifyGlass {
-	-webkit-transform: rotate(-45deg);
-	-moz-transform   : rotate(-45deg);
-	-o-transform     : rotate(-45deg);
-	transform        : rotate(-45deg);
-	font-size        : x-large;
-	color            : #F8F8F8;
+.magnifyGlassImg {
+	width: 24px;
 }
 
 .searchSeperator {
@@ -250,7 +267,7 @@
 .fieldTitle {}
 
 .singleField {
-	display         : grid;
+	display         : table;
 	height          : 20px;
 	margin-left     : auto;
 	margin-right    : auto;
@@ -274,14 +291,6 @@
 	margin-left  : auto;
 	align-self   : center;
 	padding-right: 18px;
-	padding-top  : 10px;
-	font-size    : 26px;
-	font-family  : monospace;
-}
-
-.retractedIndicator {
-	padding-top   : 0;
-	padding-bottom: 2px;
 }
 
 .blockTitle {
@@ -313,7 +322,8 @@
 }
 
 .singleBlockWrapper {
-	display      : grid;
+	display      : table;
+	width        : 100%;
 	border-bottom: 1px solid;
 	margin-bottom: 10px;
 	height       : initial;
@@ -322,6 +332,10 @@
 
 .retractBlock {
 	height: 40px;
+}
+
+.blockArrow {
+	width: 24px;
 }
 
 .blockFieldName {

@@ -4,7 +4,10 @@
 		<button class="blockTitleWrapper"  ng-click="toggleBlock(block)">
 			<div class="blockTitle">{{"blok " + block.blockNumber + " -"}}</div>
 			<div class="blockStartTime">{{getTimeTitle(block)}}</div>
-			<div class="retractIndicator" ng-class="{retractedIndicator: block.retract}">{{getRetractIndicator(block)}}</div>
+			<div class="retractIndicator">
+				<img class="blockArrow" src="assets/images/arrowleft.png" ng-show="block.retract"/>
+				<img class="blockArrow" src="assets/images/arrowdown.png" ng-hide="block.retract"/>
+			</div>
 		</button>
 		<div class="blockDescriptionWrapper" ng-hide="block.retract">
 			<div class="blockDescriptionField">Veld</div>

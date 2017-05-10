@@ -1,8 +1,8 @@
 cas:
-- alleen uitklappen als je op "uitklapknopje drukt"
-- (scrollmenu blokken verplaatst soms 1 px)
-- unicode sheit omzetten naar plaatjes
-- mix velden, meer categorieën toevoegen?
+- alleen uitklappen als je op "uitklapknopje drukt" [x]
+- (scrollmenu blokken verplaatst soms 1 px) [x]
+- unicode sheit omzetten naar plaatjes [x]
+- mix velden, meer categorieën toevoegen? []
 
 rens:
 - (ie11 'afmaken')

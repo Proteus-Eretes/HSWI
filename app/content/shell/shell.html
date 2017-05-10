@@ -1,21 +1,42 @@
 <div ng-controller="shellController" class="shell">
 	<div class="headerWrapper">
-		<button class="headerButton hamburger" ng-click="chooseMatch()">&#9776;</button>
+		<button class="headerButton hamburger" ng-click="chooseMatch()">
+			<img src="assets/images/hamburger.png" class="hamburgerImg"></img>
+		</button>
 		<button class="homeButton" ng-click="goHome()">
 			<img src="assets/images/manifest/icon-36x36.png" class="headerImg"></img>
 		</button>
 		<div class="shellTitleWrapper" ng-class="{yearDropdown:activeYearDropdown}">
-			<button class="headerButton shellTitle" ng-click="chooseYear()" ng-class="{shellTitleActive:activeYearDropdown}">{{getHeaderTitle()}}</button>
+			<button
+				class="headerButton shellTitle"
+				ng-click="chooseYear()"
+				ng-class="{shellTitleActive:activeYearDropdown}">{{getHeaderTitle()}}</button>
 			<div class="yearWrapper" ng-show="activeYearDropdown">
-				<button class="yearButton middleSwitch" ng-repeat="year in getYears()" ng-click="goToYear(year)" ng-class="{currentYearButton: currentRegatta.jaar === year.jaar}">{{year.jaar}}</button>
+				<button
+					class="yearButton middleSwitch"
+					ng-repeat="year in getYears()"
+					ng-click="goToYear(year)"
+					ng-class="{currentYearButton: currentRegatta.jaar === year.jaar}">{{year.jaar}}</button>
 			</div>
 		</div>
 		<div class="totalReferralWrapper">
-			<button class="headerButton referralTitle" ng-click="toggleReferrals()">{{getReferralTitle()}}</button>
+			<div class="headerButton referralTitle">
+				<div class="headerButton titleText" ng-click="goToReferral()">{{getReferralTitle()}}</div>
+				<button class="headerButton referralToggler" ng-click="toggleReferrals()">{{getReferralArrow()}}</button>
+			</div>
 			<div class="referralWrapper yearWrapper" ng-show="activeReferrals">
-				<button class="yearButton referralButton middleSwitch" ng-click="setReferral(0)" ng-class="{activeReferralButton: activeReferral === 0}">Uitslagen</button>
-				<button class="yearButton referralButton middleSwitch" ng-click="setReferral(1)" ng-class="{activeReferralButton: activeReferral === 1}">Loting</button>
-				<button class="yearButton referralButton middleSwitch" ng-click="setReferral(2)" ng-class="{activeReferralButton: activeReferral === 2}">Inschrijvingen</button>
+				<button
+					class="yearButton referralButton middleSwitch"
+					ng-click="setReferral(0)"
+					ng-class="{activeReferralButton: activeReferral === 0}">Uitslagen</button>
+				<button
+					class="yearButton referralButton middleSwitch"
+					ng-click="setReferral(1)"
+					ng-class="{activeReferralButton: activeReferral === 1}">Loting</button>
+				<button
+					class="yearButton referralButton middleSwitch"
+					ng-click="setReferral(2)"
+					ng-class="{activeReferralButton: activeReferral === 2}">Inschrijvingen</button>
 			</div>
 		</div>
 		<button class="headerButton shellGoToLive" ng-click="goToLive()">Live</button>
