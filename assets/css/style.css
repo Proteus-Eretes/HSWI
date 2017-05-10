@@ -285,6 +285,7 @@
 	background-color: transparent;
 	align-self      : flex-start;
 	height          : 40px;
+	width: 100%;
 }
 
 .retractIndicator {

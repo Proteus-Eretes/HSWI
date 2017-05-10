@@ -8,7 +8,7 @@
 				// first see if the regattas are already known, otherwise try the database
 				if ($rootScope.regattas) {
 					if (!$rootScope.currentRegatta) {
-						$rootScope.currentRegatta = $rootScope.regattas[0];
+						$rootScope.currentRegatta = $rootScope.regattas[10];
 					}
 					resolve();
 					return;
