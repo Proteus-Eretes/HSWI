@@ -49,6 +49,7 @@
             }
 
             .hamburger {
+                margin-left: 14px;
                 width: 44px;
                 padding: 6px 6px 6px 0;
                 font-size: 20px;
@@ -56,6 +57,10 @@
 
             .menu-header {
                 background-color: #ECECEC;
+            }
+
+            .menuHeaderContent {
+                margin-left: 20px;
             }
 
             app-header paper-icon-button {
@@ -85,7 +90,7 @@
             .feedbackButton {
                 height: 25px;
                 text-align: center;
-                width:100%;
+                width: 100%;
             }
 
         </style>
@@ -98,7 +103,9 @@
             <!-- Drawer content -->
             <app-drawer slot="drawer" style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
                 <div style="height: 100%; overflow: auto;">
-                    <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
+                    <app-toolbar class="menu-header">
+                        <div class="menuHeaderContent">Wedstrijden</div>
+                    </app-toolbar>
                     <match-list route="{{route}}"></match-list>
                 </div>
             </app-drawer>
@@ -109,7 +116,7 @@
                 <app-header class="" slot="header" reveals effects="waterfall">
                     <app-toolbar class="header-bar" id="top">
                         <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>
-                            <img src="https://images.poweredbyiris.nl/icons/hamburger.png">
+                            <img drawer-toggle src="https://images.poweredbyiris.nl/icons/hamburger.png">
                         </button>
                         <img
                                 class="img-header-bar"
