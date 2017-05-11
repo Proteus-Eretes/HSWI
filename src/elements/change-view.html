@@ -84,7 +84,12 @@
 
             _openView(e) {
                 const shortname = document.querySelector('my-app').getMatchShort();
-                this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                const parts = this.path.split('/');
+                if(parts.length > 4 && parts[parts.length - 2] !== shortname.split(' ')[1]) {
+                    this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + parts[parts.length - 2] + '/' + e.target.id;
+                } else {
+                    this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                }
                 this.selected = false;
             }
 

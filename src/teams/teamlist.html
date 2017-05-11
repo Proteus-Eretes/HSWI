@@ -291,6 +291,7 @@
              */
             _disp(team, key, round) {
                 if (this.view >= 2) return team[key];
+                if (!team.times) return;
                 if (round === -1) round = team.times.length - 1;
                 if (!team.times) return '';
                 return team.times[round][key];
