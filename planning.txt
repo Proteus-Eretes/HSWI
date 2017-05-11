@@ -2,7 +2,7 @@ cas:
 - alleen uitklappen als je op "uitklapknopje drukt" [x]
 - (scrollmenu blokken verplaatst soms 1 px) [x]
 - unicode sheit omzetten naar plaatjes [x]
-- mix velden, meer categorieën toevoegen? [mee bezig]
+- mix velden, meer categorieën toevoegen? [x]
 	- op dit moment verberg ik het lichte heren veld als er mix velden aanwezig zijn; dit gaat natuurlijk verkeerd als er lichte heren en mix velden
 		zijn, maar t is een goede noodoplossing voor de peil
 	
