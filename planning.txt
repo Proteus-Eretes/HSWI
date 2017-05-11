@@ -8,8 +8,8 @@ cas:
 	
 
 rens:
-- (ie11 'afmaken')
-- feedback knopje bijna klaar
+- (ie11 'bijna klaar')
+- feedback knopje stijl
 - bij uitslagen: is het veld live? (live updates)
 
 algemeen:
