@@ -110,6 +110,9 @@
 			else if ($rootScope.activeReferral === 2) {
 				referralName = "Inschrijvingen"
 			}
+			if ($scope.activeReferrals) {
+				$scope.toggleReferrals();
+			}
 			console.log(referralName);
 		}
 

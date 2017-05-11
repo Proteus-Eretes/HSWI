@@ -45,9 +45,13 @@
 			<div class="fieldTitle">Zware Heren</div>
 			<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, '', 'D', 'L', 'M')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 		</div>
-		<div class="fieldsWrapper">
+		<div class="fieldsWrapper" ng-hide="mixFieldsPresent()">
 			<div class="fieldTitle">Lichte Heren</div>
 			<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'L', 'LD', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
+		</div>
+		<div class=fieldsWrapper ng-show="mixFieldsPresent()">
+			<div class="fieldTitle">Mix</div>
+			<button class="singleField" ng-repeat="field in getFields(activeFieldFilter, 'Mix', 'XXXX', 'XXXX', 'XXXX')" ng-click="goToField(field)">{{field.fieldnameshort}}</button>
 		</div>
 	</div>
 	<div class="womenFieldsWrapper">

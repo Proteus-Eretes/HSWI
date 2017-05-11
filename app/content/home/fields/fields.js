@@ -41,6 +41,14 @@
 			return returnFields;
 		}
 
+		$scope.mixFieldsPresent = function() {
+			if (typeof $scope.mixFieldsPresentVar === "undefined") {
+				$scope.mixFieldsPresentVar = $scope.getFields($scope.activeFieldFilter, 'Mix', 'XXXX', 'XXXX', 'XXXX').length !== 0;
+			}
+			return $scope.mixFieldsPresentVar;
+		}
+
+
 		if (localStorage.getItem("activeFieldFilter")) {
 			$scope.activeFieldFilter = localStorage.getItem("activeFieldFilter");
 		} else {
