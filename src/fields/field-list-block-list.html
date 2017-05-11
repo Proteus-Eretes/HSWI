@@ -1,0 +1,310 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles-fields.html">
+<link rel="import" href="../styles/shared-styles-button.html">
+<link rel="import" href="../app/fields.html">
+<link rel="import" href="../views/noMatch.html">
+
+<dom-module id="field-list-block-list">
+    <template>
+        <style include="shared-styles shared-styles-fields shared-styles-button">
+            .blockTitleWrapper {
+                display: flex;
+                background-color: transparent;
+                align-self: flex-start;
+                height: 40px;
+                width: 100%;
+            }
+
+            [hidden] {
+                visibility: collapse;
+            }
+
+            .retractIndicator {
+                margin-left: auto;
+                align-self: center;
+                padding-right: 18px;
+            }
+
+            .blockTitle {
+                color: black;
+                font-size: x-large;
+                margin-left: 10px;
+                align-self: center;
+            }
+
+            .blockStartTime {
+                font-size: x-large;
+                margin-left: 8px;
+                align-self: center;
+            }
+
+            .blocksWrapper {
+                height: calc(100vh - 122px);
+                width: 100%;
+                overflow-y: scroll;
+            }
+
+            .blockFieldWrapper {
+                display: flex;
+                background-color: #e6e6e6;
+            }
+
+            .blockFieldWrapper:nth-child(even) {
+                background-color: inherit;
+            }
+
+            .darkFieldBG {
+                background-color: transparent;
+            }
+
+            .singleBlockWrapper {
+                display: table;
+                width: 100%;
+                border-bottom: 1px solid black;
+                margin-bottom: 10px;
+                height: initial;
+                overflow-y: hidden;
+            }
+
+            .retractBlock {
+                display: block;
+                width: 100%;
+                border-bottom: 1px solid black;
+                margin-bottom: 10px;
+                height: 40px;
+                overflow-y: hidden;
+            }
+
+            .blockArrow {
+                width: 24px;
+            }
+
+            .blockFieldName {
+                width: 160px;
+                text-align: right;
+                padding-right: 30px;
+                height: 20px;
+                background-color: transparent;
+                color: #0089d2;
+            }
+
+            .blockFieldStartTime {
+                margin-left: auto;
+                margin-right: 34px;
+            }
+
+            .blockDescriptionWrapper {
+                display: flex;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+            }
+
+            .blockDescriptionField {
+                font-size: small;
+                font-style: italic;
+                align-self: flex-end;
+                margin-left: 34px;
+            }
+
+            .blockDescriptionTime {
+                font-size: small;
+                width: 60px;
+                font-style: italic;
+                margin-left: auto;
+                align-self: flex-end;
+                margin-right: 24px;
+                text-align: center;
+            }
+        </style>
+        <template is="dom-if" if="[[!fields.error]]">
+            <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
+                <div class$=[[_getBlockWrapperClass(block)]]>
+                    <button class="blockTitleWrapper" on-click="_toggleBlock">
+                        <div class="blockTitle">Blok [[block.blocknumber]]: [[_getTimeTitle(block)]]</div>
+                        <div class="retractIndicator">
+                            <template is="dom-if" if="[[!block.retract]]">
+                                <img class="blockArrow" src="https://images.poweredbyiris.nl/icons/arrowleft.png"/>
+                            </template>
+                            <template is="dom-if" if="[[block.retract]]">
+                                <img class="blockArrow" src="https://images.poweredbyiris.nl/icons/arrowdown.png"/>
+                            </template>
+                        </div>
+                    </button>
+                    <div class="blockDescriptionWrapper" hidden$="[[!block.retract]]">
+                        <div class="blockDescriptionField">
+                            Veld
+                        </div>
+                        <div class="blockDescriptionTime">
+                            Verwachte starttijd
+                        </div>
+                    </div>
+                    <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
+                        <div class="blockFieldWrapper" on-click="_openField" hidden$="[[!block.retract]]">
+                            <button class="blockFieldName">
+                                [[field.fieldnameshort]]
+                            </button>
+                            <div class="blockFieldStartTime">[[_getApproxStartTime(field)]]</div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+        <template is="dom-if" if="[[fields.error]]">
+            <no-match>
+                <div>Wedstrijd bestaat niet</div>
+            </no-match>
+        </template>
+    </template>
+
+
+    <script>
+        class FieldListBlockList extends Polymer.Element {
+
+            static get is() {
+                return 'field-list-block-list';
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+            }
+
+            _getDay(s) {
+                if (s.startsWith('Mo')) {
+                    return 'Maandag';
+                }
+                if (s.startsWith('Tue')) {
+                    return 'Dinsdag';
+                }
+                if (s.startsWith('Wed')) {
+                    return 'Woensdag';
+                }
+                if (s.startsWith('Thu')) {
+                    return 'Donderdag';
+                }
+                if (s.startsWith('Fr')) {
+                    return 'Vrijdag';
+                }
+                if (s.startsWith('Sat')) {
+                    return 'Zaterdag';
+                }
+                if (s.startsWith('Sun')) {
+                    return 'Zondag';
+                }
+            }
+
+            _openField(e) {
+                let shortname = document.querySelector('my-app').getMatchShort();
+                let field = e.model.field.fieldnameshort;
+                if (this.target === 'loting') field = e.model.field.slotid;
+                this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + field + '/' + this.target;
+            }
+
+            /**
+             * Create new list of blocks
+             */
+            _updateBlocks(newValue, oldValue) {
+                this.blocks = fillFields(this.fields.fields, 'blockid');
+                if (this.blocks) {
+                    for (let i = 0; i < this.blocks.length; i++) {
+                        this.blocks[i].retract = true;
+                    }
+                }
+            }
+
+            /**
+             * Create a filter to find out which fields are in a block
+             */
+            _getFields(block, fields) {
+                return fields.filter(
+                    function(field) {
+                        return field.blockid === block.blockid;
+                    });
+            }
+
+            /**
+             * Do a sort of the time
+             */
+            _timeSort(a, b) {
+                let r = a.daydate.localeCompare(b.daydate);
+                if (r !== 0) return r;
+                return parseInt(a.starttime, 10) - parseInt(b.starttime, 10);
+            }
+
+
+            // get approx starttime of a field
+            _getApproxStartTime(field) {
+                let t = field.starttime.substring(0, 2) + ':' + field.starttime.substring(2, 4);
+                if (field.starttime.length === 3)
+                    t = field.starttime.substring(0, 1) + ':' + field.starttime.substring(1, 3);
+                return t;
+            }
+
+            // get correct day and time of a block
+            _getTimeTitle(block) {
+                let date = new Date(block.daydate);
+                let day = this._getDay(date.toDateString());
+                let startHours = parseInt(block.starttime.substring(0, 1));
+                let n = parseInt(block.starttime.substring(1, 3));
+                if (block.starttime.length > 3) {
+                    startHours = parseInt(block.starttime.substring(0, 2));
+                    n = parseInt(block.starttime.substring(2, 4));
+                }
+                let mins = n > 9 ? '' + n : '0' + n;
+                return day.substring(0, 2) + ' ' + startHours + ':' + mins;
+            }
+
+            // toggle a block to retract or not
+            _toggleBlock(e) {
+                let block = e.model.block;
+                let blocks = this.blocks;
+                for(let i = 0; i < blocks.length; i++) {
+                    if(block.id === blocks[i].id) {
+                        blocks[i].retract = !block.retract;
+                    }
+                }
+                this.blocks = blocks;
+            }
+
+            _getBlockWrapperClass(block) {
+                if (block.retract) {
+                    return 'singleBlockWrapper';
+                }
+                return 'retractBlock';
+
+
+            }
+
+            static get properties() {
+                return {
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
+                    },
+                    fields: {
+                        type: Array,
+                        notify: true,
+                        readOnly: false,
+                        value: {error: true},
+                        observer: '_updateBlocks'
+                    },
+                    target: {
+                        type: String,
+                        notify: false,
+                        readOnly: false,
+                        value: 'loting'
+                    },
+                    blocks: {
+                        type: Array,
+                        notify: true,
+                        readonly: false
+                    }
+                };
+            }
+        }
+
+        // Register custom element definition using standard platform API
+        customElements.define(FieldListBlockList.is, FieldListBlockList);
+    </script>
+</dom-module>

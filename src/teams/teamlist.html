@@ -5,7 +5,6 @@
     view:3 do not display backnumber  -> competitors view
 -->
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
 <link rel="import" href="../app/team.html">
@@ -23,19 +22,6 @@
             }
         </style>
         <template is="dom-if" if="[[!noTeams]]">
-            <!--<paper-tabs on-click="_returnToMatch" selected="{{name}}" attr-for-selected="name" scrollable fit-container>
-                <paper-tab name="uitslagen">
-                    <template is="dom-if" if="[[approved]]">
-                        Uitslagen
-                    </template>
-                    <template is="dom-if" if="[[!approved]]">
-                        Voorlopige uitslagen
-                    </template>
-                </paper-tab>
-                <paper-tab name="loting">Loting</paper-tab>
-                <paper-tab name="vereniging">Vereniging</paper-tab>
-                <paper-tab name="inschrijving">Inschrijving</paper-tab>
-            </paper-tabs>-->
             <template is="dom-if" if="[[!approved]]">
                 <div class="voorlopig">
                     Voorlopige uitslagen
@@ -64,47 +50,47 @@
                     <th class="show-gt-md">
                         Slag
                     </th>
-                    <template is="dom-if" if=[[_displaySplash(1,view)]]>
+                    <template is="dom-if" if=[[_displaySplash(1,view,splashCount)]]>
                         <th class="show-gt-md">
                             Tussentijd 1
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displaySplash(2,view)]]>
+                    <template is="dom-if" if=[[_displaySplash(2,view,splashCount)]]>
                         <th class="show-gt-md">
                             Tussentijd 2
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displaySplash(3,view)]]>
+                    <template is="dom-if" if=[[_displaySplash(3,view,splashCount)]]>
                         <th class="show-gt-md">
                             Tussentijd 3
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displaySplash(4,view)]]>
+                    <template is="dom-if" if=[[_displaySplash(4,view,splashCount)]]>
                         <th class="show-gt-md">
                             Tussentijd 4
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displayRound(0,view)]]>
+                    <template is="dom-if" if=[[_displayRound(0,view,teams)]]>
                         <th class="show-gt-md">
                             Ronde 1
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displayRound(1,view)]]>
+                    <template is="dom-if" if=[[_displayRound(1,view,teams)]]>
                         <th class="show-gt-md">
                             Ronde 2
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displayRound(2,view)]]>
+                    <template is="dom-if" if=[[_displayRound(2,view,teams)]]>
                         <th class="show-gt-md">
                             Ronde 3
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displayRound(3,view)]]>
+                    <template is="dom-if" if=[[_displayRound(3,view,teams)]]>
                         <th class="show-gt-md">
                             Ronde 4
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displaySplash(5,view)]]>
+                    <template is="dom-if" if=[[_displaySplash(5,view,splashCount)]]>
                         <th>
                             Finishtijd
                         </th>
@@ -141,47 +127,47 @@
                         <td class="show-gt-md">
                             [[team.rower8]]
                         </td>
-                        <template is="dom-if" if=[[_displaySplash(1,view)]]>
+                        <template is="dom-if" if=[[_displaySplash(1,view,splashCount)]]>
                             <td class="show-gt-md">
                                 [[_displayTime(team,'splash1',0,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displaySplash(2,view)]]>
+                        <template is="dom-if" if=[[_displaySplash(2,view,splashCount)]]>
                             <td class="show-gt-md">
                                 [[_displayTime(team,'splash2',0,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displaySplash(3,view)]]>
+                        <template is="dom-if" if=[[_displaySplash(3,view,splashCount)]]>
                             <td class="show-gt-md">
                                 [[_displayTime(team,'splash3',0,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displaySplash(4,view)]]>
+                        <template is="dom-if" if=[[_displaySplash(4,view,splashCount)]]>
                             <td class="show-gt-md">
                                 [[_displayTime(team,'splash4',0,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displayRound(0,view)]]>
+                        <template is="dom-if" if=[[_displayRound(0,view,teams)]]>
                             <td class="show-gt-md">
                                 <final-time team="[[_final(team.times,view,0)]]"></final-time>
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displayRound(1,view)]]>
+                        <template is="dom-if" if=[[_displayRound(1,view,teams)]]>
                             <td class="show-gt-md">
                                 <final-time team="[[_final(team.times,view,1)]]"></final-time>
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displayRound(2,view)]]>
+                        <template is="dom-if" if=[[_displayRound(2,view,teams)]]>
                             <td class="show-gt-md">
                                 <final-time team="[[_final(team.times,view,2)]]"></final-time>
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displayRound(3,view)]]>
+                        <template is="dom-if" if=[[_displayRound(3,view,teams)]]>
                             <td class="show-gt-md">
                                 <final-time team="[[_final(team.times,view,3)]]"></final-time>
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displaySplash(5,view)]]>
+                        <template is="dom-if" if=[[_displaySplash(5,view,splashCount)]]>
                             <td>
                                 <final-time team="[[_final(team.times,view,-1)]]"></final-time>
                             </td>
@@ -214,6 +200,7 @@
              * Route has changed request new teams
              */
             _updateRoute(newValue, oldValue) {
+                this.noTeams = true;
                 if (this.path.split('/').length < 5) return;
                 requestTeams(this, this.path.split('/')[1], this.path.split('/')[2], this.path.split('/')[3], this.path.split('/')[4]);
                 this.name = this.path.split('/')[4];
@@ -233,17 +220,14 @@
              */
             _isField(team) {
                 switch (this.path.split('/')[4]) {
-                    case 'uitslagen':
-                        return team.fieldnameshort === this.path.split('/')[3];
+                    case 'search':
+                        return true;
                     case 'vereniging':
                         return team.clubnameshort === this.path.split('/')[3];
-                    case 'search':
-                        //TODO
-                        return true;
-                    case 'loting':
-                        return team.slotid === this.path.split('/')[3];
+                    case 'uitslagen':
                     case 'inschrijving':
-                        return team.fieldnameshort === this.path.split('/')[3];
+                    case 'loting':
+                        return team.slotid === this.path.split('/')[3] || team.fieldnameshort === this.path.split('/')[3];
                 }
             }
 
@@ -285,11 +269,7 @@
              * Return to the match change the route
              */
             _returnToMatch(newValue, oldValue) {
-                try {
-                    this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name);
-                }
+                this.path = '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + this.name;
             }
 
             /**
@@ -297,10 +277,10 @@
              */
             _teamsChanged(newValue, oldValue) {
                 if (this.teams.error === false) {
-                    this.noTeams = false;
                     this.splashCount = checkSplash(this.teams.teams);
                     this._setView();
                     this._setApproved();
+                    this.noTeams = false;
                 } else {
                     this.noTeams = true;
                 }
@@ -311,7 +291,7 @@
              */
             _disp(team, key, round) {
                 if (this.view >= 2) return team[key];
-                if (round === -1) round = this.teams.setting.rounds;
+                if (round === -1) round = team.times.length - 1;
                 if (!team.times) return '';
                 return team.times[round][key];
             }
@@ -341,15 +321,15 @@
             /**
              * Do we display the splashes
              */
-            _displaySplash(splash, view) {
-                return (splash < this.splashCount || splash === 5) && this.view < 2;
+            _displaySplash(splash, view,splashCount) {
+                return (splash < splashCount || splash === 5) && this.view < 2;
             }
 
             /**
              * Do we display a round
              */
-            _displayRound(round, view) {
-                return (round < this.teams.setting.rounds) && this.view < 2;
+            _displayRound(round, view,teams) {
+                return (round < teams.setting.rounds) && this.view < 2;
             }
 
             /**

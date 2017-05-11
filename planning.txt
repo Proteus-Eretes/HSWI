@@ -1,8 +1,29 @@
 cas:
-- header afmaken
-- homepage?
+- alleen uitklappen als je op "uitklapknopje drukt" [x]
+- (scrollmenu blokken verplaatst soms 1 px) [x]
+- unicode sheit omzetten naar plaatjes [x]
+- mix velden, meer categorieën toevoegen? [x]
+	- op dit moment verberg ik het lichte heren veld als er mix velden aanwezig zijn; dit gaat natuurlijk verkeerd als er lichte heren en mix velden
+		zijn, maar t is een goede noodoplossing voor de peil
+	
 
 rens:
-- ie11 'afmaken'
-- api
+- (ie11 'bijna klaar')
+- feedback knopje stijl
+- bij uitslagen: is het veld live? (live updates)
 
+algemeen:
+- (vereniging?)
+- (starttijd) bijna klaar
+- (pagina specifieke searchbar)
+- (homepage?)
+
+Fancy dingen
+- ((push notificaties))
+- ((indexed db toevoegen))
+- 
+
+bugs:
+- velden passen niet soms
+- css checken
+- als je gaat van een wedstrijd naar een nieuwe wedstrijd, blijven de velden van de oude wedstrijd staan (in het per blok menu).

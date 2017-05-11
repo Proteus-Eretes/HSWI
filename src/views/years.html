@@ -24,7 +24,7 @@
             }
 
             .headerButton {
-                background-color: rgb(56, 56, 56);
+                /*background-color: rgb(56, 56, 56);*/
             }
 
             .yearButton:hover {
@@ -38,7 +38,7 @@
             }
 
             .yearDropdown {
-                height: 100vh;
+                height: calc(100vh - 46px);
                 position: relative;
                 border-top: 1px solid #F8F8F8;
             }
@@ -80,12 +80,8 @@
             }
 
             _openYear(e) {
-                try {
-                    this.set('path', '/' + this.match.split(' ')[0] + '/' + e.model.year.jaar);
-                    this.set('selected', false);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.match.split(' ')[0] + '/' + e.model.year.jaar);
-                }
+                this.path = '/' + this.match.split(' ')[0] + '/' + e.model.year.jaar;
+                this.selected = false;
                 document.querySelector('my-app').toTop();
             }
 

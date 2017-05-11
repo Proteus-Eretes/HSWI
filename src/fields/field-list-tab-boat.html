@@ -1,7 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../styles/shared-styles-button.html">
@@ -11,24 +8,34 @@
 <dom-module id="field-list-tab-boat">
     <template>
         <style include="shared-styles shared-styles-fields shared-styles-button">
+            .inactive {
+                /*color: #2F2F2F;*/
+                opacity: 0.7;
+            }
+            .fuller {
+                margin-right: auto;
+            }
         </style>
         <template is="dom-if" if="[[!fields.error]]">
-            <paper-tabs autoselect-delay="0" selected="{{rowers}}" scrollable fit-container no-slide>
+            <div class="fieldFilterWrapper">
                 <template is="dom-repeat" items="[[n]]">
-                    <paper-tab><div class="fieldText">[[item]]x</div><img class="rowing" src="https://images.poweredbyiris.nl/boats/rower.png"></paper-tab>
+                    <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,n,rowers)]]"
+                            on-click="_setActive">
+                        <div class="fieldText">[[item]]x</div>
+                        <img class="rowing fuller" src="https://images.poweredbyiris.nl/boats/rower.png"></button>
                 </template>
-            </paper-tabs>
+            </div>
             <div class="fields">
                 <div class="menFieldsWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Zware Heren</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,0)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,0,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Heren</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,1)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,1,1,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -36,13 +43,13 @@
                 <div class="womenFieldsWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Dames</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,0)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,0,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Lichte Dames</div>
-                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,1)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMen(rowers,fieldlist,0,1,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -50,7 +57,7 @@
                 <div class="leftOversFieldWrapper">
                     <div class="fieldsWrapper">
                         <div class="fieldTitle">Mix</div>
-                        <template is="dom-repeat" items="[[_getFieldListMix(rowers,fieldlist)]]" as="field">
+                        <template is="dom-repeat" items="[[_getFieldListMix(rowers,fieldlist,n)]]" as="field">
                             <button class="singleField" on-click="_openField">[[field.fieldnameshort]]</button>
                         </template>
                     </div>
@@ -80,11 +87,7 @@
 
             _openField(e) {
                 let shortname = document.querySelector('my-app').getMatchShort();
-                try {
-                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target);
-                }
+                this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.model.field.fieldnameshort + '/' + this.target;
             }
 
             /**
@@ -92,24 +95,24 @@
              */
             _getFieldList(n, fieldlist) {
                 return fieldlist.filter(
-                    function(field) {
+                    function (field) {
                         return +field.numberofrowers === n;
                     });
             }
 
-            _getFieldListMen(n, fieldlist, isman, isLight) {
-                n = this.n[n];
+            _getFieldListMen(n, fieldlist, isman, isLight, r) {
+                n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
-                    function(field) {
+                    function (field) {
                         return +field.isman === isman && +field.islight === isLight;
                     }
                 );
             }
 
-            _getFieldListMix(n, fieldlist) {
-                n = this.n[n];
+            _getFieldListMix(n, fieldlist, r) {
+                n = r[n];
                 return this._getFieldList(n, fieldlist).filter(
-                    function(field) {
+                    function (field) {
                         return +field.isman === 2;
                     }
                 );
@@ -120,16 +123,47 @@
              */
             _uniqBy(newValue, oldValue) {
                 if (this.fields.error === false) {
-                    var n = [];
-                    var m = [1, 2, 4, 8];
-                    this.set('fieldlist', uniqBy(this.fields.fields, 'fieldnameshort'));
+                    let n = [];
+                    const m = [1, 2, 4, 8];
+                    this.fieldlist = uniqBy(this.fields.fields, 'fieldnameshort');
                     for (let i = 0; i < m.length; i++) {
                         if (hasFields(this.fieldlist, m[i])) {
                             n.push(m[i]);
                         }
                     }
-                    this.set('n', n);
+                    this.n = n;
                 }
+            }
+
+            _setActive(e) {
+                let rowers = e.model.item;
+                let i = 0;
+                for (; i < this.n.length; i++) {
+                    if (this.n[i] === rowers) break;
+                }
+                this.rowers = i;
+            }
+
+            _updateRowers(newValue, oldValue) {
+                if(oldValue !== undefined) {
+                    const oldBoot = oldValue[this.rowers];
+                    for(let i = 0;i < newValue.length; i++) {
+                        if(oldBoot === newValue[i]) {
+                            this.rowers = i;
+                            return;
+                        }
+                    }
+                    this.rowers = 0;
+                }
+            }
+
+            _fieldClassActive(item, n, rowers) {
+                if (item === n[rowers]) return 'activeFieldFilterButton fieldFilter';
+                return 'fieldFilter inactive';
+            }
+
+            _calcWidth(n) {
+                return 'width: ' + (100 / n.length) + '%;';
             }
 
             static get properties() {
@@ -137,13 +171,12 @@
                     path: {
                         type: String,
                         notify: true,
-                        readOnly: false
+                        readOnly: false,
                     },
                     target: {
                         type: String,
-                        notify: false,
-                        readOnly: false,
-                        value: 'uitslagen'
+                        notify: true,
+                        readOnly: false
                     },
                     fields: {
                         type: Object,
@@ -162,12 +195,13 @@
                         type: Array,
                         notify: true,
                         readOnly: false,
-                        value: [1, 2, 4, 8]
+                        value: [1, 2, 4, 8],
+                        observer: '_updateRowers'
                     },
                     rowers: {
                         type: Number,
-                        notify:true,
-                        readOnly:false,
+                        notify: true,
+                        readOnly: false,
                         value: 0
                     }
                 };

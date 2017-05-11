@@ -56,11 +56,7 @@
             }
 
             _openMatch(e) {
-                try {
-                    this.set('path', '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target);
-                }
+                this.path = '/' + this.path.split('/')[1] + '/' + this.path.split('/')[2] + '/' + e.model.club.clubshort + '/' + this.target;
             }
 
             static get properties() {

@@ -24,7 +24,7 @@
             }
 
             .headerButton {
-                background-color: rgb(56, 56, 56);
+                /*background-color: rgb(56, 56, 56);*/
             }
 
             .yearButton:hover {
@@ -38,7 +38,7 @@
             }
 
             .yearDropdown {
-                height: 100vh;
+                height: calc(100vh - 46px);
                 position: relative;
                 border-top: 1px solid #F8F8F8;
             }
@@ -54,9 +54,6 @@
                     </button>
                     <button id="loting" on-click="_openView" class="yearButton">
                         Loting
-                    </button>
-                    <button id="vereniging" on-click="_openView" class="yearButton">
-                        Vereniging
                     </button>
                     <button id="inschrijvingen" on-click="_openView" class="yearButton">
                         Inschrijving
@@ -86,31 +83,26 @@
             }
 
             _openView(e) {
-                const shortname = document.querySelector('my-app').getMatchShortName();
-                try {
-                    this.set('path', '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id);
-                    this.set('selected', false);
-                } catch (a) {
-                    document.querySelector('my-app').ieWindowloc('/' + this.shortname.split(' ')[0] + '/' + this.shortname.split(' ')[1] + '/' + e.target.id);
-                }
-                document.querySelector('my-app').toTop();
+                const shortname = document.querySelector('my-app').getMatchShort();
+                this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                this.selected = false;
             }
 
             _toggleList(e) {
-                this.set('selected', !this.selected);
+                this.selected = !this.selected;
             }
 
-            _updateView(newValue,oldValue) {
+            _updateView(newValue, oldValue) {
                 let view = this.path.split('/')[this.path.split('/').length - 1];
                 switch (view) {
                     case 'uitslagen':
                     case 'loting':
                     case 'inschrijvingen':
-                    case 'vereniging':
                         this.set('view', view);
                         break;
+                    case 'vereniging':
                     default:
-                        this.set('view', 'Uitslagen');
+                        this.set('view', 'uitslagen');
                         break;
                 }
             }

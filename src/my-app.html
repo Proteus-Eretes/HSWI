@@ -9,9 +9,6 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="my-icons.html">
 <link rel="import" href="styles/shared-styles.html">
 <link rel="import" href="styles/shared-styles-button.html">
 <link rel="import" href="views/match.html">
@@ -21,6 +18,8 @@
 <link rel="import" href="teams/teamlist.html">
 <link rel="import" href="elements/search.html">
 <link rel="import" href="elements/change-view.html">
+<link rel="import" href="elements/change-match-view.html">
+
 
 <dom-module id="my-app">
     <template>
@@ -41,7 +40,6 @@
 
             .header-bar {
                 height: 44px;
-                display: flex;
             }
 
             .img-header-bar {
@@ -51,6 +49,7 @@
             }
 
             .hamburger {
+                width: 44px;
                 padding: 6px 6px 6px 0;
                 font-size: 20px;
             }
@@ -59,12 +58,16 @@
                 background-color: #ECECEC;
             }
 
+            .menuHeaderContent {
+                margin-left: 20px;
+            }
+
             app-header paper-icon-button {
                 --paper-icon-button-ink-color: white;
             }
 
             app-toolbar {
-                padding: 0 6px;
+                padding: 0;
             }
 
             .menu {
@@ -72,10 +75,21 @@
             }
 
             .searchWrapper {
-                /*padding: 5px;*/
-                border: 1px solid #0F0F0F;
+                width: calc(100% - 4px);
                 margin: 2px;
                 background-color: #FFF;
+            }
+
+            @media screen and (min-width: 1281px) {
+                .hamburger {
+                    display: none;
+                }
+            }
+
+            .feedbackButton {
+                height: 25px;
+                text-align: center;
+                width: 100%;
             }
 
         </style>
@@ -88,19 +102,20 @@
             <!-- Drawer content -->
             <app-drawer slot="drawer" style$="[[_hide(iframe)]]" class="menu" swipe-open id="drawer">
                 <div style="height: 100%; overflow: auto;">
-                    <app-toolbar class="menu-header">Wedstrijden</app-toolbar>
+                    <app-toolbar class="menu-header">
+                        <div class="menuHeaderContent">Wedstrijden</div>
+                    </app-toolbar>
                     <match-list route="{{route}}"></match-list>
                 </div>
             </app-drawer>
-
             <!-- Main content -->
             <app-header-layout has-scrolling-region>
 
                 <!-- header, shell -->
-                <app-header class="header-bar" slot="header" reveals effects="waterfall">
+                <app-header class="" slot="header" fixed effects="waterfall">
                     <app-toolbar class="header-bar" id="top">
                         <button class="headerButton hamburger" style$="[[_hide(iframe)]]" id="menu" drawer-toggle>
-                            &#9776;
+                            <img drawer-toggle src="https://images.poweredbyiris.nl/icons/hamburger.png">
                         </button>
                         <img
                                 class="img-header-bar"
@@ -114,19 +129,29 @@
                         <button class="headerButton">Live</button>
                     </app-toolbar>
                 </app-header>
-                <div class="searchWrapper"><search-match route="{{routeMatch}}"></search-match></div>
+                <div class="viewBar">
+                    <change-match-view path="{{routeMatch}}" view="{{view}}"></change-match-view>
+                </div>
+                <div class="searchWrapper">
+                    <search-match route="{{routeMatch}}"></search-match>
+                </div>
+
+
                 <template is="dom-if" if="[[matchPage]]">
-                    <main-match id="match" route="{{routeMatch}}" iframe="[[iframe]]"></main-match>
+                    <main-match view="[[_getViewNumber(view)]]" id="match" route="{{routeMatch}}"
+                                iframe="[[iframe]]"></main-match>
                 </template>
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
                 </template>
+                <button class="feedbackButton" on-click="_openFeedback">Geef nu feedback!</button>
                 <footer>
                     Copyright
                     <a style="color: #080808" href="https://www.poweredbyiris.nl">PoweredByIRIS</a>
                 </footer>
             </app-header-layout>
         </app-drawer-layout>
+
 
     </template>
 
@@ -141,8 +166,6 @@
             connectedCallback() {
                 this.match = '';
                 super.connectedCallback();
-                // this.shadowRoot.querySelector('#menu').addEventListener('click', function() {
-                // self.shadowRoot.querySelector('#drawer').toggle(); });
             }
 
             /**
@@ -189,12 +212,12 @@
             goHome(e) {
                 if (this.iframe) {
                     if (this.routeMatch.split('/').length > 2) {
-                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
+                        this.routeMatch = '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2];
                     } else {
-                        this.set('routeMatch', '/' + this.routeMatch.split('/')[1]);
+                        this.routeMatch = '/' + this.routeMatch.split('/')[1];
                     }
                 } else {
-                    this.set('routeMatch', '/');
+                    this.routeMatch = '/';
                 }
             }
 
@@ -202,18 +225,7 @@
              * return to the match
              */
             goToMatch(e) {
-                this.set('routeMatch', '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2]);
-            }
-
-            /**
-             * IE router
-             */
-            ieWindowloc(link) {
-                if (this.iframe) {
-                    window.location.href = 'iframe/' + link;
-                } else {
-                    window.location.href = link;
-                }
+                this.routeMatch = '/' + this.routeMatch.split('/')[1] + '/' + this.routeMatch.split('/')[2];
             }
 
             /**
@@ -223,8 +235,10 @@
                 if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
                     this.set('route.path', '/iframe' + this.routeMatch);
+                    //this.route.path = '/iframe' + this.routeMatch;
                 } else {
                     this.set('route.path', this.routeMatch);
+                    //this.route.path = this.routeMatch;
                 }
                 this._location();
             }
@@ -268,8 +282,8 @@
                 }
             }
 
-            //TODO make this into arrow functions for flexiblity
             /**
+             * TODO make this into arrow functions for flexiblity
              * Which page should be open
              */
             _location() {
@@ -287,6 +301,29 @@
                         this.resultPage = true;
                         break;
                 }
+            }
+
+            /**
+             * TODO get rid of this
+             * @param view
+             * @returns {number}
+             * @private
+             */
+            _getViewNumber(view) {
+                switch (view) {
+                    case 'field':
+                        return 0;
+                    case 'block':
+                        return 1;
+                    case 'club':
+                        return 2;
+                    default:
+                        return 0;
+                }
+            }
+
+            _openFeedback(e) {
+                document.querySelector('feedback-modal').toggle();
             }
 
             static get observers() {
@@ -331,6 +368,12 @@
                     dropDownVar: {
                         type: Boolean,
                         value: false,
+                        notify: true,
+                        readOnly: false
+                    },
+                    view: {
+                        type: Number,
+                        value: 0,
                         notify: true,
                         readOnly: false
                     }
