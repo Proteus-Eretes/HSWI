@@ -16,6 +16,11 @@
 			width: 100%;
 		}
 
+		[hidden] {
+			visibility: collapse;
+		}
+
+
 		.retractIndicator {
 			margin-left  : auto;
 			align-self   : center;
@@ -57,14 +62,19 @@
 		.singleBlockWrapper {
 			display      : table;
 			width        : 100%;
-			border-bottom: 1px solid;
+			border-bottom: 1px solid black;
 			margin-bottom: 10px;
 			height       : initial;
 			overflow-y   : hidden;
 		}
 
 		.retractBlock {
-			height: 40px;
+			display      : block;
+			width        : 100%;
+			border-bottom: 1px solid black;
+			margin-bottom: 10px;
+			height       : 40px;
+			overflow-y   : hidden;
 		}
 
 		.blockArrow {
@@ -110,15 +120,15 @@
         </style>
         <template is="dom-if" if="[[!fields.error]]">
             <template is="dom-repeat" items=[[blocks]] as="block" sort="_timeSort">
-                <div class="singleBlockWrapper">
-                    <button class="blockTitleWrapper" on-click="_toggleBlock">
+                <div class$=[[_getBlockWrapperClass(block)]]>
+                    <button class="blockTitleWrapper" on-click="{{_toggleBlock(block)}}">
                         <div class="blockTitle">Blok [[block.blocknumber]]: [[_getTimeTitle(block)]]</div>
 						<div class="retractIndicator">
 							<img class="blockArrow" src="https://beta.hoesnelwasik.nl/images/arrowleft.png" hidden$="[[!block.retract]]"/>
 							<img class="blockArrow" src="https://beta.hoesnelwasik.nl/images/arrowdown.png" hidden$="[[block.retract]]"/>
 					</div>
                     </button>
-                    <div class="blockDescriptionWrapper">
+                    <div class="blockDescriptionWrapper" hidden$="[[!block.retract]]">
                         <div class="blockDescriptionField">
                             Veld
                         </div>
@@ -127,7 +137,7 @@
                         </div>
                     </div>
                     <template is="dom-repeat" items="[[_getFields(block,fields.fields)]]" as="field">
-                        <div class="blockFieldWrapper" on-click="_openField">
+                        <div class="blockFieldWrapper" on-click="_openField" hidden$="[[!block.retract]]">
                             <button class="blockFieldName">
                                 [[field.fieldnameshort]]
                             </button>
@@ -192,6 +202,11 @@
              */
             _updateBlocks(newValue, oldValue) {
                 this.blocks = fillFields(this.fields.fields, 'blockid');
+				if (this.blocks) {
+					for (var i = 0; i < this.blocks.length; i++) {
+						this.blocks[i].retract = false;
+					}
+				}
             }
 
             /**
@@ -240,10 +255,17 @@
 			}
 
 			// toggle a block to retract or not
-			_toggleBlock(e) {
-				let block = e.model.block;
-				console.log(block);
+			_toggleBlock(block) {
 				block.retract = !block.retract;
+			}
+
+			_getBlockWrapperClass(block) {
+				if (block.retract) {
+					return "singleBlockWrapper";
+				}
+				return "retractBlock";
+
+
 			}
 
             static get properties() {
