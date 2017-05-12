@@ -87,7 +87,7 @@
                 const message = this.$.description.value;
                 const link = window.location;
                 const email = this.$.email.value;
-                if (message.length < 20 || message.length < 1000) {
+                if (message.length < 20 || message.length > 1000) {
                     this.error = true;
                     return;
                 }
