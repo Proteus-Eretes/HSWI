@@ -199,8 +199,8 @@
                 </template>
             </paper-dialog-scrollable>
             <div class="buttons">
-                <paper-button class="hover" dialog-dismiss>NAAR WEDSTRIJD</paper-button>
-                <paper-button class="hover" dialog-confirm>SLUITEN</paper-button>
+                <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
+                <paper-button class="hover" on-click="_goTo">[[_goToText()]]</paper-button>
             </div>
         </paper-dialog>
     </template>
@@ -221,6 +221,35 @@
              */
             _show(val) {
                 return val !== null && val !== '' && val !== undefined && val != 0;
+            }
+
+            /**
+             * Text to be displayed
+             */
+            _goToText() {
+                switch('') {
+                    case 'uitslagen':
+                    case 'loting':
+                    case 'inschrijving':
+                        return 'Naar wedstrijd';
+                    case 'search':
+                    default:
+                        return 'Naar veld';
+                }
+            }
+
+            /**
+             * Text to be displayed
+             */
+            _goTo(e) {
+                switch('') {
+                    case 'uitslagen':
+                    case 'loting':
+                    case 'inschrijving':
+                    case 'search':
+                    default:
+                }
+                this.$.modal.toggle();
             }
 
             /**
@@ -259,7 +288,7 @@
              */
             _elementSplashName(round, name, index) {
                 if (!round) return name;
-                return name + ' ronde' + (index + 1);
+                return name + ' ronde ' + (index + 1);
             }
 
             /**
@@ -294,6 +323,7 @@
              */
             toggle(team) {
                 this.team = team;
+                this.rounds = team.times.length > 1;
                 this.active = true;
                 this.$.modal.toggle();
             }
@@ -316,6 +346,11 @@
                         notify: true,
                         readOnly: false,
                         value: false
+                    },
+                    path: {
+                        type: String,
+                        notify: true,
+                        readOnly: false
                     }
                 };
             }

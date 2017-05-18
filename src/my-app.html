@@ -182,6 +182,7 @@
              * Send google pageview
              */
             _updateRoute(newValue, oldValue) {
+                ga('send', 'pageview', window.location);
                 if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
                     this.iframe = true;
@@ -190,7 +191,6 @@
                     this.routeMatch = this.route.path;
                     this.iframe = false;
                 }
-                ga('send', 'pageview', this.route.path);
                 this._location();
                 this.setMatch(false);
             }
@@ -235,10 +235,8 @@
                 if (newValue === undefined) return;
                 if (this.subRouteMatch && this.subRouteMatch.prefix === '/iframe') {
                     this.set('route.path', '/iframe' + this.routeMatch);
-                    //this.route.path = '/iframe' + this.routeMatch;
                 } else {
                     this.set('route.path', this.routeMatch);
-                    //this.route.path = this.routeMatch;
                 }
                 this._location();
             }

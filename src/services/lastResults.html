@@ -2,7 +2,7 @@
     /**
      * Get the last results from the server
      */
-    const requestData = function (self) {
+    const requestData = function(self) {
         fetch('https://beta.hoesnelwasik.nl/api/overview/')
             .then(
                 function(res) {
@@ -10,7 +10,7 @@
                         return;
                     }
 
-                    res.json().then(function (data) {
+                    res.json().then(function(data) {
                         self.match = data;
                     });
                 }

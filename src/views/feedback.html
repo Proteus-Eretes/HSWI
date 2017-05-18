@@ -87,6 +87,7 @@
                 const message = this.$.description.value;
                 const link = window.location;
                 const email = this.$.email.value;
+                const self = this;
                 if (message.length < 20 || message.length > 1000) {
                     this.error = true;
                     return;
@@ -98,6 +99,7 @@
                     mode: 'no-cors'
                 }).then(
                     function(res) {
+                        self.$.description.value = '';
                     }
                 );
                 this.toggle();
