@@ -7,14 +7,14 @@
 <!--<link rel="import" href="../teams/lastResultTeamsIE.html">-->
 <link rel="import" href="../services/lastResults.html">
 <link rel="import" href="../styles/shared-styles-tables.html">
+<link rel="import" href="../styles/shared-styles-fields.html">
 <link rel="import" href="../styles/shared-styles-button.html">
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="last-result">
     <template>
-        <style include="shared-styles-tables shared-styles shared-styles-buttons">
+        <style include="shared-styles-tables shared-styles shared-styles-fields shared-styles-button">
             .breakingnews {
-                color: #FFF;
                 padding: 5px;
                 margin: 5px;
                 font-size: 18px;
@@ -23,41 +23,48 @@
             }
 
             .matchHeader {
-                color: #FFF;
                 text-align: center;
             }
+
+            .buttonText {
+                margin-left: auto;
+                margin-right: auto;
+            }
         </style>
-        <!-- <h2 on-click="_goToMatch" class="matchHeader">
-          [[match.match]]
-      </h2> --> <!-- will come back later, in a different form -->
+        <h2 on-click="_goToMatch" class="matchHeader">
+            [[match.match]]
+        </h2>
         <template is="dom-if" if=[[news]]>
             <div class="breakingnews">
                 [[match.message]]
             </div>
         </template>
         <template is="dom-if" if="[[!displayError]]">
-            <template is="dom-repeat" items="[[match.setting.name]]">
-                <button style$="[[_calcWidth(n)]]" class$="[[_fieldClassActive(item,splash)]]"
-                on-click="_setActive">[[item]]</button>
-            </template>
+            <div class="fieldFilterWrapper">
+                <template is="dom-repeat" items="[[match.setting.name]]">
+                    <button style$="[[_calcWidth(match.setting.name)]]" class$="[[_fieldClassActive(index,splash)]]"
+                            on-click="_setActive"><div class="buttonText">[[item]]</div>
+                    </button>
+                </template>
+            </div>
             <iron-pages selected="[[splash]]">
                 <template is="dom-if" if="[[_displayLocation(1)]]">
-                    <last-result-table data-splash=1 no-teams=[[match.error]]
+                    <last-result-table splash=1 no-teams=[[match.error]]
                                        teams=[[match.teams.splash1]]></last-result-table>
                 </template>
                 <template is="dom-if" if="[[_displayLocation(2)]]">
-                    <last-result-table data-splash=2 no-teams=[[match.error]]
+                    <last-result-table splash=2 no-teams=[[match.error]]
                                        teams=[[match.teams.splash2]]></last-result-table>
                 </template>
                 <template is="dom-if" if="[[_displayLocation(3)]]">
-                    <last-result-table data-splash=3 no-teams=[[match.error]]
+                    <last-result-table splash=3 no-teams=[[match.error]]
                                        teams=[[match.teams.splash3]]></last-result-table>
                 </template>
                 <template is="dom-if" if="[[_displayLocation(4)]]">
-                    <last-result-table data-splash=4 no-teams=[[match.error]]
+                    <last-result-table splash=4 no-teams=[[match.error]]
                                        teams=[[match.teams.splash4]]></last-result-table>
                 </template>
-                <last-result-table data-splash=5 no-teams=[[match.error]]
+                <last-result-table splash=5 no-teams=[[match.error]]
                                    teams=[[match.teams.totaltime]]></last-result-table>
             </iron-pages>
         </template>
@@ -82,8 +89,8 @@
                 this.news = false;
                 super.connectedCallback();
                 requestData(this);
-                var self = this;
-                setInterval(function() {
+                const self = this;
+                setInterval(function () {
                     requestData(self);
                 }, 5000);
             }
@@ -112,6 +119,19 @@
              */
             _goToMatch(e) {
                 this.path = '/' + this.match.setting.match + '/' + this.match.setting.year;
+            }
+
+            _setActive(e) {
+                this.splash = e.model.index;
+            }
+
+            _fieldClassActive(item, splash) {
+                if (item === splash) return 'activeFieldFilterButton fieldFilter';
+                return 'fieldFilter inactive';
+            }
+
+            _calcWidth(n) {
+                return 'width: ' + (100 / n.length) + '%;';
             }
 
             static get properties() {
