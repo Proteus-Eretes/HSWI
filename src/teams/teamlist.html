@@ -1,9 +1,3 @@
-<!-- An flexible table of the teams
-    view:0 display everything -> results
-    view:1 do not display rank -> search + club view
-    view:2 do not display times -> toss view
-    view:3 do not display backnumber  -> competitors view
--->
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../clubs/oars.html">
 <link rel="import" href="../app/time.html">
@@ -187,7 +181,12 @@
     <script>
         // Extend Polymer.Element base class
         class TeamList extends Polymer.Element {
-
+            /** An flexible table of the teams
+             * view:0 display everything -> results
+             * view:1 do not display rank -> search + club view
+             * view:2 do not display times -> toss view
+             * view:3 do not display backnumber  -> competitors view
+             */
             static get is() {
                 return 'team-list';
             }
@@ -322,14 +321,14 @@
             /**
              * Do we display the splashes
              */
-            _displaySplash(splash, view,splashCount) {
+            _displaySplash(splash, view, splashCount) {
                 return (splash < splashCount || splash === 5) && this.view < 2;
             }
 
             /**
              * Do we display a round
              */
-            _displayRound(round, view,teams) {
+            _displayRound(round, view, teams) {
                 return (round < teams.setting.rounds) && this.view < 2;
             }
 

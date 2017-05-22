@@ -1,6 +1,5 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
   "fragments": [
     "src/views/team.html",
     "src/views/feedback.html"
@@ -20,5 +19,36 @@
     "rules": [
       "polymer-2"
     ]
-  }
+  },
+  "build": [
+    {
+      "name": "bundled",
+      "bundle": true,
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      }
+    },
+    {
+      "name": "unbundled",
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      }
+    }
+  ],
+  "builds": [{
+    "preset": "es6-unbundled"
+  }]
 }
+

@@ -2,7 +2,6 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../services/reggata.html">
-<link rel="import" href="../fields/field-list-boat.html">
 <link rel="import" href="../fields/field-list-tab-boat.html">
 <link rel="import" href="../fields/field-list-block-list.html">
 <link rel="import" href="clubs.html">
@@ -75,6 +74,11 @@
                     },
                     view: {
                         type: String,
+                        notify: true,
+                        readOnly: false
+                    },
+                    clubs: {
+                        type: Array,
                         notify: true,
                         readOnly: false
                     }

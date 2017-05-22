@@ -48,7 +48,7 @@
         <template is="dom-if" if="[[!_hasValue(team.excluded)]]">
             Excluded
         </template>
-        <template is="dom-if" if="[[_hasValue(team.excluded + team.disqualified)]]">
+        <template is="dom-if" if="[[_hasValue2(team.excluded,team.disqualified)]]">
             <div class$="[[_bonusTime(team.bonussecond)]]">
                 [[_displayTime(team.totaltime,team.bonussecond)]]
             </div>
@@ -73,6 +73,11 @@
             _hasValue(field) {
                 return field == 0;
             }
+
+            _hasValue2(field,b) {
+                return this._hasValue(field + b);
+            }
+
 
             _bonusTime(bonus) {
                 if (bonus > 0) return 'red';
