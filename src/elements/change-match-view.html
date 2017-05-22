@@ -60,13 +60,16 @@
             _openView(e) {
                 this.view = e.target.id;
                 let path = this.path.split('/');
+                const shortname = document.querySelector('my-app').getMatchShort();
                 if(path.length === 5) {
                     if(path[4] === 'vereniging') path[4] = 'uitslagen';
-                    this.path = path[0] + '/' + path[1] + '/' + path[2] + '/' + path[4];
-                } else if(this.view === 'club') {
-                    this.path = path[0] + '/' + path[1] + '/' + path[2] + '/vereniging';
-                } else if(path[path.length - 1] === 'vereniging' && this.view !== 'club') {
-                    this.path = path[0] + '/' + path[1] + '/' + path[2] + '/uitslagen';
+                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[2] + '/' + path[4];
+                } else if(this.view === 'club' && path.length > 2) {
+                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[2] + '/vereniging';
+                } else if(path[path.length - 1] === 'vereniging' && this.view !== 'club' && path.length > 2) {
+                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[2];
+                } else {
+                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/uitslagen';
                 }
             }
 
