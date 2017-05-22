@@ -105,7 +105,7 @@
                     <app-toolbar class="menu-header">
                         <div class="menuHeaderContent">Wedstrijden</div>
                     </app-toolbar>
-                    <match-list route="{{route}}"></match-list>
+                    <match-list current-match="[[match]]" route="{{route}}"></match-list>
                 </div>
             </app-drawer>
             <!-- Main content -->
@@ -126,7 +126,7 @@
                         <!--Filler-->
                         <div main-title></div>
                         <change-view path="{{routeMatch}}"></change-view>
-                        <button class="headerButton">Live</button>
+                        <button class="headerButton" on-click="_goToLive">Live</button>
                     </app-toolbar>
                 </app-header>
                 <div class="viewBar">
@@ -143,6 +143,9 @@
                 </template>
                 <template is="dom-if" if="[[resultPage]]">
                     <team-list path="{{routeMatch}}"></team-list>
+                </template>
+                <template is="dom-if" if="[[livePage]]">
+                    <last-result path="{{routeMatch}}"></last-result>
                 </template>
                 <button class="feedbackButton" on-click="_openFeedback">Geef nu feedback!</button>
                 <footer>
@@ -204,6 +207,17 @@
              */
             _field(route) {
                 return route.split('/')[3];
+            }
+
+            _goToLive(e) {
+                if (this.livePage) {
+                    this.livePage = false;
+                    this._location();
+                    return;
+                }
+                this.livePage = true;
+                this.resultPage = false;
+                this.matchPage = false;
             }
 
             /**
@@ -287,6 +301,7 @@
             _location() {
                 this.matchPage = false;
                 this.resultPage = false;
+                this.livePage = false;
                 switch (this.routeMatch.split('/').length) {
                     case 0:
                     case 1:
@@ -358,8 +373,14 @@
                         readOnly: false,
                         value: false
                     },
+                    livePage: {
+                        type: Boolean,
+                        notify: true,
+                        readOnly: false,
+                        value: false
+                    },
                     match: {
-                        type: Array,
+                        type: String,
                         notify: true,
                         readOnly: false
                     },

@@ -6,14 +6,6 @@
 <dom-module id="match-list">
     <template>
         <style include="shared-styles">
-            .subitem[data-selected = "false"] {
-                display: none;
-            }
-
-            .subitem[data-selected = "true"] {
-                display: inherit;
-            }
-
             ul {
                 list-style-type: none;
                 padding: 0;
@@ -22,30 +14,24 @@
 
             li.main {
                 line-height: 40px;
-                border-top: 1px solid rgba(0, 0, 0, .12);
-                padding: 0 16px;
+                padding: 0 36px;
                 margin: 0;
             }
 
-            li.main:nth-child(even) {
-                background-color: #FFF;
+            li.main:hover {
+                background-color: #ECECEC;
             }
 
-            li.subitem {
-                line-height: 40px;
-                padding: 0 16px;
-                margin: 0;
-                display: flex;
+            .selected {
+                color: #f50057;
+                border-left: 4px solid #f50057;
             }
-
-            .img {
-                margin-top: 6px;
-            }
-
         </style>
         <ul>
             <template is="dom-repeat" items="[[reggataList]]" as="match" sort="_alhpabetSort">
-                <li style="cursor: pointer;" class="main" on-click="_openMatch">[[match.regattaname]]</li>
+                <li style="cursor: pointer;" class$="[[_getClass(match,currentMatch)]]" on-click="_openMatch">
+                    [[match.regattaname]]
+                </li>
             </template>
         </ul>
     </template>
@@ -64,21 +50,19 @@
                 requestReggataList(this);
             }
 
-            /**
-             * Get the years of a match
-             */
-            _getYears(basematch) {
-                return function(match) {
-                    return basematch.shortname === match.shortname;
-                };
+
+            _getClass(match, shortname) {
+                if (shortname === undefined) return;
+                if (this._selectedMatch(match, shortname.split(' ')[0]))
+                    return 'main selected';
+                return 'main';
             }
 
             /**
              * Is a match opened?
              */
-            _selectedMatch(match, route) {
-                if (match.shortname === route.path.split('/')[1]) return 'true';
-                return 'false';
+            _selectedMatch(match, shortname) {
+                return match.shortname === shortname;
             }
 
             /**
@@ -96,18 +80,10 @@
             }
 
             /**
-             * Negative sort
-             */
-            _yearSort(a, b) {
-                return -1 * a.jaar.localeCompare(b.jaar);
-            }
-
-            /**
              * Open a match
              */
             _openMatch(e) {
-                this.set('route.path',e.model.match.shortname + '/' + e.model.match.jaar);
-                // this.route.path = e.model.match.shortname + '/' + e.model.match.jaar;
+                this.set('route.path', e.model.match.shortname + '/' + e.model.match.jaar);
             }
 
             static get properties() {
@@ -125,6 +101,11 @@
                     },
                     route: {
                         type: Object,
+                        notify: true,
+                        readOnly: false
+                    },
+                    currentMatch: {
+                        type: String,
                         notify: true,
                         readOnly: false
                     }

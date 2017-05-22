@@ -29,28 +29,28 @@
                     <th class="show-gt-md">
                         Slag
                     </th>
-                    <template is="dom-if" if=[[displaySplash1]]>
-                        <th class$=[[_setClasses(1)]]>
+                    <template is="dom-if" if=[[_displaySplash(splashCount,splash,1)]]>
+                        <th class$=[[_setClasses(splash,1)]]>
                             Tussentijd 1
                         </th>
                     </template>
-                    <template is="dom-if" if=[[displaySplash2]]>
-                        <th class$=[[_setClasses(2)]]>
+                    <template is="dom-if" if=[[_displaySplash(splashCount,splash,2)]]>
+                        <th class$=[[_setClasses(splash,2)]]>
                             Tussentijd 2
                         </th>
                     </template>
-                    <template is="dom-if" if=[[displaySplash3]]>
-                        <th class$=[[_setClasses(3)]]>
+                    <template is="dom-if" if=[[_displaySplash(splashCount,splash,3)]]>
+                        <th class$=[[_setClasses(splash,3)]]>
                             Tussentijd 3
                         </th>
                     </template>
-                    <template is="dom-if" if=[[displaySplash4]]>
-                        <th class$=[[_setClasses(4)]]>
+                    <template is="dom-if" if=[[_displaySplash(splashCount,splash,4)]]>
+                        <th class$=[[_setClasses(splash,4)]]>
                             Tussentijd 4
                         </th>
                     </template>
-                    <template is="dom-if" if=[[_displaySplash(5)]]>
-                        <th class$=[[_setClasses(5)]]>
+                    <template is="dom-if" if=[[_displaySplash(splashCount,splash,5)]]>
+                        <th class$=[[_setClasses(splash,5)]]>
                             Finishtijd
                         </th>
                     </template>
@@ -82,28 +82,28 @@
                         <td class="show-gt-md">
                             [[team.rower8]]
                         </td>
-                        <template is="dom-if" if=[[displaySplash1]]>
-                            <td class$=[[_setClasses(1)]]>
+                        <template is="dom-if" if=[[_displaySplash(splashCount,splash,1)]]>
+                            <td class$=[[_setClasses(splash,1)]]>
                                 [[_displayTime(team.splash1,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[displaySplash2]]>
-                            <td class$=[[_setClasses(2)]]>
+                        <template is="dom-if" if=[[_displaySplash(splashCount,splash,2)]]>
+                            <td class$=[[_setClasses(splash,2)]]>
                                 [[_displayTime(team.splash2,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[displaySplash3]]>
-                            <td class$=[[_setClasses(3)]]>
+                        <template is="dom-if" if=[[_displaySplash(splashCount,splash,3)]]>
+                            <td class$=[[_setClasses(splash,3)]]>
                                 [[_displayTime(team.splash3,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[displaySplash4]]>
-                            <td class$=[[_setClasses(4)]]>
+                        <template is="dom-if" if=[[_displaySplash(splashCount,splash,4)]]>
+                            <td class$=[[_setClasses(splash,4)]]>
                                 [[_displayTime(team.splash4,0)]]
                             </td>
                         </template>
-                        <template is="dom-if" if=[[_displaySplash(5)]]>
-                            <td class$=[[_setClasses(5)]]>
+                        <template is="dom-if" if=[[_displaySplash(splashCount,splash,5)]]>
+                            <td class$=[[_setClasses(splash,5)]]>
                                 <final-time team="[[team]]"></final-time>
                             </td>
                         </template>
@@ -132,16 +132,11 @@
             }
 
             /**
-             * TODO clean this
              * Which splashes should be shown had troubles with dom-if
              */
             _teamsChanged(newValue, oldValue) {
                 if (this.noTeams === false) {
                     this.splashCount = checkSplash(this.teams);
-                    this.displaySplash1 = this._displaySplash(1);
-                    this.displaySplash2 = this._displaySplash(2);
-                    this.displaySplash3 = this._displaySplash(3);
-                    this.displaySplash4 = this._displaySplash(4);
                 }
             }
 
@@ -155,10 +150,10 @@
             /**
              * Set the classes based on the view
              */
-            _setClasses(splash) {
-                if (this.splash === undefined)
-                    this.splash = this._getSplash();
-                return (splash == this.splash) ? '' : 'show-gt-md';
+            _setClasses(splash,loc) {
+                if (splash === undefined)
+                    return;
+                return (loc === splash) ? '' : 'show-gt-md';
             }
 
             /**
@@ -171,20 +166,12 @@
             /**
              * Display splashes
              */
-            _displaySplash(splash) {
-                if (this.splash === undefined)
-                    this.splash = this._getSplash();
-                if (this.splashCount === undefined)
-                    return this.splash >= splash;
-                return (this.splash >= splash && splash < this.splashCount) || (this.splash >= splash && splash === 5);
-            }
-
-            /**
-             * Get the current splash had race condition in polymer-1
-             * TODO check in polymer-2
-             */
-            _getSplash() {
-                return this.getAttribute('data-splash');
+            _displaySplash(splashCount,splash,loc) {
+                if (splash === undefined)
+                    return;
+                if (splashCount === undefined)
+                    return;
+                return (splash >= loc && loc < splashCount) || (splash >= loc && loc === 5);
             }
 
             /**

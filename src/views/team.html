@@ -323,7 +323,7 @@
              */
             toggle(team) {
                 this.team = team;
-                this.rounds = team.times.length > 1;
+                this.rounds = (team.times) && team.times.length > 1;
                 this.active = true;
                 this.$.modal.toggle();
             }
