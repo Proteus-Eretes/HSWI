@@ -20,35 +20,13 @@
       "polymer-2"
     ]
   },
-  "build": [
+  "builds": [
     {
-      "name": "bundled",
-      "bundle": true,
-      "js": {
-        "minify": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      }
+      "preset": "es5-bundled"
     },
     {
-      "name": "unbundled",
-      "js": {
-        "minify": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      }
+      "preset": "es6-unbundled"
     }
-  ],
-  "builds": [{
-    "preset": "es6-unbundled"
-  }]
+  ]
 }
 
