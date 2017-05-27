@@ -62,7 +62,7 @@
                 const shortname = document.querySelector('my-app').getMatchShort();
                 if(path.length === 5) {
                     if(path[4] === 'vereniging') path[4] = 'uitslagen';
-                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[2] + '/' + path[4];
+                    this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[4];
                 } else if(this.view === 'club') {
                     this.path = shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/vereniging';
                 } else if(path[path.length - 1] === 'vereniging' && this.view !== 'club' && path.length === 3) {
