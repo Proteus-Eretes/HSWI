@@ -5,6 +5,7 @@
 <link rel="import" href="../styles/shared-styles-tables.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../app/time.html">
+<link rel="import" href="../app/timeBonus.html">
 
 
 <dom-module id="team-modal">
@@ -85,7 +86,7 @@
                         <template is="dom-if" if=[[_show(team.totaltime)]]>
                             <tr>
                                 <td><b>Finishtijd</b></td>
-                                <td>[[_displayTime(team.totaltime,team.bonussecond)]]</td>
+                                <td><final-time-bonus team="[[team]]"></final-time-bonus></td>
                             </tr>
                         </template>
                         <template is="dom-if" if=[[_show(team.times)]]>
@@ -117,7 +118,7 @@
                                 <template is="dom-if" if=[[_show(time.totaltime)]]>
                                     <tr>
                                         <td><b>[[_elementSplashName(rounds,"Finishtijd",index)]]</b></td>
-                                        <td>[[_displayTime(time.totaltime,time.bonussecond)]]</td>
+                                        <td><final-time-bonus team="[[time]]"></final-time-bonus></td>
                                     </tr>
                                 </template>
                             </template>

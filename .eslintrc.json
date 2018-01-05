@@ -31,7 +31,8 @@
       }
     ],
     "valid-jsdoc": "warn",
-    "require-jsdoc": "warn"
+    "require-jsdoc": "off",
+    "brace-style": "off"
   },
   "globals": {
     "Polymer": true,

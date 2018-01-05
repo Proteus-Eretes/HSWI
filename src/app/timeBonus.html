@@ -1,0 +1,70 @@
+<link rel="import" href="time.html">
+<dom-module id="final-time-bonus">
+    <template>
+        <style>
+            .view{
+                display: inline;
+                font-size: inherit;
+            }
+        </style>
+        <div class="view">
+            [[_state(team)]]
+            <div class="view" style$="[[_size(team)]]">[[_displayTime(team)]]
+            </div>
+            [[_endState(team)]]
+    </template>
+    <script>
+        class FinalTimeBonus extends FinalTime {
+
+            static get is() {
+                return 'final-time-bonus';
+            }
+
+            _state(team) {
+                let r = '';
+                if (+team.disqualified > 0)
+                    r = r + 'DQ (';
+                else if (+team.excluded > 0) {
+                    r = r + 'EX (';
+                }
+                return r;
+            }
+
+            _endState(team) {
+                if (+team.disqualified > 0 || +team.excluded > 0) {
+                    return ')';
+                }
+                return '';
+            }
+
+            _size(team) {
+                if (+team.disqualified > 0 || +team.excluded > 0) {
+                    return 'font-size: 6px';
+                }
+                return '';
+            }
+
+            _displayTime(team) {
+                let r = '';
+                r = r + formatTime(team.totaltime);
+                if (+team.bonussecond > 0) {
+                    r = r + '(+' + team.bonussecond + ')';
+                }
+                return r;
+            }
+
+            static get properties() {
+                return {
+                    team: {
+                        type: Array,
+                        notify: false,
+                        readOnly: false
+                    }
+                };
+            }
+        }
+
+        // Register custom element definition using standard platform API
+        customElements.define(FinalTimeBonus.is, FinalTimeBonus);
+    </script>
+</dom-module>
