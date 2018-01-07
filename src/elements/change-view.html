@@ -23,10 +23,6 @@
                 display: block;
             }
 
-            .headerButton {
-                /*background-color: rgb(56, 56, 56);*/
-            }
-
             .yearButton:hover {
                 background-color: rgb(53, 53, 53);
             }
@@ -85,10 +81,15 @@
             _openView(e) {
                 const shortname = document.querySelector('my-app').getMatchShort();
                 const parts = this.path.split('/');
-                if(parts.length > 4 && +parts[parts.length - 2] !== +shortname.split(' ')[1]) {
-                    this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + parts[parts.length - 2] + '/' + e.target.id ;
-                } else {
+                let view = parts[parts.length - 1];
+                if (view === 'vereniging') {
                     this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                } else {
+                    if (parts.length > 4) {
+                        this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + parts[parts.length - 2] + '/' + e.target.id;
+                    } else {
+                        this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + e.target.id;
+                    }
                 }
                 this.selected = false;
             }
@@ -138,6 +139,7 @@
                 };
             }
         }
+
         customElements.define(ChangeView.is, ChangeView);
     </script>
 </dom-module>

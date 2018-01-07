@@ -60,12 +60,14 @@
                 this.view = e.target.id;
                 let path = this.path.split('/');
                 const shortname = document.querySelector('my-app').getMatchShort();
-                if(path.length === 5) {
-                    if(path[4] === 'vereniging') path[4] = 'uitslagen';
+                if (path.length === 5) {
+                    if (path[4] === 'vereniging') {
+                        path[4] = 'uitslagen';
+                    }
                     this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[4];
-                } else if(this.view === 'club') {
+                } else if (this.view === 'club') {
                     this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/vereniging';
-                } else if(path[path.length - 1] === 'vereniging' && this.view !== 'club' && path.length === 3) {
+                } else if (path[path.length - 1] === 'vereniging' && this.view !== 'club' && path.length === 3) {
                     this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/' + path[2];
                 } else {
                     this.path = '/' + shortname.split(' ')[0] + '/' + shortname.split(' ')[1] + '/uitslagen';
@@ -79,17 +81,46 @@
             _openViewClub(e) {
                 this.view = e.target.id;
                 let path = this.path.split('/');
-                if(path.length === 5) {
+                if (path.length === 5) {
                     this.path = path[0] + '/' + path[1] + '/' + path[2] + '/' + 'uitslagen';
                 }
             }
 
+            /**
+             * Set the correct classes for the view
+             * @private
+             */
             _isActive(view, currentView, mid) {
-                if (currentView === 0) currentView = 'field';
                 let classes = '';
-                if (mid === 1) classes = 'middleSwitch ';
-                if (view === currentView) return classes + 'viewSwitch activeSwitch';
+                if (currentView === 0) {
+                    currentView = 'field';
+                }
+                if (mid === 1) {
+                    classes = 'middleSwitch ';
+                }
+                if (view === currentView) {
+                    return classes + 'viewSwitch activeSwitch';
+                }
                 return classes + 'viewSwitch';
+            }
+
+            /**
+             * Switch the view when moving away from club view to a result view
+             * @param newValue
+             * @param oldValue
+             * @private
+             */
+            _updateView(newValue, oldValue) {
+                if (!newValue || !oldValue) {
+                    return;
+                }
+                let old = oldValue.split('/')[oldValue.split('/').length - 1];
+                let r = newValue.split('/')[newValue.split('/').length - 1];
+                if (oldValue.split('/').length === oldValue.split('/').length) {
+                    if (old === 'vereniging' && r !== 'vereniging' && this.view === 'club') {
+                        this.set('view', 'field');
+                    }
+                }
             }
 
             static get properties() {
@@ -103,11 +134,13 @@
                     path: {
                         type: String,
                         notify: true,
-                        readOnly: false
+                        readOnly: false,
+                        observer: '_updateView'
                     }
                 };
             }
         }
+
         customElements.define(ChangeMatchView.is, ChangeMatchView);
     </script>
 </dom-module>
