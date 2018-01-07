@@ -14,19 +14,6 @@
                 border-bottom: 1px solid #0F0F0F;
             }
 
-            .wrapper {
-                display: flex;
-            }
-
-            .headerItem {
-                width: 50%;
-                font-weight: 600;
-            }
-
-            .right {
-                width: 50%;
-            }
-
             .form-control {
                 width: 90%;
                 margin-right: auto;
@@ -48,28 +35,29 @@
                 <h4> Feedback leveren</h4>
                 <p>Help ons de uitslagen pagina te verbeteren!</p>
             </div>
-            <div class="wrapper">
-                <div class="headerItem"> Soort feedback</div>
-                <select class="right dropdown" id="type">
+            <form>
+                <div class="form-group">
+                    <label for="type"> Soort feedback</div>
+                <select class="form-control dropdown" id="type">
                     <option value=1>Ideeën</option>
                     <option value=2>Bugs</option>
                     <option value=3>Anders</option>
                 </select>
-            </div>
-            <div class="wrapper">
-                <div class="headerItem">Email</div>
-                <input class="right" type="email" id="email">
-            </div>
-
-            <div class="headerItem">Beschrijving</div>
-            <div class="form-control">
-                <textarea class="form" rows="5" id="description" maxlength=1000 required="required"
-                          placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!"></textarea>
-            </div>
-            <div class="buttons">
-                <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
-                <paper-button class="hover" on-click="_sendFeedback">Feedback verzenden</paper-button>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="description">Beschrijving</label>
+                    <textarea class="form" rows="5" id="description" maxlength=1000 required="required"
+                              placeholder="Beschrijf hier je idee of bug. In het geval van bugs helpt het enorm als je precies beschrijft hoe het te reproduceren is!"></textarea>
+                </div>
+                <div class="buttons">
+                    <paper-button class="hover" dialog-dismiss>Sluiten</paper-button>
+                    <paper-button class="hover" on-click="_sendFeedback">Feedback verzenden</paper-button>
+                </div>
+            </form>
         </paper-dialog>
     </template>
 
