@@ -2,20 +2,20 @@
     /**
      * Get the last results from the server
      */
-    const requestData = function(self) {
-        fetch('https://beta.hoesnelwasik.nl/api/overview/')
+    const requestData = function (self) {
+        fetch('https://' + window.location.hostname + '/api/overview/')
             .then(
-                function(res) {
+                function (res) {
                     if (res.status !== 200) {
                         return;
                     }
 
-                    res.json().then(function(data) {
+                    res.json().then(function (data) {
                         self.match = data;
                     });
                 }
             )
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log('Something went badly wrong: -S', err);
             });
     };

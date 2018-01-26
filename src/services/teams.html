@@ -16,9 +16,9 @@
         if (!match) {
             match = 0;
         }
-        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/' + field + '/' + choice)
+        fetch('https://' + window.location.hostname + '/api/wd/' + match + '/' + year + '/' + field + '/' + choice)
             .then(
-                function(res) {
+                function (res) {
                     if (res.status !== 200) {
                         return;
                     }
@@ -28,7 +28,7 @@
                     });
                 }
             )
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log('Something went badly wrong: -S', err);
             });
     };

@@ -33,7 +33,7 @@ A view good tutorials to get started
 First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
 [npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
-    npm install -g polymer-cli@next
+    npm install -g polymer-cli
 
 ### Start the development server
 

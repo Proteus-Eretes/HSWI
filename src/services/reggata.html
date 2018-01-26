@@ -4,10 +4,10 @@
     /**
      * Get the list of reggatas
      */
-    const requestReggataList = function(self) {
+    const requestReggataList = function (self) {
         fetch('https://beta.hoesnelwasik.nl/api/')
             .then(
-                function(res) {
+                function (res) {
                     if (res.status !== 200) {
                         return;
                     }
@@ -28,16 +28,16 @@
      * @param  {string} match
      * @param  {string} year
      */
-    const requestFields = function(self, match, year) {
+    const requestFields = function (self, match, year) {
         if (!year) {
             year = 0;
         }
         if (!match) {
             match = 0;
         }
-        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/velden/')
+        fetch('https://' + window.location.hostname + '/api/wd/' + match + '/' + year + '/velden/')
             .then(
-                function(res) {
+                function (res) {
                     if (res.status !== 200) {
                         return;
                     }
@@ -47,7 +47,7 @@
                     });
                 }
             )
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log('Something went badly wrong: -S', err);
             });
     };
@@ -58,26 +58,26 @@
      * @param  {string} match
      * @param  {string} year
      */
-    const requestClubs = function(self, match, year) {
+    const requestClubs = function (self, match, year) {
         if (!year) {
             year = 0;
         }
         if (!match) {
             match = 0;
         }
-        fetch('https://beta.hoesnelwasik.nl/api/wd/' + match + '/' + year + '/clublist/')
+        fetch('https://' + window.location.hostname + '/api/wd/' + match + '/' + year + '/clublist/')
             .then(
-                function(res) {
+                function (res) {
                     if (res.status !== 200) {
                         return;
                     }
 
-                    res.json().then(function(data) {
+                    res.json().then(function (data) {
                         self.clubs = data;
                     });
                 }
             )
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log('Something went badly wrong: -S', err);
             });
     };
